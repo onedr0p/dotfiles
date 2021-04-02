@@ -19,6 +19,7 @@ fish_add_path "/Users/devin/.jenv/bin"
 fish_add_path "/usr/local/opt/ruby@2.7/bin"
 fish_add_path "/usr/local/sbin"
 
+helm completion fish | source
 thefuck --alias | source
 status --is-interactive; and source (jenv init -|psub)
 {{- end }}

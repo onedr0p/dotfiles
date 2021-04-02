@@ -1,0 +1,31 @@
+add_newline = true
+
+format = """\
+  $username\
+  $directory\
+  $kubernetes\
+  $git_branch\
+  $git_state\
+  $git_status\
+  $character\
+  """
+
+[character]
+success_symbol = "\n[❯](bold green)"
+error_symbol = "\n[✖](bold red)"
+
+[username]
+show_always = false
+
+[kubernetes]
+symbol = "ﴱ "
+format = 'on [ﴱ $context \($namespace\)](bold bright-green) '
+disabled = false
+[kubernetes.context_aliases]
+"default" = "home-cluster"
+
+[aws]
+disabled = true
+
+[git_branch]
+symbol = " "
