@@ -1,0 +1,20 @@
+{{- $email := promptString "email" -}}
+{{- $name := promptString "name" -}}
+{{- $personal := promptString "Is this a personal device? (y/n)" -}}
+{{- $work := promptString "Is this a work device? (y/n)" -}}
+
+format: json
+sourceDir: Code/repos/onedr0p/dotfiles
+
+data:
+  name: "{{ $name }}"
+  email: "{{ $email }}"
+  personal: "{{ $personal }}"
+  work: "{{ $work }}"
+  {{- if (eq .chezmoi.os "android") }} 
+  bash: "/data/data/com.termux/files/usr/bin/bash"
+  {{- else if (eq .chezmoi.os "linux") }}
+  bash: "/bin/bash"
+  {{- else if (eq .chezmoi.os "darwin") }}
+  bash: "/usr/local/bin/bash"
+  {{- end }}
