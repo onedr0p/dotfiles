@@ -1,6 +1,7 @@
 Host *
   AddKeysToAgent yes
 {{- if (eq .chezmoi.os "darwin") }}
+  IgnoreUnknown UseKeychain
   UseKeychain yes
 {{- end }}
 Host 192.168.*.*
