@@ -1,3 +1,3 @@
 function k --wraps=kubectl --description 'kubectl shorthand'
-kubectl $argv
+    kubectl $argv
 end

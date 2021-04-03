@@ -1,0 +1,20 @@
+---
+version: '3'
+
+env:
+  HOMEBREW_FORCE_BREWED_GIT: 1
+  HOMEBREW_NO_ANALYTICS: 1
+
+tasks:
+
+  install:
+    desc: Install brew
+    cmds:
+    - type brew &>/dev/null || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh
+    silent: true
+
+  list:
+    desc: List brew packages
+    cmds:
+    - brew list
+    silent: true

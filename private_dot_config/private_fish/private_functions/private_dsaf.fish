@@ -1,4 +1,3 @@
-# Defined interactively
 function dsaf
-docker system prune -a --force
+    docker system prune -a --force
 end

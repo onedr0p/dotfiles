@@ -1,0 +1,10 @@
+---
+version: '3'
+
+vars:
+  CHEZMOI_HOME: "~/Code/repos/onedr0p/dotfiles"
+  CHEZMOI_REMOTE: "git@github.com:onedr0p/dotfiles.git"
+
+includes:
+  chezmoi: .taskfiles/chezmoi.yml
+  brew: .taskfiles/brew.yml

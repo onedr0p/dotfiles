@@ -1,16 +1,22 @@
-{{- $email := promptString "email" -}}
-{{- $name := promptString "name" -}}
-{{- $personal := promptString "Is this a personal device? (y/n)" -}}
-{{- $work := promptString "Is this a work device? (y/n)" -}}
+{{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $transient := false -}}{{/* true if this machine is temporary, e.g. a cloud or VM instance */}}
+{{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
+{{- $city := "Albany, NY" -}}{{/* city inputs for weather */}}
 
-format: json
-sourceDir: Code/repos/onedr0p/dotfiles
+{{- $personal = promptBool "personal" -}}
+{{- $headless = promptBool "headless" -}}
+{{- $transient = promptBool "transient" -}}
+{{- $kubernetes = promptBool "kubernetes" -}}
+
+{{- if not $city -}}
+{{- $city := promptString "Current city" -}}
+{{- end -}}
+
+format: yaml
+sourceDir: {{ .chezmoi.homeDir }}/Code/repos/onedr0p/dotfiles
 
 data:
-  name: "{{ $name }}"
-  email: "{{ $email }}"
-  personal: "{{ $personal }}"
-  work: "{{ $work }}"
   {{- if (eq .chezmoi.os "android") }} 
   bash: "/data/data/com.termux/files/usr/bin/bash"
   {{- else if (eq .chezmoi.os "linux") }}
