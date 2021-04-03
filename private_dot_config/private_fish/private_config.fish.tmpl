@@ -1,21 +1,33 @@
+set -gx KUBE_EDITOR nano
+set -gx VISUAL nano
+set -gx EDITOR nano
+
+set -gx GOPATH {{ .chezmoi.homeDir }}/go
 set -gx DATASTORE_TYPE kubernetes
+set -gx CALICO_DATASTORE_TYPE kubernetes
+set -gx ANSIBLE_HOST_KEY_CHECKING False
 
 starship init fish | source
 direnv hook fish | source
 flux completion fish | source
 
-{{- if (eq .chezmoi.os "android") }}
-fish_add_path /data/data/com.termux/files/home/.cargo/bin
-fish_add_path /data/data/com.termux/files/home/.krew/bin
-{{- else if (eq .chezmoi.os "darwin") }}
+fish_add_path "{{ .chezmoi.homeDir }}/.cargo/bin"
+fish_add_path "{{ .chezmoi.homeDir }}/.krew/bin"
+fish_add_path "{{ .chezmoi.homeDir }}/go/bin"
+
+{{- if (eq .chezmoi.os "darwin") }}
 test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+
+set -gx HOMEBREW_FORCE_BREWED_GIT 1
+set -gx HOMEBREW_NO_ANALYTICS 1
+set -gx RUBYJQ_USE_SYSTEM_LIBRARIES 1
 
 fish_add_path "/usr/local/opt/gettext/bin"
 fish_add_path "/usr/local/opt/libiconv/bin"
 fish_add_path "/usr/local/opt/findutils/libexec/gnubin"
 fish_add_path "/usr/local/opt/coreutils/libexec/gnubin"
 fish_add_path "/usr/local/opt/grep/libexec/gnubin"
-fish_add_path "/Users/devin/.jenv/bin"
+fish_add_path "{{ .chezmoi.homeDir }}/.jenv/bin"
 fish_add_path "/usr/local/opt/ruby@2.7/bin"
 fish_add_path "/usr/local/sbin"
 
