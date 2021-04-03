@@ -1,0 +1,14 @@
+Host *
+  AddKeysToAgent yes
+{{- if (eq .chezmoi.os "darwin") }}
+  UseKeychain yes
+{{- end }}
+Host 192.168.*.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+Host 172.16.*.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+Host 10.*.*.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
