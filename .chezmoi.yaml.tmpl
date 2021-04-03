@@ -17,10 +17,12 @@ format: yaml
 sourceDir: {{ .chezmoi.homeDir }}/Code/repos/onedr0p/dotfiles
 
 data:
-  {{- if (eq .chezmoi.os "android") }} 
+  {{- if (contains "termux" .chezmoi.homeDir) }} 
   bash: "/data/data/com.termux/files/usr/bin/bash"
-  {{- else if (eq .chezmoi.os "linux") }}
+  {{- else }}
+  {{- if (eq .chezmoi.os "linux") }}
   bash: "/bin/bash"
   {{- else if (eq .chezmoi.os "darwin") }}
   bash: "/usr/local/bin/bash"
+  {{- end }}
   {{- end }}
