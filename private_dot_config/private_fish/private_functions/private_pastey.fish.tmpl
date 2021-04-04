@@ -1,0 +1,11 @@
+function pastey --description 'paste contents in clipboard to stdout'
+{{- if (contains "termux" .chezmoi.homeDir) }}
+    termux-clipboard-get
+{{- else }}
+{{- if (eq .chezmoi.os "linux") }}
+    xclip -o -sel clip
+{{- else if (eq .chezmoi.os "darwin") }}
+    pbpaste
+{{- end }}
+{{- end }}
+end

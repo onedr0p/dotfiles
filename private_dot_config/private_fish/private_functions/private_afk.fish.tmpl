@@ -1,0 +1,9 @@
+function afk --description 'Lock the box'
+{{- if not (contains "termux" .chezmoi.homeDir) }}
+{{- if (eq .chezmoi.os "linux") }}
+    command sudo systemctl suspend
+{{- else if (eq .chezmoi.os "darwin") }}
+    command /System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend
+{{- end }}
+{{- end }}
+end

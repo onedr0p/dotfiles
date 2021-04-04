@@ -1,0 +1,11 @@
+function clipy --description 'copy stdin to clipboard'
+{{- if (contains "termux" .chezmoi.homeDir) }}
+    termux-clipboard-set
+{{- else }}
+{{- if (eq .chezmoi.os "linux") }}
+    xclip -sel clip
+{{- else if (eq .chezmoi.os "darwin") }}
+    pbcopy
+{{- end }}
+{{- end }}
+end
