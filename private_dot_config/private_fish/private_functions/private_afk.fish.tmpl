@@ -3,7 +3,7 @@ function afk --description 'Lock the box'
 {{- if (eq .chezmoi.os "linux") }}
     command sudo systemctl suspend
 {{- else if (eq .chezmoi.os "darwin") }}
-    /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine
+    open -b com.apple.ScreenSaver.Engine
 {{- end }}
 end
 {{- end }}
