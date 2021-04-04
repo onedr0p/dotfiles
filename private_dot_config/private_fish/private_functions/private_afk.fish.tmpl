@@ -1,9 +1,9 @@
-function afk --description 'Lock the box'
 {{- if not (contains "termux" .chezmoi.homeDir) }}
+function afk --description 'Lock the box'
 {{- if (eq .chezmoi.os "linux") }}
     command sudo systemctl suspend
 {{- else if (eq .chezmoi.os "darwin") }}
-    command /System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend
-{{- end }}
+    /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine
 {{- end }}
 end
+{{- end }}
