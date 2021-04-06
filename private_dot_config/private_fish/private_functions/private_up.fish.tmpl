@@ -44,7 +44,7 @@ function up --description 'updates packages'
     curl -fsSL "https://toolkit.fluxcd.io/install.sh" | bash -s "$PREFIX/bin" >/dev/null 2>&1
 
     echo "Updating taskfile..."
-    sh -c "$(curl -fsSL https://taskfile.dev/install.sh)" -- -d -b "$PREFIX/bin" >/dev/null 2>&1
+    sh -c (curl -fsSL https://taskfile.dev/install.sh) -- -d -b "$PREFIX/bin" >/dev/null 2>&1
 {{- else }}
 {{- if (eq .chezmoi.os "darwin") }}
     brew upgrade
