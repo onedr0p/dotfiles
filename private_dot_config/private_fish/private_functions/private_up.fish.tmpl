@@ -6,7 +6,7 @@ function up --description 'updates packages'
     echo "Updating chezmoi..."
     set chezmoi_version (curl -sL "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//') \
     && curl -fsSL -o "$PREFIX/tmp/chezmoi.tar.gz" \
-        "https://github.com/twpayne/chezmoi/releases/download/v$chezmoi_version/chezmoi_$chezmoi_version_linux_arm64.tar.gz" \
+        "https://github.com/twpayne/chezmoi/releases/download/v"$chezmoi_version"/chezmoi_"$chezmoi_version"_linux_arm64.tar.gz" \
     && tar zxf "$PREFIX/tmp/chezmoi.tar.gz" -C "$PREFIX/tmp" \
     && mv "$PREFIX/tmp/chezmoi" "$PREFIX/bin/chezmoi" \
     && rm -rf "$PREFIX"/tmp/*
