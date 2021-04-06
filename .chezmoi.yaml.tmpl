@@ -19,10 +19,8 @@ sourceDir: {{ .chezmoi.homeDir }}/Code/repos/onedr0p/dotfiles
 data:
   {{- if (contains "termux" .chezmoi.homeDir) }} 
   bash: "/data/data/com.termux/files/usr/bin/bash"
+  fish: "/data/data/com.termux/files/usr/bin/fish"
   {{- else }}
-  {{- if (eq .chezmoi.os "linux") }}
-  bash: "/bin/bash"
-  {{- else if (eq .chezmoi.os "darwin") }}
-  bash: "/usr/local/bin/bash"
-  {{- end }}
+  bash: "/usr/bin/env bash"
+  fish: "/usr/bin/env fish"
   {{- end }}
