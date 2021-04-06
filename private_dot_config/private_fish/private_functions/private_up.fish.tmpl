@@ -1,0 +1,55 @@
+function up --description 'updates packages'
+{{- if (contains "termux" .chezmoi.homeDir) }}
+    echo "Updating system..."
+    pkg up -y
+
+    echo "Updating chezmoi..."
+    chezmoi_version=$(curl -sL "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq --raw-output ".tag_name") \
+    && chezmoi_version="${chezmoi_version:1}" \
+    && curl -fsSL -o "$PREFIX/tmp/chezmoi.tar.gz" \
+        "https://github.com/twpayne/chezmoi/releases/download/v${chezmoi_version}/chezmoi_${chezmoi_version}_linux_arm64.tar.gz" \
+    && tar zxf "${PREFIX}/tmp/chezmoi.tar.gz" -C "${PREFIX}/tmp" \
+    && mv "${PREFIX}/tmp/chezmoi" "${PREFIX}/bin/chezmoi" \
+    && rm -rf "${PREFIX}"/tmp/*
+
+    echo "Updating kubetail..."
+    git clone https://github.com/johanhaleby/kubetail "$PREFIX/tmp/kubetail" 2> /dev/null \
+    && mv "$PREFIX/tmp/kubetail/kubetail" "${PREFIX}/bin/kubetail" \
+    && mv "$PREFIX/tmp/kubetail/completion/kubetail.fish" ~/.config/fish/completions/ \
+    && chmod +x "${PREFIX}/bin/kubetail" \
+    && rm -rf "${PREFIX}"/tmp/*
+
+    echo "Updating youtube-dl..."
+    curl -fsSL -o "${PREFIX}/bin/youtube-dl" \
+        "https://yt-dl.org/downloads/latest/youtube-dl" \
+    && chmod +x "${PREFIX}/bin/youtube-dl"
+
+    echo "Updating calicoctl..."
+    calicoctl_version=$(curl -sL "https://api.github.com/repos/projectcalico/calicoctl/releases/latest" | jq --raw-output ".tag_name") \
+    && curl -fsSL -o "${PREFIX}/bin/calicoctl" \
+        "https://github.com/projectcalico/calicoctl/releases/download/${calicoctl_version}/calicoctl-linux-arm64"\
+    && chmod +x "${PREFIX}/bin/calicoctl"
+
+    echo "Updating kubeseal..."
+    kubeseal_version=$(curl -sL "https://api.github.com/repos/bitnami-labs/sealed-secrets/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kubeseal-arm64\"))))[0].tag_name") \
+    && curl -fsSL -o "${PREFIX}/bin/kubeseal" \
+        "https://github.com/bitnami-labs/sealed-secrets/releases/download/${kubeseal_version}/kubeseal-arm64" \
+    && chmod +x "${PREFIX}/bin/kubeseal"
+
+    echo "Updating yq..."
+    curl -fsSL -o "${PREFIX}/bin/yq" \
+        "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_arm64" \
+    && chmod +x "${PREFIX}/bin/yq"
+
+    echo "Updating flux..."
+    curl -fsSL "https://toolkit.fluxcd.io/install.sh" | bash -s "${PREFIX}/bin" >/dev/null 2>&1
+
+    echo "Updating taskfile..."
+    sh -c "$(curl -fsSL https://taskfile.dev/install.sh)" -- -d -b "${PREFIX}/bin" >/dev/null 2>&1
+{{- else }}
+{{- if (eq .chezmoi.os "darwin") }}
+    brew upgrade
+{{- end }}
+{{- end }}
+    fisher update
+end

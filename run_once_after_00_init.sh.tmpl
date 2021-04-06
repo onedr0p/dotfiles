@@ -5,4 +5,5 @@ chezmoi completion fish --output ~/.config/fish/completions/chezmoi.fish
 {{- if (eq .chezmoi.os "darwin") }}
 type brew &>/dev/null || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh
 brew bundle --file ~/Brewfile
+brew install hudochenkov/sshpass/sshpass
 {{- end }}
