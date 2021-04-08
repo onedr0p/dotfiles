@@ -1,9 +1,7 @@
 function commit --description 'git conventional commits'
     if count $argv > /dev/null
         set commit_type $argv[1]
-        for i in (seq 1 $count)
-            set commit_msg (string join " " $commit_msg $argv[2..-1])
-        end
+        set commit_msg (string join " " $commit_msg $argv[2..-1])
         git commit -m $commit_type": "$commit_msg
     else
         set wtc (curl -s http://whatthecommit.com/index.txt)
