@@ -26,13 +26,13 @@ function up --description 'updates packages'
     echo "Updating calicoctl..."
     set calicoctl_version (curl -sL "https://api.github.com/repos/projectcalico/calicoctl/releases/latest" | jq --raw-output ".tag_name") \
     && curl -fsSL -o "$PREFIX/bin/calicoctl" \
-        "https://github.com/projectcalico/calicoctl/releases/download/$calicoctl_version/calicoctl-linux-arm64"\
+        "https://github.com/projectcalico/calicoctl/releases/download/"$calicoctl_version"/calicoctl-linux-arm64"\
     && chmod +x "$PREFIX/bin/calicoctl"
 
     echo "Updating kubeseal..."
     set kubeseal_version (curl -sL "https://api.github.com/repos/bitnami-labs/sealed-secrets/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kubeseal-arm64\"))))[0].tag_name") \
     && curl -fsSL -o "$PREFIX/bin/kubeseal" \
-        "https://github.com/bitnami-labs/sealed-secrets/releases/download/$kubeseal_version/kubeseal-arm64" \
+        "https://github.com/bitnami-labs/sealed-secrets/releases/download/"$kubeseal_version"/kubeseal-arm64" \
     && chmod +x "$PREFIX/bin/kubeseal"
 
     echo "Updating yq..."
