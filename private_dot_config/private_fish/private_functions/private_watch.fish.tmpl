@@ -1,0 +1,5 @@
+function watch --description 'watch with fish alias support'
+    if count $argv > /dev/null
+        /data/data/com.termux/files/usr/bin/watch -x fish -c "$argv"
+    end
+end
