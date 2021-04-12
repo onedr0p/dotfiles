@@ -1,5 +1,13 @@
 function watch --description 'watch with fish alias support'
     if count $argv > /dev/null
+{{- if (contains "termux" .chezmoi.homeDir) }}
         /data/data/com.termux/files/usr/bin/watch -x fish -c "$argv"
+{{- else }}
+{{- if (eq .chezmoi.os "linux") }}
+        /usr/bin/watch -x fish -c "$argv"
+{{- else if (eq .chezmoi.os "darwin") }}
+        /usr/local/bin/watch -x fish -c "$argv"
+{{- end }}
+{{- end }}
     end
 end
