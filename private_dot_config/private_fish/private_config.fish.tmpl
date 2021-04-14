@@ -7,6 +7,8 @@ set -gx DATASTORE_TYPE kubernetes
 set -gx CALICO_DATASTORE_TYPE kubernetes
 set -gx ANSIBLE_HOST_KEY_CHECKING False
 
+set -gx GPG_TTY (tty)
+
 starship init fish | source
 direnv hook fish | source
 flux completion fish | source
