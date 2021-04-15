@@ -3,6 +3,10 @@ function up --description 'updates packages'
     echo "Updating system..."
     pkg up -y
 
+    echo "Updating kubectl..."
+    curl -fsSL -o "$PREFIX/bin/kubectl" \
+        "https://dl.k8s.io/release/"(curl -sL https://dl.k8s.io/release/stable.txt)"/bin/linux/arm64/kubectl"
+
     echo "Updating chezmoi..."
     set chezmoi_version (curl -sL "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//') \
     && curl -fsSL -o "$PREFIX/tmp/chezmoi.tar.gz" \
@@ -10,6 +14,12 @@ function up --description 'updates packages'
     && tar zxf "$PREFIX/tmp/chezmoi.tar.gz" -C "$PREFIX/tmp" \
     && mv "$PREFIX/tmp/chezmoi" "$PREFIX/bin/chezmoi" \
     && rm -rf "$PREFIX"/tmp/*
+
+    echo "Updating k3sup..."
+    set k3sup_version (curl -sL "https://api.github.com/repos/alexellis/k3sup/releases/latest" | jq --raw-output ".tag_name") \ 
+    && curl -fsSL -o "$PREFIX/bin/k3sup" \
+        "https://github.com/alexellis/k3sup/releases/download/"$k3sup_version"/k3sup-arm64" \
+    && chmod +x "$PREFIX/bin/k3sup"
 
     echo "Updating kustomize..."
     set kustomize_version (curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kustomize\"))))[0].tag_name" | sed 's/.*\///') \
