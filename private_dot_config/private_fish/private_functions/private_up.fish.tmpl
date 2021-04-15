@@ -16,7 +16,7 @@ function up --description 'updates packages'
     && rm -rf "$PREFIX"/tmp/*
 
     echo "Updating k3sup..."
-    set k3sup_version (curl -sL "https://api.github.com/repos/alexellis/k3sup/releases/latest" | jq --raw-output ".tag_name") \ 
+    set k3sup_version (curl -sL "https://api.github.com/repos/alexellis/k3sup/releases/latest" | jq --raw-output ".tag_name") \
     && curl -fsSL -o "$PREFIX/bin/k3sup" \
         "https://github.com/alexellis/k3sup/releases/download/"$k3sup_version"/k3sup-arm64" \
     && chmod +x "$PREFIX/bin/k3sup"
