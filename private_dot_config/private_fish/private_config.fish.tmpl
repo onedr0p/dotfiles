@@ -20,7 +20,6 @@ fish_add_path "{{ .chezmoi.homeDir }}/go/bin"
 {{- if (eq .chezmoi.os "darwin") }}
 set -gx HOMEBREW_FORCE_BREWED_GIT 1
 set -gx HOMEBREW_NO_ANALYTICS 1
-set -gx RUBYJQ_USE_SYSTEM_LIBRARIES 1
 
 fish_add_path "/usr/local/opt/curl/bin"
 fish_add_path "/usr/local/opt/gettext/bin"
@@ -29,7 +28,6 @@ fish_add_path "/usr/local/opt/findutils/libexec/gnubin"
 fish_add_path "/usr/local/opt/coreutils/libexec/gnubin"
 fish_add_path "/usr/local/opt/grep/libexec/gnubin"
 fish_add_path "{{ .chezmoi.homeDir }}/.jenv/bin"
-fish_add_path "/usr/local/opt/ruby@2.7/bin"
 fish_add_path "/usr/local/sbin"
 
 helm completion fish | source
