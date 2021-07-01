@@ -1,0 +1,12 @@
+shell: fish
+configs:
+  include:
+  - ~/Code/DEVOPS_SHIT/eks-ist-gitops/kubeconfig
+prompt:
+  disable: true
+  show_depth: true
+  zsh_use_rps1: false
+  fish_use_rprompt: false
+behavior:
+  validate_namespaces: true
+  print_context_in_exec: auto
