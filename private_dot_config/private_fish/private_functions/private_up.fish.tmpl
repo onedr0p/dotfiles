@@ -15,25 +15,12 @@ function up --description 'updates packages'
     && mv "$PREFIX/tmp/chezmoi" "$PREFIX/bin/chezmoi" \
     && rm -rf "$PREFIX"/tmp/*
 
-    echo "Updating k3sup..."
-    set k3sup_version (curl -sL "https://api.github.com/repos/alexellis/k3sup/releases/latest" | jq --raw-output ".tag_name") \
-    && curl -fsSL -o "$PREFIX/bin/k3sup" \
-        "https://github.com/alexellis/k3sup/releases/download/"$k3sup_version"/k3sup-arm64" \
-    && chmod +x "$PREFIX/bin/k3sup"
-
     echo "Updating kustomize..."
     set kustomize_version (curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kustomize\"))))[0].tag_name" | sed 's/.*\///') \
     && curl -fsSL -o "$PREFIX/tmp/kustomize.tar.gz" \
         "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F"$kustomize_version"/kustomize_"$kustomize_version"_linux_arm64.tar.gz" \
     && tar zxf "$PREFIX/tmp/kustomize.tar.gz" -C "$PREFIX/tmp" \
     && mv "$PREFIX/tmp/kustomize" "$PREFIX/bin/kustomize" \
-    && rm -rf "$PREFIX"/tmp/*
-
-    echo "Updating kubetail..."
-    git clone https://github.com/johanhaleby/kubetail "$PREFIX/tmp/kubetail" 2> /dev/null \
-    && mv "$PREFIX/tmp/kubetail/kubetail" "$PREFIX/bin/kubetail" \
-    && mv "$PREFIX/tmp/kubetail/completion/kubetail.fish" ~/.config/fish/completions/ \
-    && chmod +x "$PREFIX/bin/kubetail" \
     && rm -rf "$PREFIX"/tmp/*
 
     echo "Updating youtube-dl..."
