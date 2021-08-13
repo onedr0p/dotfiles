@@ -1,15 +1,15 @@
+# all hosts
 Host *
   AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_ecdsa
+  IdentityFile ~/.ssh/id_rsa
 {{- if (eq .chezmoi.os "darwin") }}
   IgnoreUnknown UseKeychain
   UseKeychain yes
 {{- end }}
-Host 192.168.*.*
-  StrictHostKeyChecking no
-  UserKnownHostsFile /dev/null
-Host 172.16.*.*
-  StrictHostKeyChecking no
-  UserKnownHostsFile /dev/null
-Host 10.*.*.*
+
+# rfc1918
+Match Address 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null

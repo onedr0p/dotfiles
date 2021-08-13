@@ -1,4 +1,4 @@
-function pastey --description 'paste contents in clipboard to stdout'
+function put --description 'paste contents in clipboard to stdout'
 {{- if (contains "termux" .chezmoi.homeDir) }}
     termux-clipboard-get
 {{- else }}

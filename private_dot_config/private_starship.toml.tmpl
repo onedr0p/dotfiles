@@ -1,18 +1,19 @@
 add_newline = true
 
-format = """\
-  $username\
-  $directory\
-  $kubernetes\
-  $git_branch\
-  $git_state\
-  $git_status\
-  $character\
-  """
-
 [character]
 success_symbol = "\n[❯](bold green)"
 error_symbol = "\n[✖](bold red)"
+
+[cmd_duration]
+min_time = 500
+
+[directory]
+truncation_length = 5
+truncate_to_repo = true
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
 
 [username]
 show_always = false
@@ -23,11 +24,34 @@ format = 'on [ﴱ $context \($namespace\)](bold bright-green) '
 disabled = false
 [kubernetes.context_aliases]
 "default" = "home-cluster"
-"arn:aws:eks:us-east-1:910824520082:cluster/eks-devops-0" = "eks-gitops-0"
-"arn:aws:eks:us-east-1:910824520082:cluster/ist-devops-poc1" = "eks-gitops-1"
  
 [aws]
-disabled = true
+format = "on [$symbol$profile( $region)]($style) "
+style = "bold Yellow"
+symbol = "☁️ "
+
+[aws.region_aliases]
+af-south-1 = "Cape Town"
+ap-east-1 = "Hong Kong"
+ap-northeast-1 = "Tokyo"
+ap-northeast-2 = "Seoul"
+ap-northeast-3 = "Osaka"
+ap-south-1 = "Mumbai"
+ap-southeast-1 = "Singapore"
+ap-southeast-2 = "Sydney"
+ca-central-1 = "Canada"
+eu-central-1 = "Frankfurt"
+eu-north-1 = "Stockholm"
+eu-south-1 = "Milan"
+eu-west-1 = "Ireland"
+eu-west-2 = "London"
+eu-west-3 = "Paris"
+me-south-1 = "Bahrain"
+sa-east-1 = "São Paulo"
+us-east-1 = "N. Virginia"
+us-east-2 = "Ohio"
+us-west-1 = "N. California"
+us-west-2 = "Oregon"
 
 [git_branch]
 symbol = " "
