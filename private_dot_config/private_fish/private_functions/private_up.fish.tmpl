@@ -15,6 +15,14 @@ function up --description 'updates packages'
     && mv "$PREFIX/tmp/chezmoi" "$PREFIX/bin/chezmoi" \
     && rm -rf "$PREFIX"/tmp/*
 
+    echo "Updating stern..."
+    set stern_version (curl -sL "https://api.github.com/repos/stern/stern/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//') \
+    && curl -fsSL -o "$PREFIX/tmp/stern.tar.gz" \
+        "https://github.com/stern/stern/releases/download/v"$stern_version"/stern_"$stern_version"_linux_arm64.tar.gz" \
+    && tar zxf "$PREFIX/tmp/stern.tar.gz" -C "$PREFIX/tmp" \
+    && mv "$PREFIX/tmp/stern" "$PREFIX/bin/stern" \
+    && rm -rf "$PREFIX"/tmp/*
+
     echo "Updating kustomize..."
     set kustomize_version (curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kustomize\"))))[0].tag_name" | sed 's/.*\///') \
     && curl -fsSL -o "$PREFIX/tmp/kustomize.tar.gz" \
