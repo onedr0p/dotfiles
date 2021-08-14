@@ -36,6 +36,12 @@ function up --description 'updates packages'
         "https://yt-dl.org/downloads/latest/youtube-dl" \
     && chmod +x "$PREFIX/bin/youtube-dl"
 
+    echo "Updating kubie..."
+    set kubie_version (curl -sL "https://api.github.com/repos/sbstp/kubie/releases/latest" | jq --raw-output ".tag_name") \
+    && curl -fsSL -o "$PREFIX/bin/kubie" \
+        "https://github.com/sbstp/kubie/releases/download/"$kubie_version"/kubie-linux-arm64"\
+    && chmod +x "$PREFIX/bin/kubie"
+
     echo "Updating calicoctl..."
     set calicoctl_version (curl -sL "https://api.github.com/repos/projectcalico/calicoctl/releases/latest" | jq --raw-output ".tag_name") \
     && curl -fsSL -o "$PREFIX/bin/calicoctl" \
