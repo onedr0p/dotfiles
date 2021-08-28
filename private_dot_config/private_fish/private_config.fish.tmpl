@@ -8,8 +8,14 @@ set -gx ANSIBLE_HOST_KEY_CHECKING False
 set -gx GPG_TTY (tty)
 
 starship init fish | source
-direnv hook fish | source
-flux completion fish | source
+
+if type -q direnv
+    direnv hook fish | source
+end
+
+if type -q flux
+    flux completion fish | source
+end
 
 fish_add_path "{{ .chezmoi.homeDir }}/.cargo/bin"
 fish_add_path "{{ .chezmoi.homeDir }}/.krew/bin"
@@ -26,6 +32,11 @@ fish_add_path "/usr/local/opt/coreutils/libexec/gnubin"
 fish_add_path "/usr/local/opt/grep/libexec/gnubin"
 fish_add_path "/usr/local/sbin"
 
-helm completion fish | source
-thefuck --alias | source
+if type -q helm
+    helm completion fish | source
+end
+
+if type -q thefuck
+    thefuck --alias | source
+end
 {{- end }}
