@@ -1,6 +1,8 @@
 function fish_greeting
 {{- if (contains "termux" .chezmoi.homeDir) }}
     figlet -f slant "    pixel 4a" | lolcat
+{{- else if (eq .chezmoi.os "linux") }}
+    figlet -f slant "      ubuntu" | lolcat
 {{- else }}
     echo '                 '(set_color F00)'___
   ___======____='(set_color FF7F00)'-'(set_color FF0)'-'(set_color FF7F00)'-='(set_color F00)')
