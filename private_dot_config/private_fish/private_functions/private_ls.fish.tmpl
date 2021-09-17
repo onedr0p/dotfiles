@@ -1,0 +1,11 @@
+function ls --wraps=lsd --description 'lsd shorthand'
+    if type -q lsd
+        lsd $argv
+    else
+{{- if (eq .chezmoi.os "linux") }}
+        /usr/bin/ls $argv
+{{- else if (eq .chezmoi.os "darwin") }}
+        /usr/local/bin/ls $argv
+{{- end }}
+    end
+end
