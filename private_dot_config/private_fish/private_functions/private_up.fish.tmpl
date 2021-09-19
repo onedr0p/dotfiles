@@ -8,36 +8,34 @@ function up --description 'updates packages'
         "https://dl.k8s.io/release/"(curl -sL https://dl.k8s.io/release/stable.txt)"/bin/linux/arm64/kubectl"
 
     echo "Updating chezmoi..."
-    set chezmoi_version (curl -sL "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
-    curl -fsSL -o "$PREFIX/tmp/chezmoi.tar.gz" \
-      "https://github.com/twpayne/chezmoi/releases/download/v"$chezmoi_version"/chezmoi_"$chezmoi_version"_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/chezmoi.tar.gz" -C "$PREFIX/tmp"
+    set version (curl -sL "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
+    curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
+      "https://github.com/twpayne/chezmoi/releases/download/v"$version"/chezmoi_"$version"_linux_arm64.tar.gz"
+    tar zxf "$PREFIX/tmp/app.tar.gz" -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/chezmoi" "$PREFIX/bin/chezmoi"
     rm -rf "$PREFIX"/tmp/*
 
-    # https://github.com/vmware-tanzu/velero/releases/download/v1.6.3/velero-v1.6.3-linux-arm64.tar.gz
-
     echo "Updating velero..."
-    set velero_version (curl -sL "https://api.github.com/repos/vmware-tanzu/velero/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
-    curl -fsSL -o "$PREFIX/tmp/velero.tar.gz" \
-      "https://github.com/vmware-tanzu/velero/releases/download/v"$velero_version"/velero-v"$velero_version"-linux-arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/velero.tar.gz" --strip-components=1 -C "$PREFIX/tmp"
+    set version (curl -sL "https://api.github.com/repos/vmware-tanzu/velero/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
+    curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
+      "https://github.com/vmware-tanzu/velero/releases/download/v"$version"/velero-v"$version"-linux-arm64.tar.gz"
+    tar zxf "$PREFIX/tmp/app.tar.gz" --strip-components=1 -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/velero" "$PREFIX/bin/velero"
     rm -rf "$PREFIX"/tmp/*
 
     echo "Updating stern..."
-    set stern_version (curl -sL "https://api.github.com/repos/stern/stern/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
-    curl -fsSL -o "$PREFIX/tmp/stern.tar.gz" \
-      "https://github.com/stern/stern/releases/download/v"$stern_version"/stern_"$stern_version"_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/stern.tar.gz" --strip-components=1 -C "$PREFIX/tmp"
+    set version (curl -sL "https://api.github.com/repos/stern/stern/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
+    curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
+      "https://github.com/stern/stern/releases/download/v"$version"/stern_"$version"_linux_arm64.tar.gz"
+    tar zxf "$PREFIX/tmp/app.tar.gz" --strip-components=1 -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/stern" "$PREFIX/bin/stern"
     rm -rf "$PREFIX"/tmp/*
 
     echo "Updating kustomize..."
-    set kustomize_version (curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kustomize\"))))[0].tag_name" | sed 's/.*\///')
-    curl -fsSL -o "$PREFIX/tmp/kustomize.tar.gz" \
-      "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F"$kustomize_version"/kustomize_"$kustomize_version"_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/kustomize.tar.gz" -C "$PREFIX/tmp"
+    set version (curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kustomize\"))))[0].tag_name" | sed 's/.*\///')
+    curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
+      "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F"$version"/kustomize_"$version"_linux_arm64.tar.gz"
+    tar zxf "$PREFIX/tmp/app.tar.gz" -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/kustomize" "$PREFIX/bin/kustomize"
     rm -rf "$PREFIX"/tmp/*
 
@@ -47,15 +45,15 @@ function up --description 'updates packages'
     chmod +x "$PREFIX/bin/youtube-dl"
 
     echo "Updating kubie..."
-    set kubie_version (curl -sL "https://api.github.com/repos/sbstp/kubie/releases/latest" | jq --raw-output ".tag_name")
+    set version (curl -sL "https://api.github.com/repos/sbstp/kubie/releases/latest" | jq --raw-output ".tag_name")
     curl -fsSL -o "$PREFIX/bin/kubie" \
-      "https://github.com/sbstp/kubie/releases/download/"$kubie_version"/kubie-linux-arm64"
+      "https://github.com/sbstp/kubie/releases/download/"$version"/kubie-linux-arm64"
     chmod +x "$PREFIX/bin/kubie"
 
     echo "Updating calicoctl..."
-    set calicoctl_version (curl -sL "https://api.github.com/repos/projectcalico/calicoctl/releases/latest" | jq --raw-output ".tag_name")
+    set version (curl -sL "https://api.github.com/repos/projectcalico/calicoctl/releases/latest" | jq --raw-output ".tag_name")
     curl -fsSL -o "$PREFIX/bin/calicoctl" \
-      "https://github.com/projectcalico/calicoctl/releases/download/"$calicoctl_version"/calicoctl-linux-arm64"
+      "https://github.com/projectcalico/calicoctl/releases/download/"$version"/calicoctl-linux-arm64"
     chmod +x "$PREFIX/bin/calicoctl"
 
     echo "Updating yq..."
