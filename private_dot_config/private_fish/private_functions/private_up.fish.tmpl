@@ -15,6 +15,14 @@ function up --description 'updates packages'
     && mv "$PREFIX/tmp/chezmoi" "$PREFIX/bin/chezmoi" \
     && rm -rf "$PREFIX"/tmp/*
 
+    echo "Updating velero..."
+    set velero_version (curl -sL "https://api.github.com/repos/vmware-tanzu/velero/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//') \
+    && curl -fsSL -o "$PREFIX/tmp/velero.tar.gz" \
+        "https://github.com/vmware-tanzu/velero/releases/download/v"$velero_version"/velero-v"$velero_version"-linux-arm64.tar.gz" \
+    && tar zxf "$PREFIX/tmp/velero.tar.gz" -C "$PREFIX/tmp" \
+    && mv "$PREFIX/tmp/velero" "$PREFIX/bin/velero" \
+    && rm -rf "$PREFIX"/tmp/*
+
     echo "Updating stern..."
     set stern_version (curl -sL "https://api.github.com/repos/stern/stern/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//') \
     && curl -fsSL -o "$PREFIX/tmp/stern.tar.gz" \
