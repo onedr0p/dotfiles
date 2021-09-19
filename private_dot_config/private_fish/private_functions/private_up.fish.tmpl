@@ -34,7 +34,7 @@ function up --description 'updates packages'
     echo "Updating kustomize..."
     set kustomize_version (curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kustomize\"))))[0].tag_name" | sed 's/.*\///')
     curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
-      "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F"$kustomize_version"/kustomize_"$version"_linux_arm64.tar.gz"
+      "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F"$kustomize_version"/kustomize_"$kustomize_version"_linux_arm64.tar.gz"
     tar zxf "$PREFIX/tmp/app.tar.gz" -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/kustomize" "$PREFIX/bin/kustomize"
     rm -rf "$PREFIX"/tmp/*
