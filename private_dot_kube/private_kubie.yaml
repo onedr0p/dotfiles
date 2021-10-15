@@ -16,7 +16,7 @@ configs:
     - ~/.kube/configs/*.yaml
     - ~/.kube/kubie/*.yml
     - ~/.kube/kubie/*.yaml
-
+    - ./kubeconfig
   # Exclude these globs.
   # Default: values listed below.
   # Note: kubie's own config file is always excluded.
