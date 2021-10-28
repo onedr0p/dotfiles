@@ -7,7 +7,9 @@ set -gx ANSIBLE_HOST_KEY_CHECKING False
 
 set -gx GPG_TTY (tty)
 
-starship init fish | source
+if type -q starship
+    starship init fish | source
+end
 
 if type -q direnv
     direnv hook fish | source
