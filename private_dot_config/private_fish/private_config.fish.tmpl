@@ -28,28 +28,6 @@ if type -q direnv
     direnv hook fish | source
 end
 
-if type -q flux
-    flux completion fish | source
-end
-
-if type -q velero
-    velero completion fish | source
-end
-
-if type -q chezmoi
-    chezmoi completion fish | source
-end
-
-if type -q kustomize
-    kustomize completion fish | source
-end
-
 if type -q thefuck
     thefuck --alias | source
 end
-
-{{- if (eq .chezmoi.os "darwin") }}
-if type -q helm
-    helm completion fish | source
-end
-{{- end }}
