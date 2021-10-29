@@ -1,8 +1,9 @@
 # all hosts
 Host *
   AddKeysToAgent yes
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_ecdsa_sk
   IdentityFile ~/.ssh/id_ecdsa
+  IdentityFile ~/.ssh/id_ed25519
   IdentityFile ~/.ssh/id_rsa
 {{- if (eq .chezmoi.os "darwin") }}
   IgnoreUnknown UseKeychain
