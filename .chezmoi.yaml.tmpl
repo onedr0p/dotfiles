@@ -1,23 +1,13 @@
-{{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
-{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
-{{- $transient := false -}}{{/* true if this machine is temporary, e.g. a cloud or VM instance */}}
-{{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
-{{- $city := "Albany, NY" -}}{{/* city inputs for weather */}}
+{{- $personal := false -}}{{/* true if this is a personal machine */}}
 
 {{- $personal = promptBool "personal" -}}
-{{- $headless = promptBool "headless" -}}
-{{- $transient = promptBool "transient" -}}
-{{- $kubernetes = promptBool "kubernetes" -}}
-
-{{- if not $city -}}
-{{- $city := promptString "Current city" -}}
-{{- end -}}
 
 format: yaml
 sourceDir: {{ .chezmoi.homeDir }}/Code/repos/onedr0p/dotfiles
 
 data:
-  {{- if (contains "termux" .chezmoi.homeDir) }} 
+  personal: "{{ $personal }}"
+  {{- if (contains "termux" .chezmoi.homeDir) }}
   bash: "/data/data/com.termux/files/usr/bin/bash"
   fish: "/data/data/com.termux/files/usr/bin/fish"
   {{- else }}

@@ -1,14 +1,27 @@
 [user]
   name = Devin Buhl
+  {{- if (eq .personal "true") }}
+  email = devin@buhl.casa
+  signingKey = BE499A77C4D97AAE65129464E2E3D4B1C264D49F
+  {{- else }}
   email = devin.buhl@sectigo.com
   signingKey = F2C56D5A576BE441
-  # email = devin.kray@gmail.com
-  # signingKey = 554154FFF783DE317FCDA0EC77149AC618D714D6
+  {{- end }}
 [gpg]
   program = gpg
-[commit]
-  gpgsign = true
 [format]
   signOff = true
+[core]
+  editor = nano
+[commit]
+  gpgsign = true
+[merge]
+  ff = only
+[status]
+  submoduleSummary = true
+[tag]
+  forceSignAnnotated = true
+[init]
+  defaultBranch = main
 [url "ssh://git@github.com/"]
   pushInsteadOf = https://github.com/

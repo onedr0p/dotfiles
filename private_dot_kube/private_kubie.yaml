@@ -9,13 +9,6 @@ configs:
   # Include these globs.
   # Default: values listed below.
   include:
-    - ~/.kube/config
-    - ~/.kube/*.yml
-    - ~/.kube/*.yaml
-    - ~/.kube/configs/*.yml
-    - ~/.kube/configs/*.yaml
-    - ~/.kube/kubie/*.yml
-    - ~/.kube/kubie/*.yaml
     - ./kubeconfig
   # Exclude these globs.
   # Default: values listed below.
