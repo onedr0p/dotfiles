@@ -1,10 +1,14 @@
 #!{{ .bash }}
 
+# Install Homebrew
 {{- if (eq .chezmoi.os "darwin") }}
-type brew &>/dev/null || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh
+if ! command -v brew &> /dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 brew bundle --file ~/Brewfile
 {{- end }}
 
+# Install fish completions
 if [ -d ~/.config/fish/completions ]; then
     if command -v chezmoi &> /dev/null; then
         chezmoi completion fish --output ~/.config/fish/completions/chezmoi.fish
@@ -27,6 +31,7 @@ if [ -d ~/.config/fish/completions ]; then
     fi
 fi
 
+# Install nano syntax highlighting
 if [ ! -d ~/.nano ]; then
     git clone https://github.com/scopatz/nanorc.git ~/.nano
 fi
