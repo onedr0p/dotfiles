@@ -1,11 +1,24 @@
 set -gx KUBE_EDITOR nano
 set -gx VISUAL nano
 set -gx EDITOR nano
-
+set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx GOPATH {{ .chezmoi.homeDir }}/go
 set -gx ANSIBLE_HOST_KEY_CHECKING False
-
 set -gx GPG_TTY (tty)
+
+fish_add_path "{{ .chezmoi.homeDir }}/.cargo/bin"
+fish_add_path "{{ .chezmoi.homeDir }}/.krew/bin"
+fish_add_path "{{ .chezmoi.homeDir }}/go/bin"
+
+{{- if (eq .chezmoi.os "darwin") }}
+fish_add_path "/usr/local/opt/curl/bin"
+fish_add_path "/usr/local/opt/gettext/bin"
+fish_add_path "/usr/local/opt/libiconv/bin"
+fish_add_path "/usr/local/opt/findutils/libexec/gnubin"
+fish_add_path "/usr/local/opt/coreutils/libexec/gnubin"
+fish_add_path "/usr/local/opt/grep/libexec/gnubin"
+fish_add_path "/usr/local/sbin"
+{{- end }}
 
 if type -q starship
     starship init fish | source
@@ -19,26 +32,24 @@ if type -q flux
     flux completion fish | source
 end
 
-fish_add_path "{{ .chezmoi.homeDir }}/.cargo/bin"
-fish_add_path "{{ .chezmoi.homeDir }}/.krew/bin"
-fish_add_path "{{ .chezmoi.homeDir }}/go/bin"
+if type -q velero
+    velero completion fish | source
+end
 
-{{- if (eq .chezmoi.os "darwin") }}
-set -gx HOMEBREW_NO_ANALYTICS 1
+if type -q chezmoi
+    chezmoi completion fish | source
+end
 
-fish_add_path "/usr/local/opt/curl/bin"
-fish_add_path "/usr/local/opt/gettext/bin"
-fish_add_path "/usr/local/opt/libiconv/bin"
-fish_add_path "/usr/local/opt/findutils/libexec/gnubin"
-fish_add_path "/usr/local/opt/coreutils/libexec/gnubin"
-fish_add_path "/usr/local/opt/grep/libexec/gnubin"
-fish_add_path "/usr/local/sbin"
-
-if type -q helm
-    helm completion fish | source
+if type -q kustomize
+    kustomize completion fish | source
 end
 
 if type -q thefuck
     thefuck --alias | source
+end
+
+{{- if (eq .chezmoi.os "darwin") }}
+if type -q helm
+    helm completion fish | source
 end
 {{- end }}
