@@ -101,7 +101,11 @@ cask "slack"
 cask "spotify"
 cask "sublime-text"
 cask "visual-studio-code"
+mas "Affinity Photo", id: 824183456
 mas "Amphetamine", id: 937984704
+mas "Cyberduck", id: 409222199
+mas "DaisyDisk", id: 411643860
+mas "Microsoft Remote Desktop", id: 1295203466
 mas "PDF Expert", id: 1055273043
 mas "Presentify", id: 1507246666
 mas "WireGuard", id: 1451685025
