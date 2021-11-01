@@ -1,17 +1,17 @@
-# Git SSH Creds
+# Gitlab SSH Creds
 host gitlab.com
-	User git
-	Hostname gitlab.com
+  User git
+  Hostname gitlab.com
 host gitlab
-	User git
-	Hostname gitlab.com
+  User git
+  Hostname gitlab.com
 # GitHub SSH Creds
 host github.com
-	User git
-	Hostname github.com
+  User git
+  Hostname github.com
 host github
-	User git
-	Hostname github.com
+  User git
+  Hostname github.com
 
 Host *
   AddKeysToAgent yes
@@ -25,9 +25,9 @@ Host *
 {{- end }}
 {{- if (eq .personal "false") }}
   ControlMaster auto
-	ControlPath ~/.ssh/control-%h-%p-%r
-	ControlPersist 600
-	PKCS11Provider /usr/lib64/libykcs11.so
+  ControlPath ~/.ssh/control-%h-%p-%r
+  ControlPersist 600
+  PKCS11Provider /usr/lib64/libykcs11.so
 {{- end }}
 
 Host 192.168.*.*
