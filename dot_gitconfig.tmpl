@@ -13,15 +13,23 @@
   signOff = true
 [core]
   editor = nano
+  excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
 [commit]
   gpgsign = true
 [merge]
   ff = only
+[pull]
+  rebase = true
 [status]
   submoduleSummary = false
 [tag]
   forceSignAnnotated = true
 [init]
   defaultBranch = main
+[filter "lfs"]
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
 [url "ssh://git@github.com/"]
   pushInsteadOf = https://github.com/
