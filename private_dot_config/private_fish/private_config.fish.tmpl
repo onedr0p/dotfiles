@@ -11,10 +11,12 @@ fish_add_path "{{ .chezmoi.homeDir }}/.cargo/bin"
 fish_add_path "{{ .chezmoi.homeDir }}/.krew/bin"
 fish_add_path "{{ .chezmoi.homeDir }}/go/bin"
 
-{{- if (or (eq .chezmoi.os "darwin") (eq .chezmoi.osRelease.id "fedora")) }}
+{{- if hasKey .chezmoi.osRelease "id" }}
+{{- if (eq .chezmoi.osRelease.id "fedora") }}
 if status --is-interactive
     eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
+{{- end }}
 {{- end }}
 
 {{- if (eq .chezmoi.os "darwin") }}
