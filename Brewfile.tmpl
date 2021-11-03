@@ -1,3 +1,34 @@
+{{- if eq .chezmoi.osRelease.id "fedora" }}
+tap "dty1er/tap"
+tap "fluxcd/tap"
+tap "go-task/tap"
+tap "homebrew/bundle"
+tap "homebrew/core"
+tap "norwoodj/tap"
+brew "calicoctl"
+brew "chezmoi"
+brew "cilium-cli"
+brew "clusterctl"
+brew "croc"
+brew "dog"
+brew "gh"
+brew "gojq"
+brew "helm"
+brew "kubie"
+brew "kustomize
+brew "shfmt"
+brew "sops"
+brew "starship"
+brew "stern"
+brew "velero"
+brew "viddy"
+brew "yq"
+brew "dty1er/tap/kubecolor"
+brew "fluxcd/tap/flux"
+brew "go-task/tap/go-task"
+brew "norwoodj/tap/helm-docs"
+{{- end }}
+{{- if eq .chezmoi.os "darwin" }}
 tap "dty1er/tap"
 tap "fluxcd/tap"
 tap "go-task/tap"
@@ -112,3 +143,4 @@ mas "Presentify", id: 1507246666
 mas "WireGuard", id: 1451685025
 mas "Xcode", id: 497799835
 mas "Xnip", id: 1221250572
+{{- end }}

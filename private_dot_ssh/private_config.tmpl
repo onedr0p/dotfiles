@@ -1,11 +1,11 @@
 Host *
-  AddKeysToAgent yes
 {{- if (eq .personal "false") }}
   ControlMaster auto
   ControlPath ~/.ssh/control-%h-%p-%r
   ControlPersist 600
   PKCS11Provider /usr/lib64/libykcs11.so
 {{- end }}
+  AddKeysToAgent yes
   IdentityFile ~/.ssh/id_ecdsa_sk
   IdentityFile ~/.ssh/id_ecdsa
   IdentityFile ~/.ssh/id_ed25519

@@ -1,7 +1,7 @@
 #!{{ .bash }}
 
 # Install Homebrew
-{{- if (eq .chezmoi.os "darwin") }}
+{{- if (or (eq .chezmoi.os "darwin") (eq .chezmoi.osRelease.id "fedora")) }}
 if ! command -v brew &> /dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
