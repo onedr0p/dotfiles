@@ -1,6 +1,4 @@
 function up --description 'updates packages'
-    echo "Updating fisher..."
-    fisher update > /dev/null 2>&1
 {{- if (contains "termux" .chezmoi.homeDir) }}
     echo "Updating system..."
     pkg up -y
@@ -80,11 +78,9 @@ function up --description 'updates packages'
     echo "Updating taskfile..."
     sh -c (curl -fsSL https://taskfile.dev/install.sh) -- -d -b "$PREFIX/bin" >/dev/null 2>&1
 {{- end }}
-{{- if (or (eq .chezmoi.os "darwin") (eq .chezmoi.osRelease.id "fedora")) }}
+{{- if (eq .chezmoi.os "darwin") }}
     brew upgrade
 {{- end }}
-{{- if(eq .chezmoi.osRelease.id "fedora") }}
-    echo "Updating system packages..."
-    sudo dnf update
-{{- end }}
+    echo "Updating fisher..."
+    fisher update > /dev/null 2>&1
 end
