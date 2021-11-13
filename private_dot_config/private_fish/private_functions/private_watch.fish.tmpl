@@ -3,15 +3,7 @@ function watch --description 'watch with fish alias support'
         if type -q viddy
             viddy -d -n 2 --shell fish $argv[1..-1]
         else
-{{- if (contains "termux" .chezmoi.homeDir) }}
-            /data/data/com.termux/files/usr/bin/watch -x fish -c "$argv"
-{{- else }}
-{{- if (eq .chezmoi.os "linux") }}
-            /usr/bin/watch -x fish -c "$argv"
-{{- else if (eq .chezmoi.os "darwin") }}
-            /usr/local/bin/watch -x fish -c "$argv"
-{{- end }}
-{{- end }}
+            command watch -x fish -c "$argv"
         end
     end
 end
