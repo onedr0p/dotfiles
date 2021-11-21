@@ -1,5 +1,5 @@
 function f --wraps=fuck --description 'fuck shorthand'
-    if count $argv > /dev/null
+    if test -n $argv
         fuck $argv
     else
         fuck
