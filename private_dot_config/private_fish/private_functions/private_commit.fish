@@ -1,5 +1,5 @@
 function commit --description 'git scopeal commits'
-    if test -n $argv
+    if count $argv > /dev/null
         set scope $argv[1]
         set description (string join " " $description $argv[2..-1])
         git commit -s -m $scope": "$description
