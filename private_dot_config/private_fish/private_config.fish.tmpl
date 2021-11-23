@@ -29,14 +29,18 @@ fish_add_path "/usr/local/opt/grep/libexec/gnubin"
 fish_add_path "/usr/local/sbin"
 {{- end }}
 
-if type -q starship
-    starship init fish | source
-end
-
 if type -q direnv
     direnv hook fish | source
 end
 
 if type -q thefuck
     thefuck --alias | source
+end
+
+if type -q starship
+    starship init fish | source
+end
+
+if type -q zoxide
+    zoxide init fish | source
 end
