@@ -6,6 +6,7 @@ set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx GOPATH {{ .chezmoi.homeDir }}/go
 set -gx ANSIBLE_HOST_KEY_CHECKING False
 set -gx GPG_TTY (tty)
+set -gx SOPS_AGE_KEY_FILE {{ .chezmoi.homeDir }}/.config/sops/age/keys.txt
 
 fish_add_path "{{ .chezmoi.homeDir }}/.cargo/bin"
 fish_add_path "{{ .chezmoi.homeDir }}/.krew/bin"
