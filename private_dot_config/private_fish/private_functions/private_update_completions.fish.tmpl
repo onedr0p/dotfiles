@@ -1,17 +1,20 @@
 function update_completions --description 'Update shell completions'
     if type -q chezmoi
-        chezmoi completion fish --output /usr/local/share/fish/vendor_completions.d/chezmoi.fish
+        chezmoi completion fish --output ~/.config/fish/completions/chezmoi.fish
     end
     if type -q flux
-        flux completion fish > /usr/local/share/fish/vendor_completions.d/flux.fish
+        flux completion fish > ~/.config/fish/completions/flux.fish
     end
     if type -q helm
-        helm completion fish > /usr/local/share/fish/vendor_completions.d/helm.fish
+        helm completion fish > ~/.config/fish/completions/helm.fish
     end
     if type -q kustomize
-        kustomize completion fish > /usr/local/share/fish/vendor_completions.d/kustomize.fish
+        kustomize completion fish > ~/.config/fish/completions/kustomize.fish
     end
     if type -q velero
-        velero completion fish > /usr/local/share/fish/vendor_completions.d/velero.fish
+        velero completion fish > ~/.config/fish/completions/velero.fish
+    end
+    if type -q kubectl
+        kubectl completion fish > ~/.config/fish/completions/kubectl.fish
     end
 end
