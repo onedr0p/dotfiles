@@ -1,20 +1,23 @@
 #!{{ .bash }}
 
 # Install fish completions
-if [ -d /usr/local/share/fish/vendor_completions.d ]; then
+if [ -d ~/.config/fish/completions ]; then
     if command -v chezmoi &> /dev/null; then
-        chezmoi completion fish --output /usr/local/share/fish/vendor_completions.d/chezmoi.fish
+        chezmoi completion fish --output ~/.config/fish/completions/chezmoi.fish
     fi
     if command -v flux &> /dev/null; then
-        flux completion fish > /usr/local/share/fish/vendor_completions.d/flux.fish
+        flux completion fish > ~/.config/fish/completions/lux.fish
     fi
     if command -v helm &> /dev/null; then
-        helm completion fish > /usr/local/share/fish/vendor_completions.d/helm.fish
+        helm completion fish > ~/.config/fish/completions/helm.fish
     fi
     if command -v kustomize &> /dev/null; then
-        kustomize completion fish > /usr/local/share/fish/vendor_completions.d/kustomize.fish
+        kustomize completion fish > ~/.config/fish/completions/kustomize.fish
     fi
     if command -v velero &> /dev/null; then
-        velero completion fish > /usr/local/share/fish/vendor_completions.d/velero.fish
+        velero completion fish > ~/.config/fish/completions/velero.fish
+    fi
+    if command -v kubectl &> /dev/null; then
+        kubectl completion fish > ~/.config/fish/completions/kubectl.fish
     fi
 fi
