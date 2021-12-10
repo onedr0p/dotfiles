@@ -1,8 +1,13 @@
 [user]
   name = Devin Buhl
   {{- if (eq .personal "true") }}
+  {{- if (contains "termux" .chezmoi.homeDir) }}
+  email = devin.kray@gmail.com
+  signingKey = 4B675CE4CC642516AA9AE1DAA88A97FA2C009E2D
+  {{- else }}
   email = devin@buhl.casa
   signingKey = 9AFF9F70C7B840D6662F656397F4936F1BCD7E35
+  {{- end }}
   {{- else }}
   email = devin.buhl@sectigo.com
   signingKey = 00624EE876AC1D038F14D18A196A94993054011B
