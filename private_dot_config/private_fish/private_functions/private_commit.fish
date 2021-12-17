@@ -6,7 +6,7 @@ function commit --description 'git conventional commits'
     if count $argv > /dev/null
         set commit_type $argv[1]
         set breaking_change_char ""
-        if string match '*!' $commit_type
+        if string match '*!' $commit_type > /dev/null
             set breaking_change_char "!"
             set commit_type (string trim --chars="!" $commit_type)
         end
