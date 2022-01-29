@@ -7,10 +7,3 @@ sourceDir: {{ .chezmoi.homeDir }}/Code/repos/onedr0p/dotfiles
 
 data:
   personal: "{{ $personal }}"
-  {{- if (contains "termux" .chezmoi.homeDir) }}
-  bash: "/data/data/com.termux/files/usr/bin/bash"
-  fish: "/data/data/com.termux/files/usr/bin/fish"
-  {{- else }}
-  bash: "/usr/bin/env bash"
-  fish: "/usr/bin/env fish"
-  {{- end }}
