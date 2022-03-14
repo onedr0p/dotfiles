@@ -15,6 +15,7 @@ set -gx AQUA_ROOT_DIR {{ .chezmoi.homeDir }}/.local/share/aqua
 fish_add_path $AQUA_ROOT_DIR/bin
 {{- end }}
 
+fish_add_path "{{ .chezmoi.homeDir }}/.local/bin"
 fish_add_path "{{ .chezmoi.homeDir }}/.cargo/bin"
 fish_add_path "{{ .chezmoi.homeDir }}/.krew/bin"
 fish_add_path "{{ .chezmoi.homeDir }}/go/bin"
@@ -27,6 +28,12 @@ fish_add_path "/usr/local/opt/findutils/libexec/gnubin"
 fish_add_path "/usr/local/opt/coreutils/libexec/gnubin"
 fish_add_path "/usr/local/opt/grep/libexec/gnubin"
 fish_add_path "/usr/local/sbin"
+{{- end }}
+
+{{- if or (eq .chezmoi.osRelease.id "fedora" .chezmoi.osRelease.id "ubuntu") }}
+if status --is-interactive
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+end
 {{- end }}
 
 if type -q direnv

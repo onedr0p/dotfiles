@@ -14,9 +14,6 @@ if [ -d ~/.config/fish/completions ]; then
     if command -v kustomize &> /dev/null; then
         kustomize completion fish > ~/.config/fish/completions/kustomize.fish
     fi
-    if command -v velero &> /dev/null; then
-        velero completion fish > ~/.config/fish/completions/velero.fish
-    fi
     if command -v kubectl &> /dev/null; then
         kubectl completion fish > ~/.config/fish/completions/kubectl.fish
     fi

@@ -6,7 +6,7 @@ function up --description 'updates packages'
     echo "Updating calicoctl..."
     set calicoctl_version (curl -sL "https://api.github.com/repos/projectcalico/calicoctl/releases/latest" | jq --raw-output ".tag_name")
     curl -fsSL -o "$PREFIX/bin/calicoctl" \
-      "https://github.com/projectcalico/calicoctl/releases/download/"$calicoctl_version"/calicoctl-linux-arm64"
+        "https://github.com/projectcalico/calicoctl/releases/download/"$calicoctl_version"/calicoctl-linux-arm64"
     chmod +x "$PREFIX/bin/calicoctl"
 
 {{- end }}
