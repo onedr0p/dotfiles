@@ -30,7 +30,7 @@ fish_add_path "/usr/local/opt/grep/libexec/gnubin"
 fish_add_path "/usr/local/sbin"
 {{- end }}
 
-{{- if or (eq .chezmoi.osRelease.id "fedora" .chezmoi.osRelease.id "ubuntu") }}
+{{- if or (eq .osid "linux-fedora" .osid "linux-ubuntu") }}
 if status --is-interactive
     eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
