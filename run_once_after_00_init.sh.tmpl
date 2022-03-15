@@ -7,7 +7,7 @@ fi
 brew bundle --file ~/Brewfile
 {{- end }}
 
-{{- if (contains "termux" .chezmoi.homeDir) }}
+{{- if eq .osid "android" }}
 curl -sSfL \
     https://raw.githubusercontent.com/aquaproj/aqua-installer/v0.7.0/aqua-installer | \
         bash -s -- -v v0.10.2 -i $PREFIX/bin/aqua

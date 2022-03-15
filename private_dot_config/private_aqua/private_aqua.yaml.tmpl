@@ -1,4 +1,4 @@
-{{- if (contains "termux" .chezmoi.homeDir) }}
+{{- if eq .osid "android" }}
 ---
 # aqua - Declarative CLI Version Manager
 # https://aquaproj.github.io/

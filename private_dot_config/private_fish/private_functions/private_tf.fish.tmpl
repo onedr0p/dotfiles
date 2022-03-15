@@ -1,5 +1,5 @@
 function tf --wraps=terraform --description 'terraform shorthand'
-   {{- if (contains "termux" .chezmoi.homeDir) }}
+   {{- if eq .osid "android" }}
    proot -b $PREFIX/etc/resolv.conf:/etc/resolv.conf terraform $argv
    {{- else }}
    terraform $argv

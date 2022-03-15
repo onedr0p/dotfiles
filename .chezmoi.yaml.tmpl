@@ -2,8 +2,15 @@
 
 {{- $personal = promptBool "personal" -}}
 
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
 format: yaml
 sourceDir: {{ .chezmoi.homeDir }}/Code/repos/onedr0p/dotfiles
 
 data:
-  personal: "{{ $personal }}"
+  name: "Devin Buhl"
+  personal: {{ $personal | quote }}
+  osid: {{ $osid | quote }}
