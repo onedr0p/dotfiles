@@ -1,5 +1,5 @@
 function aq --wraps=aqua --description 'aqua shorthand'
-   {{- if eq .osid "android" }}
+   {{- if eq .osid "linux-android" }}
    proot -b $PREFIX/etc/resolv.conf:/etc/resolv.conf aqua $argv
    {{- else }}
    aqua $argv

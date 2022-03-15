@@ -6,7 +6,7 @@
 {{- if hasKey .chezmoi.osRelease "id" -}}
 {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- else -}}
-{{-   $osid = printf "android" -}}
+{{-   $osid = printf "linux-android" -}}
 {{- end -}}
 
 format: yaml

@@ -1,5 +1,5 @@
 function tf --wraps=terraform --description 'terraform shorthand'
-   {{- if eq .osid "android" }}
+   {{- if eq .osid "linux-android" }}
    proot -b $PREFIX/etc/resolv.conf:/etc/resolv.conf terraform $argv
    {{- else }}
    terraform $argv
