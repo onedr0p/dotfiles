@@ -1,4 +1,4 @@
-{{- if eq .osid "linux-android" }}
+{{- if (contains "termux" .chezmoi.homeDir) }}
 ---
 # aqua - Declarative CLI Version Manager
 # https://aquaproj.github.io/
@@ -7,7 +7,7 @@ registries:
     ref: v1.1.3 # renovate: depName=aquaproj/aqua-registry
 
 packages:
-  # - name: mozilla/sops@v3.7.1
+  # - name: mozilla/sops@v3.7.2
   - name: hidetatz/kubecolor@v0.0.20
   # - name: sachaos/viddy@v0.3.4
   - name: sbstp/kubie@v0.16.0

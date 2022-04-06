@@ -1,7 +1,7 @@
 [user]
   name = Devin Buhl
   {{- if (eq .personal "true") }}
-  {{- if eq .osid "linux-android" }}
+  {{- if (contains "termux" .chezmoi.homeDir) }}
   email = devin.kray@gmail.com
   signingKey = 4B675CE4CC642516AA9AE1DAA88A97FA2C009E2D
   {{- else }}
@@ -38,3 +38,7 @@
   clean = git-lfs clean -- %f
 [url "ssh://git@github.com/"]
   pushInsteadOf = https://github.com/
+{{- if lookPath "difft" }}
+[diff]
+  external = difft
+{{- end }}

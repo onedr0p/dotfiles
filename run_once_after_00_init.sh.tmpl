@@ -1,19 +1,5 @@
 #!{{ lookPath "bash" }}
 
-{{- if (eq .chezmoi.os "darwin") }}
-if ! command -v brew &> /dev/null; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-brew bundle --file ~/Brewfile
-{{- end }}
-
-{{- if eq .osid "linux-android" }}
-curl -sSfL \
-    https://raw.githubusercontent.com/aquaproj/aqua-installer/v0.7.0/aqua-installer | \
-        bash -s -- -v v0.10.2 -i $PREFIX/bin/aqua
-aqua install -a -l
-{{- end }}
-
 # Install nano syntax highlighting
 if [ ! -d ~/.nano ]; then
     git clone https://github.com/scopatz/nanorc.git ~/.nano

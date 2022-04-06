@@ -2,17 +2,14 @@
 
 {{- $personal = promptBool "personal" -}}
 
-{{- $osid := .chezmoi.os -}}
-{{- if hasKey .chezmoi.osRelease "id" -}}
-{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
-{{- else -}}
-{{-   $osid = printf "linux-android" -}}
-{{- end -}}
-
 format: yaml
 sourceDir: {{ .chezmoi.homeDir }}/Code/repos/onedr0p/dotfiles
 
 data:
   name: "Devin Buhl"
   personal: {{ $personal | quote }}
-  osid: {{ $osid | quote }}
+
+{{- if lookPath "difft" }}
+diff:
+  command: difft
+{{- end }}
