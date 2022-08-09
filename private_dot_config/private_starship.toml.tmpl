@@ -1,11 +1,13 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 add_newline = true
 
 format = """\
   $username\
   $directory\
   $kubernetes\
-  $aws\
   $git_branch\
+  $git_commit\
   $git_state\
   $git_status\
   $character\
@@ -18,34 +20,34 @@ error_symbol = "\n[✖](bold red)"
 [cmd_duration]
 min_time = 500
 
-[directory]
-truncation_length = 5
-truncate_to_repo = true
-
-# Disable the package module, hiding it from the prompt completely
-[package]
-disabled = true
-
 [username]
+disabled = false
 show_always = false
 
-[kubernetes]
-symbol = "ﴱ "
-format = 'on [ﴱ $context \($namespace\)](bold bright-green) '
+[directory]
 disabled = false
-[kubernetes.context_aliases]
-"default" = "home-cluster"
- 
-[aws]
-format = "on [$symbol$profile( $region)]($style) "
-style = "bold Yellow"
-symbol = "☁️ "
+truncation_length = 8
+truncate_to_repo = true
+read_only = " "
+home_symbol = " "
 
-[aws.region_aliases]
-us-east-1 = "N. Virginia"
-us-east-2 = "Ohio"
-us-west-1 = "N. California"
-us-west-2 = "Oregon"
+[kubernetes]
+disabled = false
+symbol = "ﴱ "
+format = 'on [ﴱ $context](bold bright-green) '
+
+[python]
+disabled = false
+format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+symbol = " "
 
 [git_branch]
+disabled = false
 symbol = " "
+
+[git_commit]
+disabled = false
+commit_hash_length = 8
+only_detached = false
+style = "grey"
+tag_symbol = " "
