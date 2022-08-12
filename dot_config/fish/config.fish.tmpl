@@ -6,7 +6,9 @@ set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx HOMEBREW_NO_INSTALL_CLEANUP 1
 set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx GOPATH {{ .chezmoi.homeDir }}/go
+set -gx ANSIBLE_FORCE_COLOR true
 set -gx ANSIBLE_HOST_KEY_CHECKING False
+set -gx PY_COLORS true
 set -gx GPG_TTY (tty)
 set -gx SOPS_AGE_KEY_FILE {{ .chezmoi.homeDir }}/.config/sops/age/keys.txt
 set -gx ANSIBLE_VAULT_PASSWORD_FILE /home/devin/.ansible/vault.txt
