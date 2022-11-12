@@ -1,19 +1,12 @@
 function up --description 'updates packages'
 {{- if (contains "termux" .chezmoi.homeDir) }}
     echo "Updating system..."
-    pkg up -y
+    pkg update
+    pkg upgrade -y
 
     echo "Updating kubectl..."
     curl -fsSL -o "$PREFIX/bin/kubectl" \
         "https://dl.k8s.io/release/"(curl -sL https://dl.k8s.io/release/stable.txt)"/bin/linux/arm64/kubectl"
-
-    echo "Updating chezmoi..."
-    set chezmoi_version (curl -sL "https://api.github.com/repos/twpayne/chezmoi/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
-    curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
-      "https://github.com/twpayne/chezmoi/releases/download/v"$chezmoi_version"/chezmoi_"$chezmoi_version"_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/app.tar.gz" -C "$PREFIX/tmp"
-    mv "$PREFIX/tmp/chezmoi" "$PREFIX/bin/chezmoi"
-    rm -rf "$PREFIX"/tmp/*
 
     echo "Updating viddy..."
     set viddy_version (curl -sL "https://api.github.com/repos/sachaos/viddy/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
@@ -52,11 +45,6 @@ function up --description 'updates packages'
     curl -fsSL -o "$PREFIX/bin/calicoctl" \
       "https://github.com/projectcalico/calicoctl/releases/download/"$calicoctl_version"/calicoctl-linux-arm64"
     chmod +x "$PREFIX/bin/calicoctl"
-
-    echo "Updating yq..."
-    curl -fsSL -o "$PREFIX/bin/yq" \
-        "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_arm64"
-    chmod +x "$PREFIX/bin/yq"
 
     echo "Updating flux..."
     curl -fsSL "https://toolkit.fluxcd.io/install.sh" | bash -s "$PREFIX/bin" >/dev/null 2>&1
