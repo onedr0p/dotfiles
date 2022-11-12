@@ -8,22 +8,6 @@ function up --description 'updates packages'
     curl -fsSL -o "$PREFIX/bin/kubectl" \
         "https://dl.k8s.io/release/"(curl -sL https://dl.k8s.io/release/stable.txt)"/bin/linux/arm64/kubectl"
 
-    echo "Updating viddy..."
-    set viddy_version (curl -sL "https://api.github.com/repos/sachaos/viddy/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
-    curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
-      "https://github.com/sachaos/viddy/releases/download/v"$viddy_version"/viddy_"$viddy_version"_Linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/app.tar.gz" -C "$PREFIX/tmp"
-    mv "$PREFIX/tmp/viddy" "$PREFIX/bin/viddy"
-    rm -rf "$PREFIX"/tmp/*
-
-    echo "Updating terraform..."
-    set terraform_version (curl -sL "https://api.github.com/repos/hashicorp/terraform/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
-    curl -fsSL -o "$PREFIX/tmp/app.zip" \
-      "https://releases.hashicorp.com/terraform/"$terraform_version"/terraform_"$terraform_version"_linux_arm64.zip"
-    unzip -q "$PREFIX/tmp/app.zip" -d "$PREFIX/tmp"
-    mv "$PREFIX/tmp/terraform" "$PREFIX/bin/terraform"
-    rm -rf "$PREFIX"/tmp/*
-
     echo "Updating stern..."
     set stern_version (curl -sL "https://api.github.com/repos/stern/stern/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
     curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
@@ -56,6 +40,4 @@ function up --description 'updates packages'
     brew update
     brew upgrade
 {{- end }}
-    echo "Updating fisher..."
-    fisher update > /dev/null 2>&1
 end
