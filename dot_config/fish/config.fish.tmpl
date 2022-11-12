@@ -19,13 +19,6 @@ set -gx SOPS_AGE_KEY_FILE {{ .chezmoi.homeDir }}/.config/sops/age/keys.txt
 set -gx ANSIBLE_VAULT_PASSWORD_FILE {{ .chezmoi.homeDir }}/.ansible/vault.txt
 {{- end }}
 
-{{- if (contains "termux" .chezmoi.homeDir) }}
-set -gx AQUA_CONFIG {{ .chezmoi.homeDir }}/.config/aqua/aqua.yaml
-set -gx AQUA_GLOBAL_CONFIG {{ .chezmoi.homeDir }}/.config/aqua/aqua.yaml
-set -gx AQUA_ROOT_DIR {{ .chezmoi.homeDir }}/.local/share/aqua
-fish_add_path $AQUA_ROOT_DIR/bin
-{{- end }}
-
 fish_add_path "{{ .chezmoi.homeDir }}/.local/bin"
 fish_add_path "{{ .chezmoi.homeDir }}/.cargo/bin"
 fish_add_path "{{ .chezmoi.homeDir }}/.krew/bin"
