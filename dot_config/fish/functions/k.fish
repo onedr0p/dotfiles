@@ -1,3 +1,7 @@
 function k --wraps=kubectl --description 'kubectl shorthand'
-    kubecolor $argv
+    if type -q kubecolor
+        kubecolor $argv
+    else
+        kubectl $argv
+    end
 end
