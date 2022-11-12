@@ -10,16 +10,16 @@ function up --description 'updates packages'
 
     echo "Updating stern..."
     set stern_version (curl -sL "https://api.github.com/repos/stern/stern/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
-    curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
+    curl -fsSL -o "$PREFIX/tmp/stern.tar.gz" \
       "https://github.com/stern/stern/releases/download/v"$stern_version"/stern_"$stern_version"_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/app.tar.gz" --strip-components=1 -C "$PREFIX/tmp"
+    tar zxf "$PREFIX/tmp/stern.tar.gz" --strip-components=1 -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/stern" "$PREFIX/bin/stern"
 
     echo "Updating kustomize..."
     set kustomize_version (curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kustomize\"))))[0].tag_name" | sed 's/.*\///')
-    curl -fsSL -o "$PREFIX/tmp/app.tar.gz" \
+    curl -fsSL -o "$PREFIX/tmp/kustomize.tar.gz" \
       "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F"$kustomize_version"/kustomize_"$kustomize_version"_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/app.tar.gz" -C "$PREFIX/tmp"
+    tar zxf "$PREFIX/tmp/kustomize.tar.gz" -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/kustomize" "$PREFIX/bin/kustomize"
 
     echo "Updating calicoctl..."
