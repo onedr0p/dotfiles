@@ -81,7 +81,3 @@
 	ss = commit --message snapshot --no-gpg-sign
 	su = submodule update
 	wd = diff --patience --word-diff
-{{- if lookPath "difft" }}
-[diff]
-  external = difft
-{{- end }}
