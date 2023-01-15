@@ -40,7 +40,7 @@ function up --description 'updates packages'
       "https://github.com/go-task/task/releases/download/v"$taskfile_version"/task_linux_arm64.tar.gz"
     tar zxf "$PREFIX/tmp/taskfile.tar.gz" -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/task" "$PREFIX/bin/task"
-    chmod -x "$PREFIX/bin/task"
+    chmod +x "$PREFIX/bin/task"
 {{- end }}
 {{- if (eq .chezmoi.os "darwin") }}
     brew update
