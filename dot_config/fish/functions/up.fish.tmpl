@@ -41,4 +41,6 @@ function up --description 'updates packages'
     brew update
     brew upgrade
 {{- end }}
+    echo "Updating fisher..."
+    fisher update > /dev/null 2>&1
 end
