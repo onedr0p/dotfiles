@@ -35,7 +35,12 @@ function up --description 'updates packages'
     curl -fsSL "https://toolkit.fluxcd.io/install.sh" | bash -s "$PREFIX/bin" >/dev/null 2>&1
 
     echo "Updating taskfile..."
-    sh -c (curl -fsSL https://taskfile.dev/install.sh) -- -d -b "$PREFIX/bin"
+    set taskfile_version (curl -sL "https://api.github.com/repos/go-task/task/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
+    curl -fsSL -o "$PREFIX/tmp/taskfile.tar.gz" \
+      "https://github.com/go-task/task/releases/download/v"$taskfile_version"/task_linux_arm64.tar.gz"
+    tar zxf "$PREFIX/tmp/taskfile.tar.gz" -C "$PREFIX/tmp"
+    mv "$PREFIX/tmp/taskfile" "$PREFIX/bin/taskfile"
+    chmod -x "$PREFIX/bin/taskfile"
 {{- end }}
 {{- if (eq .chezmoi.os "darwin") }}
     brew update
