@@ -13,7 +13,7 @@ function up --description 'updates packages'
     set stern_version (curl -sL "https://api.github.com/repos/stern/stern/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
     curl -fsSL -o "$PREFIX/tmp/stern.tar.gz" \
       "https://github.com/stern/stern/releases/download/v"$stern_version"/stern_"$stern_version"_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/stern.tar.gz" --strip-components=1 -C "$PREFIX/tmp"
+    tar zxf "$PREFIX/tmp/stern.tar.gz" -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/stern" "$PREFIX/bin/stern"
     chmod -x "$PREFIX/bin/stern"
 
