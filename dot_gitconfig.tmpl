@@ -1,5 +1,17 @@
 [user]
   name = Devin Buhl
+  {{- if (eq .personal "true") }}
+  {{- if (contains "termux" .chezmoi.homeDir) }}
+  email = devin.kray@gmail.com
+  signingKey = /home/devin/.ssh/update-me
+  {{- else }}
+  email = devin@buhl.casa
+  signingKey = /Users/devin/.ssh/id_ed25519.pub
+  {{- end }}
+  {{- else }}
+  email = devin.buhl@sectigo.com
+  signingKey = /home/devin/.ssh/update-me
+  {{- end }}
 [gpg]
   format = ssh
 [format]
