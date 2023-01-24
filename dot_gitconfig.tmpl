@@ -1,20 +1,14 @@
 [user]
   name = Devin Buhl
-  {{- if (eq .personal "false") }}
-  email = devin.buhl@sectigo.com
-  signingKey = 00624EE876AC1D038F14D18A196A94993054011B
-  {{- end }}
 [gpg]
-  program = gpg
+  format = ssh
 [format]
   signOff = true
 [core]
   editor = nano
   excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
 [commit]
-  {{- if (eq .personal "false") }}
   gpgsign = true
-  {{- end }}
 [merge]
   ff = only
 [pull]
