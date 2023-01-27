@@ -3,7 +3,7 @@
   {{- if (eq .personal "true") }}
   {{- if (contains "termux" .chezmoi.homeDir) }}
   email = devin.kray@gmail.com
-  signingKey = /home/devin/.ssh/update-me
+  signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB75L4ZEN17wcsK765dWzqlf0lY+sbK25QCIvebB/+1x
   {{- else }}
   email = devin@buhl.casa
   signingKey = /Users/devin/.ssh/id_ed25519.pub
