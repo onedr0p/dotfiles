@@ -7,8 +7,3 @@ format: yaml
 data:
   name: "Devin Buhl"
   personal: {{ $personal | quote }}
-
-{{- if lookPath "difft" }}
-diff:
-  command: difft
-{{- end }}
