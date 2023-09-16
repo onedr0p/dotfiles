@@ -4,11 +4,6 @@ function up --description 'updates packages'
     pkg update
     pkg upgrade -y
 
-    echo "Updating kubectl..."
-    curl -fsSL -o "$PREFIX/bin/kubectl" \
-        "https://dl.k8s.io/release/"(curl -sL https://dl.k8s.io/release/stable.txt)"/bin/linux/arm64/kubectl"
-    chmod +x "$PREFIX/bin/kubectl"
-
     echo "Updating stern..."
     set stern_version (curl -sL "https://api.github.com/repos/stern/stern/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
     curl -fsSL -o "$PREFIX/tmp/stern.tar.gz" \
@@ -24,12 +19,6 @@ function up --description 'updates packages'
     tar zxf "$PREFIX/tmp/kustomize.tar.gz" -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/kustomize" "$PREFIX/bin/kustomize"
     chmod +x "$PREFIX/bin/kustomize"
-
-    echo "Updating calicoctl..."
-    set calicoctl_version (curl -sL "https://api.github.com/repos/projectcalico/calicoctl/releases/latest" | jq --raw-output ".tag_name")
-    curl -fsSL -o "$PREFIX/bin/calicoctl" \
-      "https://github.com/projectcalico/calicoctl/releases/download/"$calicoctl_version"/calicoctl-linux-arm64"
-    chmod +x "$PREFIX/bin/calicoctl"
 
     echo "Updating flux..."
     curl -fsSL "https://toolkit.fluxcd.io/install.sh" | bash -s "$PREFIX/bin" >/dev/null 2>&1
