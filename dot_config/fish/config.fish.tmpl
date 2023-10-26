@@ -33,6 +33,12 @@ if status --is-interactive
 end
 {{- end }}
 
+{{- if lookPath "/home/linuxbrew/.linuxbrew/bin/brew" }}
+if status --is-interactive
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+end
+{{- end }}
+
 if type -q atuin
     atuin init fish | source
 end
