@@ -7,7 +7,6 @@ set -gx ANSIBLE_FORCE_COLOR true
 set -gx ANSIBLE_HOST_KEY_CHECKING False
 set -gx PY_COLORS true
 set -gx GPG_TTY (tty)
-set -gx ATUIN_NOBIND "true"
 
 {{- if stat (joinPath .chezmoi.homeDir ".config/sops/age/keys.txt") }}
 set -gx SOPS_AGE_KEY_FILE {{ .chezmoi.homeDir }}/.config/sops/age/keys.txt
