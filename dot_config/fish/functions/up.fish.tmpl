@@ -32,6 +32,6 @@ function up --description 'updates packages'
     chmod +x "$PREFIX/bin/task"
 
     echo "Updating fisher..."
-    fisher update > /dev/null 2>&1
+    fisher update
 end
 {{- end }}
