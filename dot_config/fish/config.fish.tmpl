@@ -53,3 +53,9 @@ end
 if type -q zoxide
     zoxide init fish | source
 end
+
+{{- if (contains "termux" .chezmoi.homeDir) }}
+if type -q atuin
+    atuin init fish | source
+end
+{{- end }}
