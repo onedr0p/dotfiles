@@ -10,7 +10,7 @@ function up --description 'updates packages'
       "https://github.com/stern/stern/releases/download/v"$stern_version"/stern_"$stern_version"_linux_arm64.tar.gz"
     tar zxf "$PREFIX/tmp/stern.tar.gz" -C "$PREFIX/tmp"
     mv "$PREFIX/tmp/stern" "$PREFIX/bin/stern"
-    chmod -x "$PREFIX/bin/stern"
+    chmod +x "$PREFIX/bin/stern"
 
     echo "Updating kustomize..."
     set kustomize_version (curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kustomize\"))))[0].tag_name" | sed 's/.*\///')
