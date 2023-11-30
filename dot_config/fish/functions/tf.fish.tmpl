@@ -2,6 +2,6 @@ function tf --wraps=terraform --description 'terraform shorthand'
    {{- if (contains "termux" .chezmoi.homeDir) }}
    proot -b $PREFIX/etc/resolv.conf:/etc/resolv.conf terraform $argv
    {{- else }}
-   terraform $argv
+   {{ lookPath "terraform" }} $argv
    {{- end }}
 end

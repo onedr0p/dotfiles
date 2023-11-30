@@ -1,5 +1,5 @@
 {{- if (contains "termux" .chezmoi.homeDir) }}
-function up --description 'updates packages'
+function tupper --description 'updates termux packages'
     echo "Updating system..."
     pkg update
     pkg upgrade -y

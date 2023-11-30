@@ -3,6 +3,6 @@ function cm --wraps=chezmoi --description 'chezmoi shorthand'
         printf "Do not run chezmoi within the dotfiles repo you doofus"
         return
     else
-        chezmoi $argv
+        {{ lookPath "chezmoi" }} $argv
     end
 end

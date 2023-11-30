@@ -1,9 +1,9 @@
 function watch --description 'watch with fish alias support'
-    if count $argv > /dev/null
+    if test (count $argv) -gt 0
         if type -q viddy
-            viddy -d -n 2 --shell {{ lookPath "fish" }} $argv[1..-1]
+            {{ lookPath "viddy" }} -d -n 2 --shell {{ lookPath "fish" }} $argv[1..-1]
         else
-            command watch -x {{ lookPath "fish" }} -c "$argv"
+            command {{ lookPath "watch" }} -x {{ lookPath "fish" }} -c "$argv"
         end
     end
 end

@@ -1,7 +1,7 @@
 function k --wraps=kubectl --description 'kubectl shorthand'
     if type -q kubecolor
-        kubecolor $argv
+        {{ lookPath "kubecolor" }} $argv
     else
-        kubectl $argv
+        {{ lookPath "kubectl" }} $argv
     end
 end
