@@ -5,6 +5,7 @@
 #   `commit feat-renovate add new package rule` => `feat(renovate): add new package rule`
 #   `commit feat!-kubernetes remove rook-ceph`  => `feat(kubernetes)!: remove rook-ceph`
 #   `commit feat-kubernetes! remove rook-ceph`  => `feat(kubernetes)!: remove rook-ceph`
+# revert, chore, ci, docs, refactor, perf, test, build, feat, fix, style
 function commit --description 'git conventional commits'
     if test (count $argv) -gt 0
         set title $argv[1]
@@ -13,14 +14,13 @@ function commit --description 'git conventional commits'
             printf "Whoops you are missing a commit message" | cowsay | lolcat
             return
         end
-        set short (string trim (string split "." "$description" -f1))
-        set long (string trim (string split "." "$description" -m1 -f2))
+        set short (string trim (string split "//" "$description" -f1))
+        set long (string trim (string split "//" "$description" -m1 -f2))
         if string match -q '*-*' $title
             set type (string trim (string split "-" "$title" -f1))
             set scope (string trim (string split "-" "$title" -m1 -f2))
             set title "$type($scope)"
-            if string match -q '*!' $scope or string match -q '*!' $type
-                set type (string trim --chars="!" $type)
+            if string match -q '*!' "$scope"
                 set scope (string trim --chars="!" $scope)
                 set title "$type($scope)!"
             end
