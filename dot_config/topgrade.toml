@@ -1,1 +1,2 @@
+[misc]
 disable = ["containers", "gem", "helm", "ruby_gems"]
