@@ -1,37 +1,31 @@
 {{- if (contains "termux" .chezmoi.homeDir) }}
 function tupper --description 'updates termux packages'
-    echo "Updating system..."
     pkg update
     pkg upgrade -y
 
-    echo "Updating stern..."
-    set stern_version (curl -sL "https://api.github.com/repos/stern/stern/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
-    curl -fsSL -o "$PREFIX/tmp/stern.tar.gz" \
-      "https://github.com/stern/stern/releases/download/v"$stern_version"/stern_"$stern_version"_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/stern.tar.gz" -C "$PREFIX/tmp"
-    mv "$PREFIX/tmp/stern" "$PREFIX/bin/stern"
-    chmod +x "$PREFIX/bin/stern"
+    pushd "$PREFIX/bin"
+    for app in \
+            "stern/stern?as=stern" \
+            "kubernetes-sigs/kustomize?as=kustomize" \
+            "fluxcd/flux2?as=flux" \
+            "go-task/task?as=task" \
+            "yannh/kubeconform?as=kubeconform" \
+            "cilium/cilium-cli?as=cilium" \
+            "kubecolor/kubecolor?as=kubecolor" \
+            "siderolabs/talos?as=talosctl" \
+            "kubernetes-sigs/krew?as=krew"
+        curl -fsSL "https://i.jpillora.com/$app&type=script" | bash
+    end
+    popd
 
-    echo "Updating kustomize..."
-    set kustomize_version (curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases" | jq --raw-output "map(select(any(.assets[].name; contains(\"kustomize\"))))[0].tag_name" | sed 's/.*\///')
-    curl -fsSL -o "$PREFIX/tmp/kustomize.tar.gz" \
-      "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F"$kustomize_version"/kustomize_"$kustomize_version"_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/kustomize.tar.gz" -C "$PREFIX/tmp"
-    mv "$PREFIX/tmp/kustomize" "$PREFIX/bin/kustomize"
-    chmod +x "$PREFIX/bin/kustomize"
+    for app in cilium flux helm k9s kubectl kustomize talosctl
+        $app completion fish > "$HOME/.config/fish/completions/$app.fish"
+    end
 
-    echo "Updating flux..."
-    curl -fsSL "https://toolkit.fluxcd.io/install.sh" | bash -s "$PREFIX/bin" >/dev/null 2>&1
+    gh completion --shell fish > "$HOME/.config/fish/completions/gh.fish"
+    stern --completion fish > "$HOME/.config/fish/completions/stern.fish"
+    yq shell-completion fish > "$HOME/.config/fish/completions/yq.fish"
 
-    echo "Updating taskfile..."
-    set taskfile_version (curl -sL "https://api.github.com/repos/go-task/task/releases/latest" | jq --raw-output ".tag_name" | sed '1s/^.//')
-    curl -fsSL -o "$PREFIX/tmp/taskfile.tar.gz" \
-      "https://github.com/go-task/task/releases/download/v"$taskfile_version"/task_linux_arm64.tar.gz"
-    tar zxf "$PREFIX/tmp/taskfile.tar.gz" -C "$PREFIX/tmp"
-    mv "$PREFIX/tmp/task" "$PREFIX/bin/task"
-    chmod +x "$PREFIX/bin/task"
-
-    echo "Updating fisher..."
     fisher update
 end
 {{- end }}
