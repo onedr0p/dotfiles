@@ -1,11 +1,11 @@
 # Write conventional commits with steeze
 # commit $type[!]?[-$scope]?[!]? $message. $long message
 # Examples:
-#   `commit chore update readme`                                          => `chore: add new package rule`
+#   `commit chore update readme`                                          => `chore: update readme`
 #   `commit feat-renovate add new package rule`                           => `feat(renovate): add new package rule`
 #   `commit feat!-kubernetes remove rook-ceph`                            => `feat(kubernetes)!: remove rook-ceph`
 #   `commit feat-kubernetes! remove rook-ceph`                            => `feat(kubernetes)!: remove rook-ceph`
-#   `commit feat-kubernetes! remove rook-ceph // I want to use Longhorn`  => `feat(kubernetes)!: remove rook-ceph` and with `I want to use Longhorn` ammended
+#   `commit feat-kubernetes! remove rook-ceph // I want to use Longhorn`  => `feat(kubernetes)!: remove rook-ceph` with `I want to use Longhorn` ammended
 # revert, chore, ci, docs, refactor, perf, test, build, feat, fix, style
 function commit --description 'git conventional commits'
     if test (count $argv) -gt 0
