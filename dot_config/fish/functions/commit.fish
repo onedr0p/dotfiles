@@ -1,5 +1,5 @@
 # Write conventional commits with steeze
-# commit $type[!]?[-$scope]?[!]? $message. $long message
+# commit $type[!]?[-$scope]?[!]? $message // $long message
 # Examples:
 #   `commit chore update readme`                                          => `chore: update readme`
 #   `commit feat-renovate add new package rule`                           => `feat(renovate): add new package rule`
