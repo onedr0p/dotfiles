@@ -1,12 +1,12 @@
 {{- if (contains "termux" .chezmoi.homeDir) }}
 [tools]
 "aqua:helmfile/helmfile" = "latest"
-"fluxcd/flux2" = "latest"
-"go-task/task" = "latest"
-"kubernetes-sigs/krew" = "latest"
-"cilium/cilium-cli" = "latest"
-"siderolabs/talos" = "latest"
-"yannh/kubeconform" = "latest"
-"kubenetes-sigs/kustomize" = "latest"
-"stern/stern" = "latest"
+"aqua:fluxcd/flux2" = "latest"
+"aqua:go-task/task" = "latest"
+"aqua:kubernetes-sigs/krew" = "latest"
+"aqua:cilium/cilium-cli" = "latest"
+"aqua:siderolabs/talos" = "latest"
+"aqua:yannh/kubeconform" = "latest"
+"aqua:kubenetes-sigs/kustomize" = "latest"
+"aqua:stern/stern" = "latest"
 {{- end }}
