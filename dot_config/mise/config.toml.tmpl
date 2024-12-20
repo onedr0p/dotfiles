@@ -1,0 +1,12 @@
+{{- if (contains "termux" .chezmoi.homeDir) }}
+[tools]
+"aqua:helmfile/helmfile" = "latest"
+"fluxcd/flux2" = "latest"
+"go-task/task" = "latest"
+"kubernetes-sigs/krew" = "latest"
+"cilium/cilium-cli" = "latest"
+"siderolabs/talos" = "latest"
+"yannh/kubeconform" = "latest"
+"kubenetes-sigs/kustomize" = "latest"
+"stern/stern" = "latest"
+{{- end }}

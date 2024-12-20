@@ -3,28 +3,8 @@ function tupper --description 'updates termux packages'
     pkg update
     pkg upgrade -y
 
-    pushd "$HOME/.local/bin"
-    for app in \
-            "stern/stern?as=stern" \
-            "kubernetes-sigs/kustomize?as=kustomize" \
-            "fluxcd/flux2?as=flux" \
-            "go-task/task?as=task" \
-            "yannh/kubeconform?as=kubeconform" \
-            "cilium/cilium-cli?as=cilium" \
-            "siderolabs/talos?as=talosctl" \
-            "kubernetes-sigs/krew?as=krew"
-        curl -fsSL "https://i.jpillora.com/$app&type=script" | bash
-    end
-    popd
-
     curl https://mise.jdx.dev/mise-latest-linux-arm64-musl > $HOME/.local/bin/mise
     chmod +x $HOME/.local/bin/mise
-
-    for app in cilium flux kustomize mise talosctl
-        $app completion fish > "$HOME/.config/fish/completions/$app.fish"
-    end
-
-    stern --completion fish > "$HOME/.config/fish/completions/stern.fish"
 
     fisher update
 end
