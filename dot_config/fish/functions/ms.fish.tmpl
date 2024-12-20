@@ -1,0 +1,7 @@
+function ms --wraps=mise --description 'mise shorthand'
+   {{- if (contains "termux" .chezmoi.homeDir) }}
+   proot -b $PREFIX/etc/resolv.conf:/etc/resolv.conf mise $argv
+   {{- else }}
+   {{ lookPath "mise" }} $argv
+   {{- end }}
+end
