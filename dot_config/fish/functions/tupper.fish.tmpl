@@ -3,7 +3,7 @@ function tupper --description 'updates termux packages'
     pkg update
     pkg upgrade -y
 
-    pushd "$PREFIX/bin"
+    pushd "$HOME/.local/bin"
     for app in \
             "stern/stern?as=stern" \
             "kubernetes-sigs/kustomize?as=kustomize" \
@@ -17,16 +17,14 @@ function tupper --description 'updates termux packages'
     end
     popd
 
-    curl https://mise.jdx.dev/mise-latest-linux-arm64-musl > $PREFIX/bin/mise
-    chmod +x $PREFIX/bin/mise
+    curl https://mise.jdx.dev/mise-latest-linux-arm64-musl > $HOME/.local/bin/mise
+    chmod +x $HOME/.local/bin/mise
 
-    for app in cilium flux helm k9s kubectl kustomize mise talosctl
+    for app in cilium flux kustomize mise talosctl
         $app completion fish > "$HOME/.config/fish/completions/$app.fish"
     end
 
-    gh completion --shell fish > "$HOME/.config/fish/completions/gh.fish"
     stern --completion fish > "$HOME/.config/fish/completions/stern.fish"
-    yq shell-completion fish > "$HOME/.config/fish/completions/yq.fish"
 
     fisher update
 end
