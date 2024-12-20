@@ -21,10 +21,6 @@ if status is-interactive
         {{ lookPath "mise" }} activate fish | source
     end
 
-    if type -q thefuck
-        {{ lookPath "thefuck" }} --alias | source
-    end
-
     if type -q starship
         {{ lookPath "starship" }} init fish | source
     end
@@ -40,8 +36,4 @@ end
 
 if type -q lsd
     alias ls {{ lookPath "lsd" }}
-end
-
-if type -q thefuck
-    alias f {{ lookPath "thefuck" }}
 end
