@@ -17,7 +17,10 @@ function tupper --description 'updates termux packages'
     end
     popd
 
-    for app in cilium flux helm k9s kubectl kustomize talosctl
+    curl https://mise.jdx.dev/mise-latest-linux-arm64-musl > $PREFIX/bin/mise
+    chmod +x $PREFIX/bin/mise
+
+    for app in cilium flux helm k9s kubectl kustomize mise talosctl
         $app completion fish > "$HOME/.config/fish/completions/$app.fish"
     end
 
