@@ -17,10 +17,6 @@ if status is-interactive
         {{ lookPath "direnv" }} hook fish | source
     end
 
-    if type -q mise
-        {{ lookPath "mise" }} activate fish | source
-    end
-
     if type -q thefuck
         {{ lookPath "thefuck" }} --alias | source
     end
