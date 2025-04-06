@@ -1,8 +1,6 @@
 set -gx KUBE_EDITOR nano
 set -gx VISUAL nano
 set -gx EDITOR nano
-set -gx HOMEBREW_NO_ANALYTICS 1
-set -gx HOMEBREW_CASK_OPTS --no-quarantine
 set -gx GOPATH {{ .chezmoi.homeDir }}/.go
 set -gx ANSIBLE_FORCE_COLOR true
 set -gx ANSIBLE_HOST_KEY_CHECKING False
