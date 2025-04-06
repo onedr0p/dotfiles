@@ -1,1 +1,5 @@
-set fish_greeting ""
+function fish_greeting
+    if type -q fastfetch
+    {{ lookPath "fastfetch" }}
+    end
+end
