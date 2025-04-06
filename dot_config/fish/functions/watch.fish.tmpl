@@ -1,9 +1,9 @@
 function watch --description 'watch with fish alias support'
     if test (count $argv) -gt 0
         if type -q viddy
-            {{ lookPath "viddy" }} --disable_auto_save --differences --interval 2 --shell {{ lookPath "fish" }} $argv[1..-1]
+    {{ lookPath "viddy" }} --disable_auto_save --differences --interval 2 --shell {{ lookPath "fish" }} $argv[1..-1]
         else
-            command {{ lookPath "watch" }} -x {{ lookPath "fish" }} -c "$argv"
+    command {{ lookPath "watch" }} -x {{ lookPath "fish" }} -c "$argv"
         end
     end
 end
