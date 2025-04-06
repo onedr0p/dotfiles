@@ -2,7 +2,6 @@ if type -q bat
     abbr cat bat
 end
 
-
 if type -q doggo
     abbr dig doggo
 end
