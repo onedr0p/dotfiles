@@ -1,0 +1,9 @@
+if type -q mise
+    if test "$VSCODE_RESOLVING_ENVIRONMENT" = 1
+    {{ lookPath "mise" }} activate fish --shims | source
+    else if status is-interactive
+    {{ lookPath "mise" }} activate fish | source
+    else
+    {{ lookPath "mise" }} activate fish --shims | source
+    end
+end
