@@ -7,3 +7,8 @@ set -gx ANSIBLE_HOST_KEY_CHECKING False
 set -gx PY_COLORS true
 set -gx GPG_TTY (tty)
 set -gx LANG en_US.utf-8
+
+fish_add_path "{{ .chezmoi.homeDir }}/.local/bin"
+fish_add_path "{{ .chezmoi.homeDir }}/.cargo/bin"
+fish_add_path "{{ .chezmoi.homeDir }}/.krew/bin"
+fish_add_path "{{ .chezmoi.homeDir }}/.go/bin"

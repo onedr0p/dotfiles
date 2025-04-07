@@ -1,3 +1,4 @@
+{{- if (eq .chezmoi.os "darwin") }}
 set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx HOMEBREW_BUNDLE_FILE $XDG_CONFIG_HOME/homebrew/brewfile
 set -gx HOMEBREW_CASK_OPTS --no-quarantine
@@ -11,10 +12,16 @@ end
 type -q brew && eval (brew shellenv)
 
 fish_add_path --global --prepend /opt/homebrew/opt/curl/bin
+fish_add_path --global --prepend /opt/homebrew/opt/gettext/bin
 
 if type -q gdu
     fish_add_path --global --prepend $HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin
 end
+
+if type -q ggrep
+    fish_add_path --global --prepend $HOMEBREW_PREFIX/opt/grep/libexec/gnubin
+end
+
 
 if type -q gsed
     fish_add_path --global --prepend $HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin
@@ -27,3 +34,4 @@ end
 if type -q gfind
     fish_add_path --global --prepend /opt/homebrew/opt/findutils/libexec/gnubin
 end
+{{- end }}
