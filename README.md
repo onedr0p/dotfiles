@@ -1,9 +1,7 @@
 # dotfiles
 
-My dotfiles managed by chezmoi
-
-## first time set up
+My dotfiles managed by [Chezmoi](https://www.chezmoi.io/).
 
 ```sh
-chezmoi init git@github.com:onedr0p/dotfiles.git
+chezmoi init onedr0p/dotfiles
 ```
