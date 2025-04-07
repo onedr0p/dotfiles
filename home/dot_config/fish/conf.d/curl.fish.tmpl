@@ -1,0 +1,3 @@
+if type -q curl
+    set -gx CURL_HOME "{{ .chezmoi.homeDir }}/.config/curl"
+end
