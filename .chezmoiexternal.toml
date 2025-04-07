@@ -1,0 +1,4 @@
+[".nano"]
+    type = "git-repo"
+    url = "https://github.com/scopatz/nanorc.git"
+    refreshPeriod = "168h"
