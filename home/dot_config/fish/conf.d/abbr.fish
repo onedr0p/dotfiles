@@ -11,6 +11,7 @@ if type -q doggo
 end
 
 if type -q git
+    abbr --command git co checkout
     abbr --command git pl pull --rebase --autostash
     abbr --command git pf push --force
 end
