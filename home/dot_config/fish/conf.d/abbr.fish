@@ -23,3 +23,7 @@ end
 if type -q lsd
     abbr ls lsd
 end
+
+if type -q viddy
+    abbr --command watch k kubectl
+end
