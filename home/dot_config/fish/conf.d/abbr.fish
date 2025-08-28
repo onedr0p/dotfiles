@@ -16,6 +16,10 @@ if type -q git
     abbr --command git pf push --force
 end
 
+if type -q just
+    abbr j just
+end
+
 if type -q kubectl
     abbr k kubectl
 end
