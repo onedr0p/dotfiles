@@ -1,0 +1,20 @@
+export KUBE_EDITOR=nano
+export VISUAL=nano
+export EDITOR=nano
+export GOPATH="{{ .chezmoi.homeDir }}/.go"
+export ANSIBLE_FORCE_COLOR=true
+export ANSIBLE_HOST_KEY_CHECKING=False
+export PY_COLORS=true
+export LANG=en_US.utf-8
+export CURL_HOME="{{ .chezmoi.homeDir }}/.config/curl"
+
+typeset -U path
+for dir in \
+    "{{ .chezmoi.homeDir }}/.local/bin" \
+    "{{ .chezmoi.homeDir }}/.cargo/bin" \
+    "{{ .chezmoi.homeDir }}/.krew/bin" \
+    "{{ .chezmoi.homeDir }}/.go/bin"
+do
+    [[ -d $dir ]] && path=($dir $path)
+done
+export PATH

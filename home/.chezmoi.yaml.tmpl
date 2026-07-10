@@ -1,3 +1,5 @@
+{{- $shell := promptStringOnce . "shell" "Shell to configure (fish/zsh)" "fish" -}}
 format: yaml
 data:
   name: "Devin Buhl"
+  shell: {{ $shell | quote }}

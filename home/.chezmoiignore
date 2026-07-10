@@ -1,3 +1,9 @@
 {{ if ne .chezmoi.os "darwin" }}
 .config/homebrew/brewfile
 {{ end }}
+{{ if eq (index . "shell" | default "fish") "zsh" }}
+.config/fish
+{{ else }}
+.zshrc
+.zshenv
+{{ end }}

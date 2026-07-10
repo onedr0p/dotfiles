@@ -1,0 +1,9 @@
+{{- if eq (index . "shell" | default "fish") "zsh" -}}
+#!/bin/bash
+set -euo pipefail
+# Clone oh-my-zsh only if missing; chezmoi manages ~/.zshrc, so we skip the
+# official installer (which would write its own .zshrc).
+if [ ! -d "{{ .chezmoi.homeDir }}/.oh-my-zsh" ]; then
+    git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git "{{ .chezmoi.homeDir }}/.oh-my-zsh"
+fi
+{{- end -}}
