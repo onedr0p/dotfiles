@@ -1,0 +1,419 @@
+tap "autobrr/mkbrr"
+tap "doodlescheduling/flux-build", "https://github.com/DoodleScheduling/flux-build.git", trusted: true
+tap "fluxcd/tap"
+tap "go-task/tap", trusted: true
+tap "home-operations/tap", trusted: true
+tap "homebrew/cask"
+tap "homebrew/core"
+tap "homeport/tap", trusted: true
+tap "josephpage/jetpack-io", trusted: true
+tap "kluctl/tap", trusted: true
+tap "netbirdio/tap"
+tap "postfinance/tap", trusted: true
+tap "siderolabs/tap", trusted: true
+tap "stefanprodan/tap", trusted: true
+tap "terror/tap"
+tap "utkuozdemir/pv-migrate"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
+# Static checker for GitHub Actions workflow files
+brew "actionlint"
+# Simple, modern, secure file encryption
+brew "age"
+# Record and share terminal sessions
+brew "asciinema"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# C library of Git core methods that is re-entrant and linkable
+brew "libgit2"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Cross platform file encryption utility using blowfish
+brew "bcrypt"
+# GNU binary tools for native development
+brew "binutils"
+# New way to see and navigate directory trees
+brew "broot"
+# Translates human-readable Butane Configs into machine-readable Ignition Configs
+brew "butane"
+# Manage your dotfiles across multiple diverse machines, securely
+brew "chezmoi"
+# Converts CIDRs to IP ranges
+brew "cidr2range"
+# CLI to install, manage & troubleshoot Kubernetes clusters running Cilium
+brew "cilium-cli"
+# Conventional Commits toolbox
+brew "cocogitto"
+# Container runtimes on MacOS (and Linux) with minimal setup
+brew "colima"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Container Signing
+brew "cosign"
+# Securely send things from one computer to another
+brew "croc"
+# Validate and define text-based and dynamic configuration
+brew "cue"
+# Get a file from an HTTP, HTTPS or FTP server
+brew "curl"
+# Command-line DNS Client for Humans
+brew "doggo"
+# Pluggable and configurable code formatting platform written in Rust
+brew "dprint"
+# Static file server
+brew "dufs"
+# Diff tool for YAML files, and sometimes JSON
+brew "dyff"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Collection of GNU find, xargs, and locate
+brew "findutils"
+# User-friendly command-line shell for UNIX-like operating systems
+brew "fish"
+# Fort Knox for your secrets - flexible secret management tool
+brew "fnox"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GNU awk utility
+brew "gawk"
+# GNU compiler collection
+brew "gcc"
+# GitHub command-line tool
+brew "gh"
+# Distributed revision control system
+brew "git"
+# Command-line option parsing utility
+brew "gnu-getopt"
+# GNU implementation of the famous stream editor
+brew "gnu-sed"
+# GNU version of the tar archiving utility
+brew "gnu-tar"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
+# Pure Go implementation of jq
+brew "gojq"
+# Ping, but with a graph
+brew "gping"
+# GNU grep, egrep and fgrep
+brew "grep"
+# Vulnerability scanner for container images and filesystems
+brew "grype"
+# Tool for glamorous shell scripts
+brew "gum"
+# Smarter Dockerfile linter to validate best practices
+brew "hadolint"
+# Kubernetes package manager
+brew "helm"
+# Deploy Kubernetes Helm Charts
+brew "helmfile"
+# Improved top (interactive process viewer)
+brew "htop"
+# JSON output from a shell
+brew "jo"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Handy way to save and run project-specific commands
+brew "just"
+# Kubernetes CLI To Manage Your Clusters In Style!
+brew "k9s"
+# Fast and secure open-source backup
+brew "kopia"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
+# Package manager for kubectl plugins
+brew "krew"
+# Colorize your kubectl output
+brew "kubecolor"
+# FAST Kubernetes manifests validator, with support for Custom Resources!
+brew "kubeconform"
+# OpenID Connect authentication plugin for kubectl
+brew "kubelogin"
+# Template-free customization of Kubernetes YAML manifests
+brew "kustomize"
+# Fast and powerful Git hooks manager for any type of projects
+brew "lefthook"
+# Pager program similar to more
+brew "less"
+# Library for encoding and decoding .avif files
+brew "libavif"
+# Conversion library
+brew "libiconv"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
+# C virtualization API
+brew "libvirt"
+# Clone of ls with colorful output, file type icons, and more
+brew "lsd"
+# Mac App Store command-line interface
+brew "mas"
+# Unified display of technical and tag data for audio/video
+brew "media-info"
+# Render Jinja2 templates directly from the command-line to stdout
+brew "minijinja-cli"
+# Run a Kubernetes cluster locally
+brew "minikube"
+# Replacement for ls, cp and other commands for object storage
+brew "minio-mc"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
+# Collection of tools that nobody wrote when UNIX was young
+brew "moreutils"
+# Program for MPEG audio stream validation
+brew "mp3val"
+# Feature-rich command-line audio/video downloader
+brew "yt-dlp"
+# Media player based on MPlayer and mplayer2
+brew "mpv"
+# 'traceroute' and 'ping' in a single tool
+brew "mtr"
+# Free (GNU) replacement for the Pico text editor
+brew "nano"
+# Port scanning utility for large networks
+brew "nmap"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
+# OCI Registry As Storage
+brew "oras"
+# High-performance formatting tool for JavaScript and TypeScript
+brew "oxfmt"
+# 7-Zip (high compression file archiver) implementation
+brew "p7zip"
+# Data loading tool for PostgreSQL
+brew "pgloader"
+# Fast, disk space efficient package manager
+brew "pnpm"
+# Tool for managing OCI containers and pods
+brew "podman"
+# Print the IP addresses in a given range
+brew "prips"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
+# Generic machine emulator and virtualizer
+brew "qemu"
+# Install various Ruby versions and implementations
+brew "ruby-build"
+# Ruby version manager
+brew "rbenv"
+# Rsync for cloud storage
+brew "rclone"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Utility that provides fast incremental file transfer
+brew "rsync"
+# Powerful, clean, object-oriented scripting language
+brew "ruby"
+# Rust toolchain installer
+brew "rustup"
+# Intuitive find & replace CLI
+brew "sd"
+# Autoformat shell script source code
+brew "shfmt"
+# Work with remote images registries
+brew "skopeo"
+# Editor of encrypted files
+brew "sops"
+# SOund eXchange: universal sound sample translator
+brew "sox"
+# Non-interactive SSH password auth
+brew "sshpass"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Tail multiple Kubernetes pods & their containers
+brew "stern"
+# SMTP command-line test tool
+brew "swaks"
+# Configuration helper for talos clusters
+brew "talhelper"
+# CLI for out-of-band management of Kubernetes nodes created by Talos
+brew "talosctl"
+# Command-line packet analyzer
+brew "tcpdump"
+# User interface to the TELNET protocol
+brew "telnet"
+# Text interface for Git repositories
+brew "tig"
+# Terminal multiplexer
+brew "tmux"
+# Upgrade all the things
+brew "topgrade"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Converts a ttyrec file into gif files
+brew "ttygif"
+# Ultra fast grep with query UI, fuzzy search, archive search, and more
+brew "ugrep"
+# Extraction utility for .zip compressed archives
+brew "unzip"
+# Compress/expand executable files
+brew "upx"
+# Helm-like configuration values loader with support for various sources
+brew "vals"
+# Modern watch command
+brew "viddy"
+# Internet file retriever
+brew "wget"
+# Extensible command-line tool to format YAML files
+brew "yamlfmt"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
+brew "yq"
+# Find security issues in GitHub Actions setups
+brew "zizmor"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# UNIX shell (command interpreter)
+brew "zsh"
+# Command-line tool for creating, modifying and inspecting torrent files
+brew "autobrr/mkbrr/mkbrr", trusted: true
+# Flux CLI
+brew "fluxcd/tap/flux", trusted: true
+# Netbird project.
+brew "netbirdio/tap/netbird", trusted: true
+# Language server for just
+brew "terror/tap/just-lsp", trusted: true
+# Password manager that keeps all passwords secure behind one password
+cask "1password"
+# Command-line interface for 1Password
+cask "1password-cli"
+# Enable Windows-like alt-tab
+cask "alt-tab"
+# Android SDK component
+cask "android-platform-tools"
+# Tool to flash OS images to SD cards & USB drives
+cask "balenaetcher"
+# 3D model slicing software for 3D printers, maintained by Bambu Lab
+cask "bambu-studio"
+# Menu bar icon organiser
+cask "bartender"
+# Display management tool
+cask "betterdisplay"
+# Compare files and folders
+cask "beyond-compare"
+# Small, stateless webhook-to-notification relay
+cask "home-operations/tap/chaski", trusted: true
+# Anthropic's official Claude AI desktop app
+cask "claude"
+# Terminal-based AI coding assistant
+cask "claude-code"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
+# Voice and text chat software
+cask "discord"
+# Window peeking utility app
+cask "dockdoor"
+# Web browser
+cask "firefox"
+# Render and diff Flux GitOps repositories offline, without a cluster
+cask "home-operations/tap/flate"
+cask "font-fira-code"
+cask "font-fira-code-nerd-font"
+cask "font-fira-mono-nerd-font"
+cask "font-monaspace"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
+# Web browser
+cask "google-chrome"
+# Code editor focused on stability, without AI, subscriptions, or telemetry
+cask "gram"
+# IRC client
+cask "halloy"
+# Open-source video transcoder
+cask "handbrake-app"
+# Free and open-source media player
+cask "iina"
+# Terminal emulator as alternative to Apple's Terminal app
+cask "iterm2"
+# Kubectl plugin operating the kopiur Kopia-native backup operator
+cask "home-operations/tap/kopiur", trusted: true
+# Utility that shows the latest app updates
+cask "latest"
+# Meet, chat, call, and collaborate in just one place
+cask "microsoft-teams"
+cask "mqtt-explorer"
+# Music tagger
+cask "musicbrainz-picard"
+# Netbird UI Client
+cask "netbirdio/tap/netbird-ui", trusted: true
+# Finds large, unwanted files and deletes them
+cask "omnidisksweeper"
+# Utility to uninstall apps and remove leftover files from old/uninstalled apps
+cask "pearcleaner"
+# Persistent volume migration plugin for Kubernetes
+cask "utkuozdemir/pv-migrate/pv-migrate", trusted: true
+# Archive manager for data compression and backups
+cask "rar"
+# Control your tools with a few keystrokes
+cask "raycast"
+# Tool to format memory cards complying with the SD File System spec
+cask "sdformatter"
+# Instant messaging application focusing on security
+cask "signal"
+# Team communication and collaboration software
+cask "slack"
+# Video game digital distribution service
+cask "steam"
+# Mesh VPN based on WireGuard
+cask "tailscale-app"
+# Messaging app with a focus on speed and security
+cask "telegram"
+# Talos Orchestrator by PostFinance
+cask "postfinance/tap/topf"
+# Open-source BitTorrent client
+cask "transmission"
+# Open-source code editor
+cask "visual-studio-code"
+# Multimedia player
+cask "vlc"
+# Lossless audio decoder
+cask "xld"
+# REST, GraphQL and gRPC client
+cask "yaak"
+# Media file tag editor
+cask "yate"
+# Multiplayer code editor
+cask "zed"
+# Video communication and virtual meeting platform
+cask "zoom"
+# Desktop client for the Zulip team chat platform
+cask "zulip"
+mas "AutoMounter", id: 1160435653
+mas "Cyberduck", id: 409222199
+mas "Jump Desktop", id: 524141863
+mas "Lungo", id: 1263070803
+mas "Maccy", id: 1527619437
+mas "Magnet", id: 441258766
+mas "MediaInfo", id: 510620098
+mas "Microsoft Outlook", id: 985367838
+mas "PDF Expert", id: 1055273043
+mas "Presentify", id: 1507246666
+mas "uBlock Origin Lite", id: 6745342698
+mas "WireGuard", id: 1451685025
+mas "Xcode", id: 497799835
+mas "Xnip", id: 1221250572
+cargo "cargo-update"
+krew "browse-pvc"
+krew "cert-manager"
+krew "cnpg"
+krew "ctx"
+krew "df-pv"
+krew "envsubst"
+krew "get-all"
+krew "klock"
+krew "kopiur/kopiur"
+krew "marvin"
+krew "netshoot/netshoot"
+krew "node-restart"
+krew "node-shell"
+krew "ns"
+krew "pv-migrate"
+krew "pv-mounter"
+krew "rook-ceph"
+krew "view-secret"
+krew "viewnode"
+krew "virt"
+npm "@devcontainers/cli"
