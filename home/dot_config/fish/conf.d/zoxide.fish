@@ -1,3 +1,3 @@
-if type -q zoxide
+if status is-interactive; and type -q zoxide
     zoxide init fish | source
 end

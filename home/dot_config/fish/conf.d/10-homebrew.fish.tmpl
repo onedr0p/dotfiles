@@ -10,7 +10,10 @@ for bindir in /usr/local/bin /opt/homebrew/bin
     test -d $bindir && fish_add_path --global $bindir
 end
 
-type -q brew && eval (brew shellenv)
+# HOMEBREW_PREFIX is exported, so nested shells inherit it and can skip shellenv
+if not set -q HOMEBREW_PREFIX; and type -q brew
+    eval (brew shellenv)
+end
 
 fish_add_path --global $HOMEBREW_PREFIX/opt/curl/bin
 fish_add_path --global $HOMEBREW_PREFIX/opt/gettext/bin
