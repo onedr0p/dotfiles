@@ -12,8 +12,8 @@ end
 
 type -q brew && eval (brew shellenv)
 
-fish_add_path --global /opt/homebrew/opt/curl/bin
-fish_add_path --global /opt/homebrew/opt/gettext/bin
+fish_add_path --global $HOMEBREW_PREFIX/opt/curl/bin
+fish_add_path --global $HOMEBREW_PREFIX/opt/gettext/bin
 
 if type -q gdu
     fish_add_path --global $HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin
@@ -32,10 +32,10 @@ if type -q gawk
 end
 
 if type -q gfind
-    fish_add_path --global /opt/homebrew/opt/findutils/libexec/gnubin
+    fish_add_path --global $HOMEBREW_PREFIX/opt/findutils/libexec/gnubin
 end
 
 if type -q gtar
-    fish_add_path --global /opt/homebrew/opt/gnu-tar/libexec/gnubin
+    fish_add_path --global $HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin
 end
 {{- end }}
