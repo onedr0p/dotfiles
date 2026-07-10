@@ -3,13 +3,23 @@
 Default instructions for AI coding agents (Claude Code, Codex, etc.).
 Project-level AGENTS.md / CLAUDE.md files take precedence over this file.
 
+## Working Style
+
+- Be concise. Skip preamble like "You're absolutely right" and don't over-explain.
+- When asked a question, answer it; don't jump straight to editing files.
+- Never use em dashes in prose. Use a hyphen (-), semicolon (;), or colon (:) instead, whichever fits.
+- Reversible actions that follow from the request: just do them and say so. Stop and ask only for destructive or hard-to-undo actions, or a genuine change of scope.
+- After a code change, verify it by actually running the code or its tests; don't claim it works untested.
+- Comments explain non-obvious constraints only. Don't add comments that narrate what the code does.
+- Never edit secrets or ignored files (`*.key`, `*.crt`, `.private/`, anything gitignored).
+
 ## Environment & Shell
 
 - **Shell**: The user uses `fish`. ALWAYS generate fish-compatible commands if a command is intended to be run by the user. Shell scripts can use bash/sh syntax.
   - Use `(cmd)` for substitution, not `$(cmd)`.
   - Use `set -gx VAR val` for exports.
   - Use `and`/`or` for logic.
-- Both macOS and Linux are in use — anything written for the shell must work on both.
+- Both macOS and Linux are in use; anything written for the shell must work on both.
 - Dotfiles are managed with chezmoi (source: `~/.local/share/chezmoi`). Edit dotfiles in the chezmoi source, not the rendered files in `$HOME`.
 
 ## Preferred Tools
@@ -26,6 +36,8 @@ The following modern tools are available and preferred over their traditional co
 
 ## Git
 
+- Never `git commit`, `git push`, or open a PR unless asked.
 - Sign off commits (`git commit -s`).
+- Use Conventional Commits: `type(scope): summary` (types: feat, fix, chore, ci, docs, refactor, perf, test, build, style, revert).
+- Do not mention Claude, Codex, or AI in commit messages, PR descriptions, or code comments. No "Generated with" trailers.
 - Prefer `--force-with-lease` over `--force` when force-pushing.
-- Do not commit or push unless asked.
