@@ -22,6 +22,7 @@ The following modern tools are available and preferred over their traditional co
 - **Processes**: `procs` instead of `ps`.
 - **Text Replace**: `sd` instead of `sed`.
 - **Data**: `jq` for JSON, `yq` for YAML.
+- **Pod Logs**: `stern` instead of `kubectl logs`.
 
 ## Git
 
