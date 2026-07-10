@@ -1,0 +1,9 @@
+{{- if or (contains "termux" .chezmoi.homeDir) (eq (index . "shell" | default "fish") "zsh") -}}
+#!/bin/bash
+set -euo pipefail
+# Bootstrap mise before files are applied, so the mise-install hook (run after
+# files) has a working mise to read ~/.config/mise/config.toml.
+if ! command -v mise >/dev/null && [ ! -x "{{ .chezmoi.homeDir }}/.local/bin/mise" ]; then
+    curl -fsSL https://mise.run | sh
+fi
+{{- end -}}

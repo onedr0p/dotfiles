@@ -3,6 +3,10 @@ ZSH_THEME=""
 plugins=(fluxcd git kubectl mise)
 [[ -r $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
 
+# Activate mise first: starship, lsd, bat, kubecolor, etc. are mise-managed,
+# so they must be on PATH before the command -v guards below run.
+command -v mise >/dev/null && eval "$(mise activate zsh)"
+
 export GPG_TTY=$(tty)
 
 command -v bat >/dev/null && alias cat='bat'
@@ -77,5 +81,4 @@ commit() {
 command -v starship >/dev/null && eval "$(starship init zsh)"
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
-command -v mise >/dev/null && eval "$(mise activate zsh)"
 command -v kubectl-krew >/dev/null && path=("{{ .chezmoi.homeDir }}/.krew/bin" $path)
