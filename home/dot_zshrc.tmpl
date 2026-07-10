@@ -3,35 +3,28 @@ ZSH_THEME=""
 plugins=(fluxcd git kubectl)
 [[ -r $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
 
-# Activate mise first: starship, lsd, bat, kubecolor, etc. are mise-managed,
-# so they must be on PATH before the command -v guards below run.
-command -v mise >/dev/null && eval "$(mise activate zsh)"
+# Everything below is guaranteed by the mise config (installed via the
+# chezmoi mise-install hook) and reachable through the shims dir that
+# .zshenv puts on PATH, so no command existence checks are needed.
+eval "$(mise activate zsh)"
 
 export GPG_TTY=$(tty)
 
-command -v bat >/dev/null && alias cat='bat'
-command -v chezmoi >/dev/null && alias cm='chezmoi'
-command -v doggo >/dev/null && alias dig='doggo'
-command -v just >/dev/null && alias j='just'
-command -v lsd >/dev/null && alias ls='lsd'
-command -v mise >/dev/null && alias ms='mise'
-command -v terraform >/dev/null && alias tf='terraform'
+alias cat='bat'
+alias cm='chezmoi'
+alias j='just'
+alias ls='lsd'
+alias ms='mise'
 alias k='kubectl'
 alias gco='git checkout'
 alias gpl='git pull --rebase --autostash'
 alias gpf='git push --force-with-lease'
 
-if command -v kubecolor >/dev/null; then
-    kubectl() { command kubecolor "$@" }
-fi
+kubectl() { command kubecolor "$@" }
 
 watch() {
     (( $# == 0 )) && return
-    if command -v viddy >/dev/null; then
-        command viddy --disable_auto_save --differences --interval 2 --shell zsh "$@"
-    else
-        command watch -x zsh -c "$*"
-    fi
+    command viddy --disable_auto_save --differences --interval 2 --shell zsh "$@"
 }
 
 # commit TYPE[-SCOPE][!] SUMMARY [// BODY] -> signed-off conventional commit
@@ -78,7 +71,6 @@ commit() {
     fi
 }
 
-command -v starship >/dev/null && eval "$(starship init zsh)"
-command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
-command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
-command -v kubectl-krew >/dev/null && path=("{{ .chezmoi.homeDir }}/.krew/bin" $path)
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"

@@ -9,7 +9,10 @@ export LANG=en_US.utf-8
 export CURL_HOME="{{ .chezmoi.homeDir }}/.config/curl"
 
 typeset -U path
+# mise shims first: mise activate only fixes up PATH at the first prompt, so
+# rc-time and non-interactive lookups need the shims.
 for dir in \
+    "{{ .chezmoi.homeDir }}/.local/share/mise/shims" \
     "{{ .chezmoi.homeDir }}/.local/bin" \
     "{{ .chezmoi.homeDir }}/.cargo/bin" \
     "{{ .chezmoi.homeDir }}/.krew/bin" \
