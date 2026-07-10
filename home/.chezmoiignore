@@ -1,7 +1,9 @@
-{{ if ne .chezmoi.os "darwin" }}
+{{- $machine := includeTemplate "machine" . -}}
+{{- $shell := includeTemplate "shell" . -}}
+{{ if ne $machine "macos" }}
 .config/homebrew/brewfile
 {{ end }}
-{{ if eq (index . "shell" | default "fish") "zsh" }}
+{{ if eq $shell "zsh" }}
 .config/fish
 {{ else }}
 .zshrc

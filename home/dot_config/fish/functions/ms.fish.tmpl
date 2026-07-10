@@ -1,5 +1,5 @@
 function ms --wraps=mise --description 'mise shorthand'
-   {{- if (contains "termux" .chezmoi.homeDir) }}
+   {{- if eq (includeTemplate "machine" .) "termux" }}
     # Ref: https://github.com/jdx/mise/issues/1969
     proot -b $PREFIX/etc/resolv.conf:/etc/resolv.conf -b $PREFIX/etc/tls:/etc/ssl mise $argv
    {{- else }}

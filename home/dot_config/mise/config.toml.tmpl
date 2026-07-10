@@ -1,7 +1,8 @@
+{{- $machine := includeTemplate "machine" . -}}
 [settings]
 experimental = true
 
-{{- if (contains "termux" .chezmoi.homeDir) }}
+{{- if eq $machine "termux" }}
 [tools]
 "aqua:helmfile/helmfile" = "latest"
 "aqua:fluxcd/flux2" = "latest"
@@ -13,7 +14,7 @@ experimental = true
 "aqua:kubernetes-sigs/kustomize" = "latest"
 "aqua:stern/stern" = "latest"
 "aqua:mitsuhiko/minijinja" = "latest"
-{{- else if eq (index . "shell" | default "fish") "zsh" }}
+{{- else if eq $machine "truenas" }}
 [env]
 MISE_AQUA_GITHUB_ATTESTATIONS = "false"
 

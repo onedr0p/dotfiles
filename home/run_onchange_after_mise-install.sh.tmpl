@@ -1,4 +1,4 @@
-{{- if or (contains "termux" .chezmoi.homeDir) (eq (index . "shell" | default "fish") "zsh") -}}
+{{- if ne (includeTemplate "machine" .) "macos" -}}
 #!/bin/bash
 # mise config hash: {{ include "dot_config/mise/config.toml.tmpl" | sha256sum }}
 set -euo pipefail

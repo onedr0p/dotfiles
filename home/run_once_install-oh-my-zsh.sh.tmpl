@@ -1,4 +1,4 @@
-{{- if eq (index . "shell" | default "fish") "zsh" -}}
+{{- if eq (includeTemplate "shell" .) "zsh" -}}
 #!/bin/bash
 set -euo pipefail
 # Clone oh-my-zsh only if missing; chezmoi manages ~/.zshrc, so we skip the
