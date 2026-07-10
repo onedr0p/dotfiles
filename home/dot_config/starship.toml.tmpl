@@ -10,6 +10,8 @@ format = """\
   $git_commit\
   $git_state\
   $git_status\
+  $python\
+  $cmd_duration\
   $character\
   """
 
@@ -39,7 +41,7 @@ style  = "bold bright-green"
 
 [python]
 disabled = false
-format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\] '
 symbol = " "
 
 [git_branch]
