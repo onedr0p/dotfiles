@@ -1,3 +1,3 @@
 function kubecolor --wraps=kubectl
-    {{ lookPath "kubecolor" }} $argv
+    command kubecolor $argv
 end
