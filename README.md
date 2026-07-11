@@ -8,7 +8,7 @@ My dotfiles managed by [Chezmoi](https://www.chezmoi.io/).
 | --------- | --------------------- | ----- | --------------- |
 | `macos`   | Laptop (macOS)        | fish  | Homebrew        |
 | `termux`  | Phone (Termux)        | fish  | pkg + mise      |
-| `truenas` | NAS (TrueNAS Scale)   | zsh   | mise            |
+| `truenas` | NAS (TrueNAS Scale)   | fish  | mise            |
 
 `chezmoi init` prompts once for the machine (with a sensible default detected
 from the environment) and everything else derives from that answer: the shell
@@ -55,10 +55,12 @@ sh -c "$(curl -fsSL get.chezmoi.io)" -- -b "$HOME/.local/bin" init --apply onedr
 ```
 
 mise is bootstrapped automatically and the declared tools are installed during
-the first apply. Afterwards, set the login shell to zsh in the TrueNAS UI.
+the first apply. Afterwards, set the login shell to zsh in the TrueNAS UI:
+fish comes from mise and can't be registered in `/etc/shells` (the base OS is
+sealed), so `.zshrc` execs into fish for interactive sessions instead.
 Re-run `chezmoi apply` after major TrueNAS updates.
 
-### Fish plugins (macos, termux)
+### Fish plugins
 
 `~/.config/fish/fish_plugins` is managed by chezmoi, but
 [fisher](https://github.com/jorgebucaran/fisher) itself is not bootstrapped by
