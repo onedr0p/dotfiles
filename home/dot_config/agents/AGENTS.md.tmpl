@@ -1,3 +1,4 @@
+{{- $shell := includeTemplate "shell" . -}}
 # Global Agent Instructions
 
 Default instructions for AI coding agents (Claude Code, Codex, etc.).
@@ -15,10 +16,12 @@ Project-level AGENTS.md / CLAUDE.md files take precedence over this file.
 
 ## Environment & Shell
 
-- **Shell**: The user uses `fish`. ALWAYS generate fish-compatible commands if a command is intended to be run by the user. Shell scripts can use bash/sh syntax.
+- **Shell**: The user uses `{{ $shell }}` on this machine. ALWAYS generate {{ $shell }}-compatible commands if a command is intended to be run by the user. Shell scripts can use bash/sh syntax.
+{{- if eq $shell "fish" }}
   - Use `(cmd)` for substitution, not `$(cmd)`.
   - Use `set -gx VAR val` for exports.
   - Use `and`/`or` for logic.
+{{- end }}
 - Both macOS and Linux are in use; anything written for the shell must work on both.
 - Dotfiles are managed with chezmoi (source: `~/.local/share/chezmoi`). Edit dotfiles in the chezmoi source, not the rendered files in `$HOME`.
 
