@@ -1,3 +1,12 @@
+{{- $machine := includeTemplate "machine" . -}}
+{{- if eq $machine "truenas" }}
+# fish can't be the login shell here (sealed rootfs, not in /etc/shells), so
+# interactive sessions exec into it; `zsh` typed from fish still gets zsh.
+if [[ -z "$ZSH_EXECUTION_STRING" && "$(ps -p $PPID -o comm= 2>/dev/null)" != "fish" ]] && command -v fish >/dev/null; then
+    exec fish
+fi
+{{- end }}
+
 export ZSH="{{ .chezmoi.homeDir }}/.oh-my-zsh"
 ZSH_THEME=""
 plugins=(fluxcd git kubectl)
