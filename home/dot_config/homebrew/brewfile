@@ -192,6 +192,8 @@ brew "pnpm"
 brew "podman"
 # Print the IP addresses in a given range
 brew "prips"
+# Modern replacement for ps written in Rust
+brew "procs"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.13"
 # Generic machine emulator and virtualizer
