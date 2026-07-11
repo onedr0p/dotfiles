@@ -25,13 +25,25 @@ chezmoi init --apply onedr0p/dotfiles
 ```
 
 The brew bundle hook installs everything in the brewfile on first apply.
+Afterwards, make fish the login shell:
+
+```sh
+echo "$(brew --prefix)/bin/fish" | sudo tee -a /etc/shells
+chsh -s "$(brew --prefix)/bin/fish"
+```
 
 ### termux
 
 ```sh
-pkg install chezmoi git
+pkg install chezmoi git mise fish
 chezmoi init --apply onedr0p/dotfiles
+chsh -s fish
 ```
+
+mise is not bootstrapped by a hook on termux; it must come from pkg (as above)
+or the mise-install hook silently skips and no declared tools get installed.
+Prompt niceties (starship, zoxide, atuin, bat, lsd) also come from pkg; the
+fish config skips whichever are missing.
 
 ### truenas
 
@@ -46,8 +58,23 @@ mise is bootstrapped automatically and the declared tools are installed during
 the first apply. Afterwards, set the login shell to zsh in the TrueNAS UI.
 Re-run `chezmoi apply` after major TrueNAS updates.
 
+### Fish plugins (macos, termux)
+
+`~/.config/fish/fish_plugins` is managed by chezmoi, but
+[fisher](https://github.com/jorgebucaran/fisher) itself is not bootstrapped by
+a hook. Install it once from a fish shell and it picks up the managed plugin
+list:
+
+```sh
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
+fisher update
+```
+
 ## Notes
 
-The machine answer is stored in the local chezmoi config
-(`~/.config/chezmoi/chezmoi.yaml`), not in this repo. To change it later,
-remove the `machine` entry from that file and re-run `chezmoi init`.
+- The machine answer is stored in the local chezmoi config
+  (`~/.config/chezmoi/chezmoi.yaml`), not in this repo. To change it later,
+  remove the `machine` entry from that file and re-run `chezmoi init`.
+- `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md` are symlinks to
+  `~/.config/agents/AGENTS.md`, so Claude Code and Codex share one set of
+  global agent instructions.
