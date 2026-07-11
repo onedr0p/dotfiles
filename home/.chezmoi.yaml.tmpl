@@ -6,6 +6,8 @@
 {{- end -}}
 {{- $machine := promptChoiceOnce . "machine" "Machine" (list "macos" "termux" "truenas") $default -}}
 format: yaml
+# Run scripts from the home dataset: /tmp is mounted noexec on TrueNAS Scale.
+scriptTempDir: {{ .chezmoi.homeDir }}/.cache/chezmoi
 data:
   name: "Devin Buhl"
   machine: {{ $machine | quote }}
