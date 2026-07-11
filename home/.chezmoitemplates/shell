@@ -1,6 +1,0 @@
-{{- /* The machine's shell: zsh on truenas, fish everywhere else. */ -}}
-{{- if eq (includeTemplate "machine" .) "truenas" -}}
-zsh
-{{- else -}}
-fish
-{{- end -}}

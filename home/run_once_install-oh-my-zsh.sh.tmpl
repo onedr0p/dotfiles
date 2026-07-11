@@ -1,4 +1,4 @@
-{{- if eq (includeTemplate "shell" .) "zsh" -}}
+{{- if eq (includeTemplate "machine" .) "truenas" -}}
 #!/bin/bash
 set -euo pipefail
 # Clone oh-my-zsh only if missing; chezmoi manages ~/.zshrc, so we skip the
