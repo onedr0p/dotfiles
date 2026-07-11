@@ -4,6 +4,7 @@ add_newline = true
 
 format = """\
   $username\
+  $hostname\
   $directory\
   $kubernetes\
   $git_branch\
@@ -11,9 +12,10 @@ format = """\
   $git_state\
   $git_status\
   $python\
-  $cmd_duration\
   $character\
   """
+
+right_format = "$cmd_duration"
 
 [character]
 success_symbol = "\n[❯](bold green)"
@@ -26,6 +28,13 @@ min_time = 500
 disabled = false
 show_always = false
 
+[hostname]
+disabled = false
+ssh_only = true
+ssh_symbol = " "
+format = "[$ssh_symbol$hostname]($style) "
+style = "bold yellow"
+
 [directory]
 disabled = false
 truncation_length = 8
@@ -33,8 +42,15 @@ truncate_to_repo = true
 read_only = " "
 home_symbol = " "
 
+[directory.substitutions]
+"~/.local/share/chezmoi" = "chezmoi"
+
 [kubernetes]
 disabled = false
+# detect_env_vars is intentionally absent: with detect_files/folders set,
+# starship 1.26 never consults it (Option::or short-circuits on Some(false))
+detect_files = ["kustomization.yaml", "Chart.yaml", "helmfile.yaml"]
+detect_folders = ["kubernetes", "k8s"]
 symbol = "󱃾 "
 format = "[\\[$symbol$context \\($namespace\\)\\]]($style) "
 style  = "bold bright-green"
@@ -48,9 +64,15 @@ symbol = " "
 disabled = false
 symbol = " "
 
+[git_status]
+disabled = false
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+
 [git_commit]
 disabled = false
 commit_hash_length = 8
-only_detached = false
+only_detached = true
 style = "grey"
 tag_symbol = " "
