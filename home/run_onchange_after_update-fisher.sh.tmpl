@@ -1,0 +1,18 @@
+#!/bin/bash
+# fish_plugins hash: {{ include "dot_config/fish/fish_plugins" | sha256sum }}
+set -euo pipefail
+# Bootstrap fisher and sync the managed plugin list whenever it changes.
+# "update-fisher" sorts after brew-bundle and mise-install, so fish already
+# exists on first apply (brew on macos, mise on truenas). No fish means no
+# plugins to manage (termux), so skip.
+FISH="$(command -v fish || true)"
+for candidate in /opt/homebrew/bin/fish /usr/local/bin/fish "{{ .chezmoi.homeDir }}/.local/share/mise/shims/fish"; do
+    [ -n "$FISH" ] && break
+    [ -x "$candidate" ] && FISH="$candidate"
+done
+[ -n "$FISH" ] || exit 0
+if "$FISH" -c 'functions -q fisher' 2>/dev/null; then
+    "$FISH" -c 'fisher update'
+else
+    "$FISH" -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update'
+fi
