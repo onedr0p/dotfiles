@@ -1,5 +1,5 @@
 [user]
-  name = Devin Buhl
+  name = {{ .name }}
   email = devin@buhl.casa
   {{- $machine := includeTemplate "machine" . }}
   {{- if eq $machine "termux" }}
