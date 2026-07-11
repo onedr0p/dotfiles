@@ -62,15 +62,9 @@ Re-run `chezmoi apply` after major TrueNAS updates.
 
 ### Fish plugins
 
-`~/.config/fish/fish_plugins` is managed by chezmoi, but
-[fisher](https://github.com/jorgebucaran/fisher) itself is not bootstrapped by
-a hook. Install it once from a fish shell and it picks up the managed plugin
-list:
-
-```sh
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
-fisher update
-```
+`~/.config/fish/fish_plugins` is managed by chezmoi, and the `update-fisher`
+hook bootstraps [fisher](https://github.com/jorgebucaran/fisher) and re-runs
+`fisher update` whenever the plugin list changes.
 
 ## Notes
 
