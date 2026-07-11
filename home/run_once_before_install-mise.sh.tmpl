@@ -1,0 +1,10 @@
+{{- if eq (includeTemplate "machine" .) "truenas" -}}
+#!/bin/bash
+set -euo pipefail
+# Bootstrap mise before files are applied, so the mise-install hook (run after
+# files) has a working mise to read ~/.config/mise/config.toml. truenas only:
+# macos gets mise from Homebrew, termux from its own package setup.
+if ! command -v mise >/dev/null && [ ! -x "{{ .chezmoi.homeDir }}/.local/bin/mise" ]; then
+    curl -fsSL https://mise.run | sh
+fi
+{{- end -}}

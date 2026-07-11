@@ -1,0 +1,10 @@
+{{- /* One of: macos, termux, truenas. Prompted at init; derived for configs that predate the prompt. */ -}}
+{{- if hasKey . "machine" -}}
+{{- .machine -}}
+{{- else if contains "termux" .chezmoi.homeDir -}}
+termux
+{{- else if eq .chezmoi.os "darwin" -}}
+macos
+{{- else -}}
+truenas
+{{- end -}}

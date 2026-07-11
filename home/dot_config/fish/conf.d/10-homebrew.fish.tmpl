@@ -1,4 +1,4 @@
-{{- if (eq .chezmoi.os "darwin") }}
+{{- if eq (includeTemplate "machine" .) "macos" }}
 set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx HOMEBREW_BUNDLE_FILE {{ .chezmoi.homeDir }}/.config/homebrew/brewfile
 set -gx HOMEBREW_CASK_OPTS --no-quarantine

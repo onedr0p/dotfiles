@@ -1,3 +1,11 @@
+{{- $default := "truenas" -}}
+{{- if contains "termux" .chezmoi.homeDir -}}
+{{-   $default = "termux" -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $default = "macos" -}}
+{{- end -}}
+{{- $machine := promptChoiceOnce . "machine" "Machine" (list "macos" "termux" "truenas") $default -}}
 format: yaml
 data:
   name: "Devin Buhl"
+  machine: {{ $machine | quote }}

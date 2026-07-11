@@ -1,0 +1,9 @@
+{{- if ne (includeTemplate "machine" .) "macos" -}}
+#!/bin/bash
+# mise config hash: {{ include "dot_config/mise/config.toml.tmpl" | sha256sum }}
+set -euo pipefail
+# Install the tools declared in the mise config whenever that config changes.
+MISE="{{ .chezmoi.homeDir }}/.local/bin/mise"
+[ -x "$MISE" ] || MISE="$(command -v mise || true)"
+[ -n "$MISE" ] && "$MISE" install --yes
+{{- end -}}

@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "darwin" -}}
+{{- if eq (includeTemplate "machine" .) "macos" -}}
 #!/bin/bash
 # brewfile hash: {{ include "dot_config/homebrew/brewfile" | sha256sum }}
 set -euo pipefail
