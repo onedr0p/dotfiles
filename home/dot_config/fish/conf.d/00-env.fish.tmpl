@@ -9,8 +9,6 @@ status is-interactive; and set -gx GPG_TTY (tty)
 set -gx LANG en_US.utf-8
 {{- if eq (includeTemplate "machine" .) "truenas" }}
 
-# TrueNAS SCALE mounts /tmp noexec; installers that run binaries out of the
-# temp dir (e.g. rustup-init) need an exec-able one.
 set -gx TMPDIR {{ .chezmoi.homeDir }}/.cache/tmp
 test -d $TMPDIR; or mkdir -p $TMPDIR
 {{- end }}
