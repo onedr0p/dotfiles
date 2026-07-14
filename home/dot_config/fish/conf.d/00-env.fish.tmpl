@@ -7,6 +7,11 @@ set -gx ANSIBLE_HOST_KEY_CHECKING False
 set -gx PY_COLORS true
 status is-interactive; and set -gx GPG_TTY (tty)
 set -gx LANG en_US.utf-8
+{{- if eq (includeTemplate "machine" .) "truenas" }}
+
+set -gx TMPDIR {{ .chezmoi.homeDir }}/.cache/tmp
+test -d $TMPDIR; or mkdir -p $TMPDIR
+{{- end }}
 
 fish_add_path --global "{{ .chezmoi.homeDir }}/.local/bin"
 fish_add_path --global "{{ .chezmoi.homeDir }}/.cargo/bin"
