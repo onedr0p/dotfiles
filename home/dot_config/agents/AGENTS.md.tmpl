@@ -13,7 +13,7 @@ These rules bias toward caution over speed; use judgment on trivial tasks.
 - Never use em dashes in prose. Use a hyphen (-), semicolon (;), or colon (:) instead, whichever fits.
 - Reversible actions that follow from the request: just do them and say so. Stop and ask only for destructive or hard-to-undo actions, or a genuine change of scope.
 - After a code change, verify it by actually running the code or its tests; don't claim it works untested.
-- Comments explain non-obvious constraints only. Don't add comments that narrate what the code does.
+- Comments explain non-obvious constraints only. Don't add comments that narrate what the code does and do not comment on previous or past behavior.
 - Never edit secrets or ignored files (`*.key`, `*.crt`, `.private/`, anything gitignored).
 
 ## Code Discipline
@@ -22,7 +22,6 @@ These rules bias toward caution over speed; use judgment on trivial tasks.
 - Touch only what the request requires. Don't refactor or "improve" adjacent code; match the existing style even when you'd do it differently.
 - Remove imports, variables, and functions that your change orphaned. Leave pre-existing dead code alone; mention it instead.
 - Every changed line should trace back to the request.
-- When writing comments in code keep the prose short and do not comment on previous or past behavior. If there is no need to add a comment, do not add any.
 
 ## Environment & Shell
 
