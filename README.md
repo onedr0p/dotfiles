@@ -54,6 +54,14 @@ so install chezmoi to `~/.local/bin` with the official script:
 sh -c "$(curl -fsSL get.chezmoi.io)" -- -b "$HOME/.local/bin" init --apply onedr0p/dotfiles
 ```
 
+TrueNAS Scale mounts `/tmp` noexec, which breaks chezmoi script hooks and mise
+installs. A post-init script must exist to remount it with exec (System →
+Advanced Settings → Init/Shutdown Scripts, type Command, when Post Init):
+
+```sh
+mount -o remount,exec /tmp
+```
+
 mise is bootstrapped automatically and the declared tools are installed during
 the first apply. Afterwards, set the login shell to zsh in the TrueNAS UI:
 fish comes from mise and can't be registered in `/etc/shells` (the base OS is
