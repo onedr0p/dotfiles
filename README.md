@@ -98,7 +98,9 @@ sudo curl -fsSL https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo 
   | sudo tee /etc/yum.repos.d/terra.repo
 sudo rpm-ostree install --idempotent terra-release
 # libatomic: runtime dep for the mise-managed node build (not in the base image)
-sudo rpm-ostree install --idempotent --assumeyes fish git mise starship libatomic
+# systemd-networkd: not in Fedora IoT's base image; layered for step 2 below
+sudo rpm-ostree install --idempotent --assumeyes \
+  fish git mise starship libatomic systemd-networkd
 
 # Permissive SELinux + no host firewall (dev box)
 sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
@@ -107,7 +109,27 @@ sudo systemctl disable --now firewalld.service
 sudo systemctl reboot
 ```
 
-**2. Per-user setup** (after the reboot):
+**2. Network — switch to systemd-networkd** (optional; Fedora IoT defaults to
+NetworkManager, which is fine to keep). Do this *after* the reboot and ideally
+from the console: dropping NetworkManager kills any in-flight SSH session.
+`systemd-networkd` does nothing until it has a `.network` file, so write the
+config **first**, enable networkd, and disable NetworkManager **last** — the
+reverse order leaves the box with no networking.
+
+```sh
+# Replicate the current DHCP setup on the wired link (adjust the interface name)
+printf '[Match]\nName=ens2\n\n[Network]\nDHCP=yes\n' \
+  | sudo tee /etc/systemd/network/20-wired.network
+
+# Bring networkd + DNS up, hand /etc/resolv.conf to systemd-resolved
+sudo systemctl enable --now systemd-networkd systemd-resolved
+sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+# Only now retire NetworkManager
+sudo systemctl disable --now NetworkManager
+```
+
+**3. Per-user setup** (after the reboot):
 
 ```sh
 # Pull your SSH public keys from GitHub for remote login
@@ -118,7 +140,7 @@ curl https://github.com/$GITHUB_USER.keys > ~/.ssh/authorized_keys
 chsh -s /usr/bin/fish
 ```
 
-**3. chezmoi.** It is not layered; install it to `~/.local/bin` with the
+**4. chezmoi.** It is not layered; install it to `~/.local/bin` with the
 official script (as on truenas), then let the first apply take over. mise then
 manages chezmoi going forward (it is in the fedora tool list):
 
