@@ -1,9 +1,11 @@
-{{- if eq (includeTemplate "machine" .) "truenas" -}}
+{{- if or (eq (includeTemplate "machine" .) "truenas") (eq (includeTemplate "machine" .) "fedora") -}}
 #!/bin/bash
 set -euo pipefail
 # Bootstrap mise before files are applied, so the mise-install hook (run after
-# files) has a working mise to read ~/.config/mise/config.toml. truenas only:
-# macos gets mise from Homebrew, termux from its own package setup.
+# files) has a working mise to read ~/.config/mise/config.toml. truenas and
+# fedora: macos gets mise from Homebrew, termux from its own package setup.
+# On Fedora IoT mise usually comes from rpm-ostree; the command -v guard below
+# makes this a no-op when it is already present.
 if ! command -v mise >/dev/null && [ ! -x "{{ .chezmoi.homeDir }}/.local/bin/mise" ]; then
     curl -fsSL https://mise.run | sh
 fi

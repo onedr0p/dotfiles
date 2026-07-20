@@ -3,8 +3,12 @@
 {{-   $default = "termux" -}}
 {{- else if eq .chezmoi.os "darwin" -}}
 {{-   $default = "macos" -}}
+{{- else if eq .chezmoi.os "linux" -}}
+{{-   if eq (index .chezmoi.osRelease "id") "fedora" -}}
+{{-     $default = "fedora" -}}
+{{-   end -}}
 {{- end -}}
-{{- $machine := promptChoiceOnce . "machine" "Machine" (list "macos" "termux" "truenas") $default -}}
+{{- $machine := promptChoiceOnce . "machine" "Machine" (list "macos" "termux" "truenas" "fedora") $default -}}
 format: yaml
 data:
   name: "Devin Buhl"
