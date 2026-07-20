@@ -76,6 +76,19 @@ base tools (`fish`, `git`, `mise`, `starship`) are layered into the OS image
 and activated with a reboot. The `terra-release` repo provides `mise` and
 `starship`.
 
+**0. Passwordless sudo** (optional, dev box only — the provisioning below is
+sudo-heavy). Add a `wheel` NOPASSWD drop-in, validated with `visudo` so a typo
+can't lock you out of sudo:
+
+```sh
+echo '%wheel ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/10-wheel-nopasswd
+sudo chmod 0440 /etc/sudoers.d/10-wheel-nopasswd
+sudo visudo -cf /etc/sudoers.d/10-wheel-nopasswd   # must print "... parsed OK"
+```
+
+Your user must be in the `wheel` group (`id -nG | grep -qw wheel`); add it with
+`sudo usermod -aG wheel "$USER"` and re-login if not.
+
 **1. Host provisioning** (needs `sudo`; ends in a reboot that activates the
 layered packages, permissive SELinux, and the disabled firewall):
 
