@@ -1,0 +1,30 @@
+# Theme config
+theme = Night Owl
+
+# Fonts
+font-family = FiraCode Nerd Font
+font-size = 14
+font-thicken = true
+
+# macOS specific
+macos-auto-secure-input = true
+macos-secure-input-indication = true
+
+window-padding-balance = false
+window-padding-x = 10
+window-padding-y = 10,2
+
+# Application settings
+auto-update = download
+auto-update-channel = stable
+clipboard-trim-trailing-spaces = true
+shell-integration = detect
+
+# Window settings
+window-height = 45
+window-width = 180
+
+# Cursor settings
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
