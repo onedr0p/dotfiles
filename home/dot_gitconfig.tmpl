@@ -4,8 +4,8 @@
   {{- $machine := includeTemplate "machine" . }}
   {{- if eq $machine "termux" }}
   signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGzIUqlk6IxP55MutXhdKy1w76sfJOd9YFT58P5Vy/0B
-  {{- else if eq $machine "truenas" }}
-  {{- /* Key file path, not the literal key: no ssh-agent runs here, so git signs with the on-disk private key. */}}
+  {{- else if or (eq $machine "truenas") (eq $machine "fedora") }}
+  {{- /* Key file path, not the literal key: no ssh-agent assumed, so git signs with the on-disk private key. */}}
   signingKey = {{ .chezmoi.homeDir }}/.ssh/id_ed25519.pub
   {{- else }}
   signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJnRHFdQWqxfTRuioNM4G3vZyWQy18Xty1+vQV0qm/6G
