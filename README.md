@@ -72,23 +72,42 @@ Re-run `chezmoi apply` after major TrueNAS updates.
 ### fedora
 
 Fedora IoT is an immutable `rpm-ostree` system: `/usr` is read-only, so the
-base tools (`fish`, `git`, `mise`) are layered into the OS image and activated
-with a reboot. The `terra-release` repo provides `mise`:
+base tools (`fish`, `git`, `mise`, `starship`) are layered into the OS image
+and activated with a reboot. The `terra-release` repo provides `mise` and
+`starship`.
+
+**1. Host provisioning** (needs `sudo`; ends in a reboot that activates the
+layered packages, permissive SELinux, and the disabled firewall):
 
 ```sh
+# Terra repo -> mise + starship
 sudo curl -fsSL https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo \
   | sudo tee /etc/yum.repos.d/terra.repo
 sudo rpm-ostree install --idempotent terra-release
-sudo rpm-ostree install --idempotent --assumeyes fish git mise
+# libatomic: runtime dep for the mise-managed node build (not in the base image)
+sudo rpm-ostree install --idempotent --assumeyes fish git mise starship libatomic
+
+# Permissive SELinux + no host firewall (dev box)
+sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+sudo systemctl disable --now firewalld.service
+
 sudo systemctl reboot
 ```
 
-fish is a real login shell here (it is in `/etc/shells`), so there is no zsh
-layer — set it with `chsh -s /usr/bin/fish` if it is not already your shell.
+**2. Per-user setup** (after the reboot):
 
-chezmoi itself is not layered; install it to `~/.local/bin` with the official
-script (as on truenas), then let the first apply take over. mise then manages
-chezmoi going forward (it is in the fedora tool list):
+```sh
+# Pull your SSH public keys from GitHub for remote login
+export GITHUB_USER="onedr0p"
+curl https://github.com/$GITHUB_USER.keys > ~/.ssh/authorized_keys
+
+# fish is a real login shell here (it is in /etc/shells), so no zsh layer
+chsh -s /usr/bin/fish
+```
+
+**3. chezmoi.** It is not layered; install it to `~/.local/bin` with the
+official script (as on truenas), then let the first apply take over. mise then
+manages chezmoi going forward (it is in the fedora tool list):
 
 ```sh
 sh -c "$(curl -fsSL get.chezmoi.io)" -- -b "$HOME/.local/bin" init --apply onedr0p/dotfiles

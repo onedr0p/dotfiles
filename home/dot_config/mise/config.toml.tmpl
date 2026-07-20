@@ -67,8 +67,9 @@ experimental = true
 {{- else if eq $machine "fedora" }}
 
 [tools]
-# fish, git and mise come from rpm-ostree on Fedora IoT, so they are not
-# declared here. chezmoi is managed by mise after the get.chezmoi.io bootstrap.
+# fish, git, mise and starship come from rpm-ostree (terra) on Fedora IoT, so
+# they are not declared here. chezmoi is managed by mise after the
+# get.chezmoi.io bootstrap.
 "1password" = "2.35.0"
 "age" = "latest"
 "atuin" = "latest"
@@ -101,7 +102,6 @@ experimental = true
 "rg" = "latest"
 "sd" = "latest"
 "sops" = "latest"
-"starship" = "latest"
 "stern" = "latest"
 "talos" = "latest"
 "task" = "latest"
@@ -114,6 +114,7 @@ experimental = true
 "aqua:dalance/procs" = "latest"
 "aqua:mitsuhiko/minijinja" = "latest"
 "aqua:samwho/spacer" = "latest"
-"github:autobrr/go-mediainfo" = "latest"
-"github:home-operations/flate" = "latest"
+{{- /* go-mediainfo and flate (github: backend) are home-media tools, not dev
+       tools, and their unauthenticated GitHub API lookups hit the anonymous
+       rate limit here — omitted from the fedora dev box. */}}
 {{- end }}
