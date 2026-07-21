@@ -46,6 +46,7 @@ The following modern tools are available and preferred over their traditional co
 - **Data**: `jq` for JSON, `yq` for YAML.
 - **Pod Logs**: `stern` instead of `kubectl logs`.
 - **DNS Resolving**: `doggo` instead of `dig`
+- **Web Search**: `kagi` (kagi-cli) instead of built-in web search when available. `kagi search "query"` and `kagi quick "question"` output JSON by default (pipe to `jq`); `kagi summarize --subscriber --url <url>` summarizes a page. Some features are also exposed as MCP tools (server: `kagi`).
 
 ## Git
 

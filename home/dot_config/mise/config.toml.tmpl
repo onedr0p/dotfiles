@@ -64,6 +64,7 @@ experimental = true
 "aqua:samwho/spacer" = "latest"
 "github:autobrr/go-mediainfo" = "latest"
 "github:home-operations/flate" = "latest"
+"github:Microck/kagi-cli" = "latest"
 {{- else if eq $machine "fedora" }}
 
 [tools]
@@ -114,6 +115,7 @@ experimental = true
 "aqua:dalance/procs" = "latest"
 "aqua:mitsuhiko/minijinja" = "latest"
 "aqua:samwho/spacer" = "latest"
+"github:Microck/kagi-cli" = "latest"
 {{- /* go-mediainfo and flate (github: backend) are home-media tools, not dev
        tools, and their unauthenticated GitHub API lookups hit the anonymous
        rate limit here — omitted from the fedora dev box. */}}
