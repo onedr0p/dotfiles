@@ -10,6 +10,8 @@ These rules bias toward caution over speed; use judgment on trivial tasks.
 - When asked a question, answer it; don't jump straight to editing files.
 - If a request is ambiguous, present the interpretations instead of picking one silently. If a simpler approach exists, say so; push back when warranted.
 - Don't state versions, API shapes, or flags from memory; verify against the release page, docs, or the code itself.
+- Only cite URLs actually fetched in the current session. Omit a citation rather than fabricate or carry one forward unverified.
+- Don't provide time estimates.
 - Never use em dashes in prose. Use a hyphen (-), semicolon (;), or colon (:) instead, whichever fits.
 - Reversible actions that follow from the request: just do them and say so. Stop and ask only for destructive or hard-to-undo actions, or a genuine change of scope.
 - After a code change, verify it by actually running the code or its tests; don't claim it works untested.
@@ -36,7 +38,7 @@ These rules bias toward caution over speed; use judgment on trivial tasks.
 
 The following modern tools are available and preferred over their traditional counterparts:
 
-- **Search**: `rg` (ripgrep) instead of `grep`.
+- **Search**: `rg` (ripgrep) instead of `grep`. rg is recursive by default; never pass `-r` (it means `--replace` and silently rewrites matched text in the output).
 - **Find**: `fd` instead of `find`.
 - **List**: `lsd` instead of `ls`.
 - **Processes**: `procs` instead of `ps`.
