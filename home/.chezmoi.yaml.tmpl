@@ -9,7 +9,10 @@
 {{-   end -}}
 {{- end -}}
 {{- $machine := promptChoiceOnce . "machine" "Machine" (list "macos" "termux" "truenas" "fedora") $default -}}
+{{- $name := promptStringOnce . "name" "Git name" "Devin Buhl" -}}
+{{- $email := promptStringOnce . "email" "Git email" "devin@buhl.casa" -}}
 format: yaml
 data:
-  name: "Devin Buhl"
+  name: {{ $name | quote }}
+  email: {{ $email | quote }}
   machine: {{ $machine | quote }}

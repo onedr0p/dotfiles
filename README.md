@@ -11,8 +11,8 @@ My dotfiles managed by [Chezmoi](https://www.chezmoi.io/).
 | `truenas` | NAS (TrueNAS Scale)   | fish  | mise            |
 | `fedora`  | Dev box (Fedora IoT)  | fish  | rpm-ostree + mise |
 
-`chezmoi init` prompts once for the machine (with a sensible default detected
-from the environment) and everything else derives from that answer: the shell
+`chezmoi init` prompts once for the machine and Git identity. The machine has a
+sensible default detected from the environment, and determines the shell
 config to lay down, the mise tool list, and the package hooks.
 
 ## Bootstrap
@@ -71,10 +71,9 @@ Re-run `chezmoi apply` after major TrueNAS updates.
 
 ### fedora
 
-Fedora IoT is an immutable `rpm-ostree` system: `/usr` is read-only, so the
-base tools (`fish`, `git`, `mise`, `starship`) are layered into the OS image
-and activated with a reboot. The `terra-release` repo provides `mise` and
-`starship`.
+Fedora IoT is an immutable `rpm-ostree` system: `/usr` is read-only, so system
+packages are layered into the OS image and activated with a reboot. The
+`terra-release` repo provides `mise` and `starship`.
 
 **0. Passwordless sudo** (optional, dev box only — the provisioning below is
 sudo-heavy). Add a `wheel` NOPASSWD drop-in, validated with `visudo` so a typo
@@ -97,10 +96,15 @@ layered packages, permissive SELinux, and the disabled firewall):
 sudo curl -fsSL https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo \
   | sudo tee /etc/yum.repos.d/terra.repo
 sudo rpm-ostree install --idempotent terra-release
-# libatomic: runtime dep for the mise-managed node build (not in the base image)
-# systemd-networkd: not in Fedora IoT's base image; layered for step 2 below
+# libatomic is a runtime dependency for the mise-managed node build.
+# systemd-networkd supports the optional network setup in step 2 below.
 sudo rpm-ostree install --idempotent --assumeyes \
-  fish git mise starship libatomic systemd-networkd
+  autoconf automake bat bind-utils binutils btop docker expect fastfetch \
+  fd-find fish fzf gcc gcc-c++ git htop libatomic libtool lm_sensors lsd \
+  make mise moreutils nano net-tools netcat nmap nvme-cli patch pciutils \
+  procs qemu-guest-agent qemu-system-x86-core qemu-user-static-aarch64 \
+  ripgrep rsync runc smartmontools starship systemd-networkd tcpdump telnet \
+  tree usbutils wget zoxide
 
 # Permissive SELinux + no host firewall (dev box)
 sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
@@ -149,8 +153,8 @@ sh -c "$(curl -fsSL get.chezmoi.io)" -- -b "$HOME/.local/bin" init --apply onedr
 ```
 
 Pick `fedora` at the machine prompt (it is the default on Fedora). The
-mise-install hook installs the declared tools into `~/.local`; nothing else is
-layered onto the OS image. Re-run `chezmoi apply` after pulling changes.
+mise-install hook installs the remaining declared tools into `~/.local`.
+Re-run `chezmoi apply` after pulling changes.
 
 ### Fish plugins
 
@@ -160,9 +164,9 @@ hook bootstraps [fisher](https://github.com/jorgebucaran/fisher) and re-runs
 
 ## Notes
 
-- The machine answer is stored in the local chezmoi config
-  (`~/.config/chezmoi/chezmoi.yaml`), not in this repo. To change it later,
-  remove the `machine` entry from that file and re-run `chezmoi init`.
+- The machine and Git identity answers are stored in the local chezmoi config
+  (`~/.config/chezmoi/chezmoi.yaml`), not in this repo. To change one later,
+  remove its entry from that file and re-run `chezmoi init`.
 - `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md` are symlinks to
   `~/.config/agents/AGENTS.md`, so Claude Code and Codex share one set of
   global agent instructions.
