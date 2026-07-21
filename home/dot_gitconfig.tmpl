@@ -1,6 +1,6 @@
 [user]
   name = {{ .name }}
-  email = devin@buhl.casa
+  email = {{ index . "email" | default "devin@buhl.casa" }}
   {{- $machine := includeTemplate "machine" . }}
   {{- if eq $machine "termux" }}
   signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGzIUqlk6IxP55MutXhdKy1w76sfJOd9YFT58P5Vy/0B
