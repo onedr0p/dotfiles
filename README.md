@@ -73,7 +73,8 @@ Re-run `chezmoi apply` after major TrueNAS updates.
 
 Fedora IoT is an immutable `rpm-ostree` system: `/usr` is read-only, so system
 packages are layered into the OS image and activated with a reboot. The
-`terra-release` repo provides `mise` and `starship`.
+`terra-release` repo provides packages including `1password-cli`, `kopia`,
+`mise`, `sops`, and `starship`.
 
 **0. Passwordless sudo** (optional, dev box only — the provisioning below is
 sudo-heavy). Add a `wheel` NOPASSWD drop-in, validated with `visudo` so a typo
@@ -99,12 +100,13 @@ sudo rpm-ostree install --idempotent terra-release
 # libatomic is a runtime dependency for the mise-managed node build.
 # systemd-networkd supports the optional network setup in step 2 below.
 sudo rpm-ostree install --idempotent --assumeyes \
-  autoconf automake bat bind-utils binutils btop docker expect fastfetch \
-  fd-find fish fzf gcc gcc-c++ git htop libatomic libtool lm_sensors lsd \
-  make mise moreutils nano net-tools netcat nmap nvme-cli patch pciutils \
-  procs qemu-guest-agent qemu-system-x86-core qemu-user-static-aarch64 \
-  ripgrep rsync runc smartmontools starship systemd-networkd tcpdump telnet \
-  tree usbutils wget zoxide
+  1password-cli age atuin autoconf automake bat bind-utils binutils btop \
+  chezmoi croc docker expect fastfetch fd-find fish fzf gcc gcc-c++ gh git \
+  gum helm htop just kopia kustomize libatomic libtool lm_sensors lsd make \
+  mise moreutils nano net-tools netcat nmap nvme-cli patch pciutils procs \
+  qemu-guest-agent qemu-system-x86-core qemu-user-static-aarch64 ripgrep \
+  rsync runc smartmontools sops spacer starship systemd-networkd tcpdump \
+  telnet tree usbutils wget yq zoxide
 
 # Permissive SELinux + no host firewall (dev box)
 sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
@@ -144,12 +146,11 @@ curl https://github.com/$GITHUB_USER.keys > ~/.ssh/authorized_keys
 chsh -s /usr/bin/fish
 ```
 
-**4. chezmoi.** It is not layered; install it to `~/.local/bin` with the
-official script (as on truenas), then let the first apply take over. mise then
-manages chezmoi going forward (it is in the fedora tool list):
+**4. chezmoi.** It is layered by the rpm-ostree command in step 1, so initialize
+the dotfiles directly:
 
 ```sh
-sh -c "$(curl -fsSL get.chezmoi.io)" -- -b "$HOME/.local/bin" init --apply onedr0p/dotfiles
+chezmoi init --apply onedr0p/dotfiles
 ```
 
 Pick `fedora` at the machine prompt (it is the default on Fedora). The
