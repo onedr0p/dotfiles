@@ -3,8 +3,8 @@ machine = "macos"
 
 [dotfiles]
 "~/.config/mise/mise.macos.toml" = { source = "~/.dotfiles/mise.macos.toml", mode = "symlink" }
-"~/.config/homebrew" = { source = "~/.dotfiles/home/macos/homebrew", mode = "symlink" }
-"~/.config/fish/conf.d/10-homebrew.fish" = { source = "~/.dotfiles/home/macos/10-homebrew.fish", mode = "symlink" }
+"~/.config/homebrew" = { source = "~/.dotfiles/home/config/homebrew", mode = "symlink" }
+"~/.config/fish/conf.d/10-homebrew.fish" = { source = "~/.dotfiles/home/config/fish/conf.d/10-homebrew.fish", mode = "symlink" }
 
 # Runs after the dotfiles phase so the brewfile symlink exists on first run.
 [bootstrap.hooks.post-dotfiles]

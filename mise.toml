@@ -9,13 +9,14 @@ experimental = true
 git_name = "Devin Buhl"
 git_email = "devin@buhl.casa"
 
-# home/config mirrors ~/.config exactly; template sources and machine-only
-# files live outside it so symlink-each never deploys them (`exclude` is not
-# supported by the current mise release).
+# home/config mirrors ~/.config; template sources and macos-only files are
+# excluded from the symlink-each walk and deployed by their own entries.
+# `exclude` requires a mise release newer than 2026.7.15 - older versions
+# ignore the key silently and deploy the excluded files too.
 [dotfiles]
-"~/.config" = { source = "~/.dotfiles/home/config", mode = "symlink-each" }
-"~/.config/fish/functions/ms.fish" = { source = "~/.dotfiles/home/fish/ms.fish.tmpl", mode = "template" }
-"~/.config/fish/functions/tf.fish" = { source = "~/.dotfiles/home/fish/tf.fish.tmpl", mode = "template" }
+"~/.config" = { source = "~/.dotfiles/home/config", mode = "symlink-each", exclude = ["*.tmpl", "homebrew", "10-homebrew.fish"] }
+"~/.config/fish/functions/ms.fish" = { source = "~/.dotfiles/home/config/fish/functions/ms.fish.tmpl", mode = "template" }
+"~/.config/fish/functions/tf.fish" = { source = "~/.dotfiles/home/config/fish/functions/tf.fish.tmpl", mode = "template" }
 "~/.gitconfig" = { source = "~/.dotfiles/home/gitconfig.tmpl", mode = "template" }
 "~/.gitignore_global" = { source = "~/.dotfiles/home/gitignore_global", mode = "symlink" }
 "~/.nanorc" = { source = "~/.dotfiles/home/nanorc", mode = "symlink" }
