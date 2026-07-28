@@ -1,0 +1,36 @@
+[vars]
+machine = "fedora"
+
+[dotfiles]
+"~/.config/mise/mise.fedora.toml" = { source = "~/.dotfiles/mise.fedora.toml", mode = "symlink" }
+
+[tools]
+# Command-line tools available through rpm-ostree are not declared here.
+"cilium-cli" = "latest"
+"claude" = "latest"
+"cloudflared" = "latest"
+"codex" = "latest"
+"dyff" = "latest"
+"flux2" = "latest"
+"helmfile" = "latest"
+"krew" = "latest"
+"kubecolor" = "latest"
+"kubeconform" = "latest"
+"kubectl" = "latest"
+"lefthook" = "latest"
+"node" = "latest"
+"npm" = "latest"
+"python" = "latest"
+"sd" = "latest"
+"stern" = "latest"
+"talos" = "latest"
+"task" = "latest"
+"vals" = "latest"
+"viddy" = "latest"
+"yamlfmt" = "latest"
+"aqua:autobrr/mkbrr" = "latest"
+"aqua:mitsuhiko/minijinja" = "latest"
+"github:Microck/kagi-cli" = "latest"
+# go-mediainfo and flate (github: backend) are home-media tools, not dev
+# tools, and their unauthenticated GitHub API lookups hit the anonymous
+# rate limit here - omitted from the fedora dev box.

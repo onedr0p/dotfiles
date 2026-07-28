@@ -1,6 +1,17 @@
 # dotfiles
 
-My dotfiles managed by [Chezmoi](https://www.chezmoi.io/).
+My dotfiles managed by [mise](https://mise.jdx.dev/dotfiles.html).
+
+## Layout
+
+- `mise.toml` - shared config: `[dotfiles]` entries, the nanorc syntax repo,
+  and the fisher bootstrap task. Symlinked to `~/.config/mise/config.toml` on
+  apply, so it is also the global mise config.
+- `mise.<machine>.toml` - per-machine overlays: `[tools]`, machine-only
+  dotfiles, packages, and the `machine` template var. Selected via `MISE_ENV`.
+- `home/` - the dotfile sources. Most are symlinked into `$HOME`
+  (`symlink-each` for `~/.config`); `*.tmpl` files are rendered with the mise
+  template engine (`~/.gitconfig`, `~/.ssh/config`, two fish functions).
 
 ## Machines
 
@@ -11,22 +22,48 @@ My dotfiles managed by [Chezmoi](https://www.chezmoi.io/).
 | `truenas` | NAS (TrueNAS Scale)   | fish  | mise            |
 | `fedora`  | Dev box (Fedora IoT)  | fish  | rpm-ostree + mise |
 
-`chezmoi init` prompts once for the machine and Git identity. The machine has a
-sensible default detected from the environment, and determines the shell
-config to lay down, the mise tool list, and the package hooks.
+The machine is pinned once per host in `~/.config/mise/miserc.toml` (untracked):
+
+```sh
+mkdir -p ~/.config/mise
+printf 'env = ["fedora"]\n' > ~/.config/mise/miserc.toml   # or macos/termux/truenas
+```
+
+It selects the `mise.<machine>.toml` overlay, which determines the shell
+config to lay down, the mise tool list, and the package hooks. Git identity
+defaults live in `[vars]` in `mise.toml`; override them per host in an
+untracked `mise.local.toml` next to `mise.toml`.
 
 ## Bootstrap
+
+Common flow, after the machine-specific preparation below:
+
+```sh
+git clone https://github.com/onedr0p/dotfiles ~/.dotfiles
+cd ~/.dotfiles
+mise trust
+mkdir -p ~/.config/mise
+printf 'env = ["<machine>"]\n' > ~/.config/mise/miserc.toml
+mise bootstrap --yes
+chmod 600 ~/.ssh/config
+```
+
+`mise bootstrap` clones the declared repos, applies the dotfiles (including
+symlinking this repo's `mise.toml` into `~/.config/mise/config.toml`),
+installs the declared `[tools]`, and runs the fisher task. Re-run it (or
+`mise dotfiles apply`) after pulling changes. The `chmod` is needed because
+git does not track the 0600 mode on the ssh config source.
 
 ### macos
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install chezmoi
-chezmoi init --apply onedr0p/dotfiles
+brew install mise
 ```
 
-The brew bundle hook installs everything in the brewfile on first apply.
-Afterwards, make fish the login shell:
+Then run the common flow. The post-dotfiles hook installs everything in the
+brewfile on each bootstrap (`--no-upgrade`, so it only installs what is
+missing). Afterwards, make fish the login shell:
 
 ```sh
 echo "$(brew --prefix)/bin/fish" | sudo tee -a /etc/shells
@@ -36,38 +73,34 @@ chsh -s "$(brew --prefix)/bin/fish"
 ### termux
 
 ```sh
-pkg install chezmoi git mise fish
-chezmoi init --apply onedr0p/dotfiles
+pkg install git mise fish
 chsh -s fish
 ```
 
-mise is not bootstrapped by a hook on termux; it must come from pkg (as above)
-or the mise-install hook silently skips and no declared tools get installed.
-Prompt niceties (starship, zoxide, atuin, bat, lsd) also come from pkg; the
-fish config skips whichever are missing.
+Then run the common flow. Prompt niceties (starship, zoxide, atuin, bat, lsd)
+also come from pkg; the fish config skips whichever are missing.
 
 ### truenas
 
 TrueNAS Scale has no usable package manager (the base OS is reset on updates),
-so install chezmoi to `~/.local/bin` with the official script:
+so install mise to `~/.local/bin` with the official script:
 
 ```sh
-sh -c "$(curl -fsSL get.chezmoi.io)" -- -b "$HOME/.local/bin" init --apply onedr0p/dotfiles
+curl https://mise.run | MISE_INSTALL_PATH="$HOME/.local/bin/mise" sh
 ```
 
-TrueNAS Scale mounts `/tmp` noexec, which breaks chezmoi script hooks and mise
-installs. A post-init script must exist to remount it with exec (System →
-Advanced Settings → Init/Shutdown Scripts, type Command, when Post Init):
+TrueNAS Scale mounts `/tmp` noexec, which breaks mise installs. A post-init
+script must exist to remount it with exec (System → Advanced Settings →
+Init/Shutdown Scripts, type Command, when Post Init):
 
 ```sh
 mount -o remount,exec /tmp
 ```
 
-mise is bootstrapped automatically and the declared tools are installed during
-the first apply. Afterwards, set the login shell to zsh in the TrueNAS UI:
-fish comes from mise and can't be registered in `/etc/shells` (the base OS is
-sealed), so `.zshrc` execs into fish for interactive sessions instead.
-Re-run `chezmoi apply` after major TrueNAS updates.
+Then run the common flow. Afterwards, set the login shell to zsh in the
+TrueNAS UI: fish comes from mise and can't be registered in `/etc/shells`
+(the base OS is sealed), so `.zshrc` execs into fish for interactive sessions
+instead. Re-run `mise bootstrap --yes` after major TrueNAS updates.
 
 ### fedora
 
@@ -101,7 +134,7 @@ sudo rpm-ostree install --idempotent terra-release
 # systemd-networkd supports the optional network setup in step 2 below.
 sudo rpm-ostree install --idempotent --assumeyes \
   1password-cli age atuin autoconf automake bat bind-utils binutils btop \
-  chezmoi croc docker expect fastfetch fd-find fish fzf gcc gcc-c++ gh git \
+  croc docker expect fastfetch fd-find fish fzf gcc gcc-c++ gh git \
   gum helm htop just kopia kustomize libatomic libtool lm_sensors lsd make \
   mise moreutils nano net-tools netcat nmap nvme-cli patch pciutils procs \
   qemu-guest-agent qemu-system-x86-core qemu-user-static-aarch64 ripgrep \
@@ -146,28 +179,26 @@ curl https://github.com/$GITHUB_USER.keys > ~/.ssh/authorized_keys
 chsh -s /usr/bin/fish
 ```
 
-**4. chezmoi.** It is layered by the rpm-ostree command in step 1, so initialize
-the dotfiles directly:
-
-```sh
-chezmoi init --apply onedr0p/dotfiles
-```
-
-Pick `fedora` at the machine prompt (it is the default on Fedora). The
-mise-install hook installs the remaining declared tools into `~/.local`.
-Re-run `chezmoi apply` after pulling changes.
+**4. Dotfiles.** mise is layered by the rpm-ostree command in step 1, so run
+the common flow with `fedora` in `miserc.toml`. The bootstrap installs the
+remaining declared tools into `~/.local`.
 
 ### Fish plugins
 
-`~/.config/fish/fish_plugins` is managed by chezmoi, and the `update-fisher`
-hook bootstraps [fisher](https://github.com/jorgebucaran/fisher) and re-runs
-`fisher update` whenever the plugin list changes.
+`~/.config/fish/fish_plugins` is a managed symlink, and the `bootstrap` task
+bootstraps [fisher](https://github.com/jorgebucaran/fisher) and runs
+`fisher update` on every `mise bootstrap`.
 
 ## Notes
 
-- The machine and Git identity answers are stored in the local chezmoi config
-  (`~/.config/chezmoi/chezmoi.yaml`), not in this repo. To change one later,
-  remove its entry from that file and re-run `chezmoi init`.
-- `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md` are symlinks to
-  `~/.config/agents/AGENTS.md`, so Claude Code and Codex share one set of
-  global agent instructions.
+- Machine identity lives in `~/.config/mise/miserc.toml`; git identity
+  overrides live in `mise.local.toml`. Neither is tracked in this repo.
+- Most deployed files are symlinks into the repo, so editing the deployed file
+  edits the repo checkout. Rendered templates (`~/.gitconfig`, `~/.ssh/config`,
+  `ms.fish`, `tf.fish`) need `mise dotfiles apply` after editing their
+  `.tmpl` source.
+- `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md` are symlinks to the same
+  agents file as `~/.config/agents/AGENTS.md`, so Claude Code and Codex share
+  one set of global agent instructions.
+- `mise dotfiles status` shows what is applied, missing, or drifted;
+  `mise bootstrap status` covers packages, repos, and tools too.
