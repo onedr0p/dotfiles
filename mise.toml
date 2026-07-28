@@ -1,0 +1,49 @@
+[settings]
+experimental = true
+
+# `machine` is defined only in the mise.<machine>.toml overlays (selected via
+# MISE_ENV, pinned once in ~/.config/mise/miserc.toml); defining it here too
+# would override the overlay when loaded from the global config dir. Git
+# identity can be overridden locally in an untracked mise.local.toml.
+[vars]
+git_name = "Devin Buhl"
+git_email = "devin@buhl.casa"
+
+# home/config mirrors ~/.config exactly; template sources and machine-only
+# files live outside it so symlink-each never deploys them (`exclude` is not
+# supported by the current mise release).
+[dotfiles]
+"~/.config" = { source = "~/.dotfiles/home/config", mode = "symlink-each" }
+"~/.config/fish/functions/ms.fish" = { source = "~/.dotfiles/home/fish/ms.fish.tmpl", mode = "template" }
+"~/.config/fish/functions/tf.fish" = { source = "~/.dotfiles/home/fish/tf.fish.tmpl", mode = "template" }
+"~/.gitconfig" = { source = "~/.dotfiles/home/gitconfig.tmpl", mode = "template" }
+"~/.gitignore_global" = { source = "~/.dotfiles/home/gitignore_global", mode = "symlink" }
+"~/.nanorc" = { source = "~/.dotfiles/home/nanorc", mode = "symlink" }
+"~/.ssh/config" = { source = "~/.dotfiles/home/ssh/config.tmpl", mode = "template" }
+"~/.claude/CLAUDE.md" = { source = "~/.dotfiles/home/config/agents/AGENTS.md", mode = "symlink" }
+"~/.codex/AGENTS.md" = { source = "~/.dotfiles/home/config/agents/AGENTS.md", mode = "symlink" }
+# Each mise.<machine>.toml overlay symlinks only itself into ~/.config/mise,
+# so hosts don't carry (and warn about) the other machines' overlays.
+"~/.config/mise/config.toml" = { source = "~/.dotfiles/mise.toml", mode = "symlink" }
+
+[bootstrap.repos]
+"~/.nano" = { url = "https://github.com/scopatz/nanorc.git" }
+
+# Bootstraps fisher and syncs the managed plugin list. Runs after [tools], so
+# fish already exists (brew on macos, mise on truenas). No fish means no
+# plugins to manage (termux), so skip.
+[tasks.bootstrap]
+run = '''
+set -eu
+FISH="$(command -v fish || true)"
+for candidate in /opt/homebrew/bin/fish /usr/local/bin/fish "$HOME/.local/share/mise/shims/fish"; do
+    [ -n "$FISH" ] && break
+    [ -x "$candidate" ] && FISH="$candidate"
+done
+[ -n "$FISH" ] || exit 0
+if "$FISH" -c 'functions -q fisher' 2>/dev/null; then
+    "$FISH" -c 'fisher update'
+else
+    "$FISH" -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update'
+fi
+'''

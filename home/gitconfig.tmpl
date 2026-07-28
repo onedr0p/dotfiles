@@ -1,0 +1,42 @@
+[user]
+  name = {{ vars.git_name }}
+  email = {{ vars.git_email }}
+{%- if vars.machine == "termux" %}
+  signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGzIUqlk6IxP55MutXhdKy1w76sfJOd9YFT58P5Vy/0B
+{%- elif vars.machine == "truenas" or vars.machine == "fedora" %}
+  {#- Key file path, not the literal key: no ssh-agent assumed, so git signs with the on-disk private key. #}
+  signingKey = {{ env.HOME }}/.ssh/id_ed25519.pub
+{%- else %}
+  signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJnRHFdQWqxfTRuioNM4G3vZyWQy18Xty1+vQV0qm/6G
+{%- endif %}
+[gpg]
+  format = ssh
+[format]
+  signOff = true
+[core]
+  autocrlf = input
+  editor = nano
+  excludesfile = {{ env.HOME }}/.gitignore_global
+[commit]
+  gpgsign = true
+[merge]
+  ff = only
+[pull]
+  rebase = true
+[fetch]
+  prune = true
+[status]
+  submoduleSummary = false
+[tag]
+  forceSignAnnotated = true
+[init]
+  defaultBranch = main
+[filter "lfs"]
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+[url "ssh://git@github.com/"]
+  pushInsteadOf = https://github.com/
+[push]
+  autoSetupRemote = true

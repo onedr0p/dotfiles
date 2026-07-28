@@ -1,0 +1,62 @@
+[vars]
+machine = "truenas"
+
+[dotfiles]
+"~/.config/mise/mise.truenas.toml" = { source = "~/.dotfiles/mise.truenas.toml", mode = "symlink" }
+"~/.zshenv" = { source = "~/.dotfiles/home/zshenv", mode = "symlink" }
+"~/.zshrc" = { source = "~/.dotfiles/home/zshrc", mode = "symlink" }
+
+[bootstrap.repos]
+# A plain clone, not the official installer: the installer would write its
+# own .zshrc over the managed one.
+"~/.oh-my-zsh" = { url = "https://github.com/ohmyzsh/ohmyzsh.git" }
+
+[tools]
+"1password" = "2.35.0"
+"age" = "latest"
+"atuin" = "latest"
+"bat" = "latest"
+"cilium-cli" = "latest"
+"claude" = "latest"
+"cloudflared" = "latest"
+"codex" = "latest"
+"croc" = "latest"
+"dyff" = "latest"
+"fd" = "latest"
+"flux2" = "latest"
+"gh" = "latest"
+"gum" = "latest"
+"helm" = "latest"
+"helmfile" = "latest"
+"just" = "latest"
+"kopia" = "latest"
+"krew" = "latest"
+"kubecolor" = "latest"
+"kubeconform" = "latest"
+"kubectl" = "latest"
+"kustomize" = "latest"
+"lefthook" = "latest"
+"lsd" = "latest"
+"node" = "latest"
+"npm" = "latest"
+"python" = "latest"
+"rg" = "latest"
+"sd" = "latest"
+"sops" = "latest"
+"starship" = "latest"
+"stern" = "latest"
+"talos" = "latest"
+"task" = "latest"
+"vals" = "latest"
+"viddy" = "latest"
+"yamlfmt" = "latest"
+"yq" = "latest"
+"zoxide" = "latest"
+"aqua:autobrr/mkbrr" = "latest"
+"aqua:dalance/procs" = "latest"
+"aqua:fish-shell/fish-shell" = "latest"
+"aqua:mitsuhiko/minijinja" = "latest"
+"aqua:samwho/spacer" = "latest"
+"github:autobrr/go-mediainfo" = "latest"
+"github:home-operations/flate" = "latest"
+"github:Microck/kagi-cli" = "latest"

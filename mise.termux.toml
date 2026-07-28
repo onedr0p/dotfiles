@@ -1,0 +1,17 @@
+[vars]
+machine = "termux"
+
+[dotfiles]
+"~/.config/mise/mise.termux.toml" = { source = "~/.dotfiles/mise.termux.toml", mode = "symlink" }
+
+[tools]
+"cilium-cli" = "latest"
+"flux2" = "latest"
+"helmfile" = "latest"
+"krew" = "latest"
+"kubeconform" = "latest"
+"kustomize" = "latest"
+"stern" = "latest"
+"talos" = "latest"
+"task" = "latest"
+"aqua:mitsuhiko/minijinja" = "latest"
