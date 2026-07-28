@@ -158,8 +158,6 @@ brew "minijinja-cli"
 brew "minikube"
 # Replacement for ls, cp and other commands for object storage
 brew "minio-mc"
-# Polyglot runtime manager (asdf rust clone)
-brew "mise"
 # Collection of tools that nobody wrote when UNIX was young
 brew "moreutils"
 # Program for MPEG audio stream validation
