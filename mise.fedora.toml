@@ -17,8 +17,8 @@ machine = "fedora"
 
 # No [tools] here on purpose. Homebrew covers every global tool, including the
 # ones that look macOS-only: casks whose sole artifact is a `binary` install
-# fine on linuxbrew (claude-code, codex), and the Kagi CLI has a tap formula
-# with an on_linux block.
+# fine on linuxbrew (claude-code@latest, codex), and the Kagi CLI has a tap
+# formula with an on_linux block.
 #
 # Language runtimes (node, npm, uv, python) are per-project only, declared in
 # each project's own mise config, so mise stays a dotfiles manager here.

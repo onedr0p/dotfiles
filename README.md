@@ -125,7 +125,7 @@ No third-party rpm repo is needed. fish comes from Fedora's own repos, and
 everything that used to come from Terra is now a Homebrew entry: starship,
 kopia, sops, and `1password-cli`. That last one is a cask, which installs on
 linuxbrew because its only artifact is a `binary` rather than a macOS `.app` -
-the same reason the `claude-code` and `codex` casks work here. Terra's
+the same reason the `claude-code@latest` and `codex` casks work here. Terra's
 `1password-cli` rpm also pulled in the 1Password desktop app as a dependency,
 which is dead weight on a headless box.
 
@@ -215,9 +215,9 @@ anything an entry's installer needs must already exist or that entry fails.
 
 `mise.fedora.toml` declares no `[tools]` - Homebrew covers every global tool,
 including the ones that look macOS-only. A cask whose sole artifact is a
-`binary` installs fine on linuxbrew, which is how `claude-code`, `codex` and
-`1password-cli` arrive, and the Kagi CLI comes from a tap formula with an
-`on_linux` block.
+`binary` installs fine on linuxbrew, which is how `claude-code@latest`,
+`codex` and `1password-cli` arrive, and the Kagi CLI comes from a tap formula
+with an `on_linux` block.
 
 Language runtimes are deliberately not global on this machine: `node`, `npm`,
 `uv` and `python` are declared per project in that project's own mise config, so

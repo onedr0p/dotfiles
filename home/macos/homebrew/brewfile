@@ -296,8 +296,10 @@ cask "beyond-compare"
 cask "home-operations/tap/chaski", trusted: true
 # Anthropic's official Claude AI desktop app
 cask "claude"
+# The `@latest` cask tracks the release channel of the same name; the plain
+# `claude-code` cask follows `stable`, which lags behind.
 # Terminal-based AI coding assistant
-cask "claude-code"
+cask "claude-code@latest"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
 # Voice and text chat software

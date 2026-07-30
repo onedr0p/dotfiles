@@ -120,8 +120,10 @@ brew "microck/kagi/kagi", trusted: true
 # binary its postinstall fetches.
 # Command-line interface for 1Password
 cask "1password-cli"
+# The `@latest` cask tracks the release channel of the same name; the plain
+# `claude-code` cask follows `stable`, which lags behind.
 # Terminal-based AI coding assistant
-cask "claude-code"
+cask "claude-code@latest"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
 # Small, stateless webhook-to-notification relay
