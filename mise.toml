@@ -1,3 +1,7 @@
+# `exclude` on symlink-each entries landed in 2026.7.16; older releases ignore it
+# silently and deploy the excluded files.
+min_version = "2026.7.16"
+
 [settings]
 experimental = true
 
@@ -9,19 +13,36 @@ experimental = true
 git_name = "Devin Buhl"
 git_email = "devin@buhl.casa"
 
-# home/config mirrors ~/.config exactly; template sources and machine-only
-# files live outside it so symlink-each never deploys them (`exclude` is not
-# supported by the current mise release).
+# home/config mirrors ~/.config exactly. Template sources live alongside their
+# rendered targets and are kept out of symlink-each by `exclude`, which needs
+# mise 2026.7.16 (see min_version). Per-machine homebrew files stay in
+# home/<machine>/ because fedora and macos each need a different brewfile at the
+# same ~/.config/homebrew path.
 [dotfiles]
-"~/.config" = { source = "~/.dotfiles/home/config", mode = "symlink-each" }
-"~/.config/fish/functions/ms.fish" = { source = "~/.dotfiles/home/fish/ms.fish.tmpl", mode = "template" }
-"~/.config/fish/functions/tf.fish" = { source = "~/.dotfiles/home/fish/tf.fish.tmpl", mode = "template" }
+"~/.config" = { source = "~/.dotfiles/home/config", mode = "symlink-each", exclude = ["*.tmpl"] }
+"~/.config/fish/functions/ms.fish" = { source = "~/.dotfiles/home/config/fish/functions/ms.fish.tmpl", mode = "template" }
+"~/.config/fish/functions/tf.fish" = { source = "~/.dotfiles/home/config/fish/functions/tf.fish.tmpl", mode = "template" }
 "~/.gitconfig" = { source = "~/.dotfiles/home/gitconfig.tmpl", mode = "template" }
 "~/.gitignore_global" = { source = "~/.dotfiles/home/gitignore_global", mode = "symlink" }
 "~/.nanorc" = { source = "~/.dotfiles/home/nanorc", mode = "symlink" }
 "~/.ssh/config" = { source = "~/.dotfiles/home/ssh/config.tmpl", mode = "template" }
 "~/.claude/CLAUDE.md" = { source = "~/.dotfiles/home/config/agents/AGENTS.md", mode = "symlink" }
 "~/.codex/AGENTS.md" = { source = "~/.dotfiles/home/config/agents/AGENTS.md", mode = "symlink" }
+# Claude Code writes this file itself when settings change via /config, so those
+# edits land in the repo through the symlink and show up as a diff.
+"~/.claude/settings.json" = { source = "~/.dotfiles/home/claude/settings.json", mode = "symlink" }
+# codex persists machine-local state into config.toml (per-project trust_level,
+# notice.*, tui.*), so manage only a marker block instead of the whole file.
+# Dotted keys, not [analytics]/[otel] headers: codex appends new tables at EOF,
+# so a block that opens a table scope swallows whatever codex writes next and
+# the next apply deletes it. Keep these markers above the first table header.
+"~/.codex/config.toml/telemetry" = { block = '''
+analytics.enabled = false
+otel.exporter = "none"
+otel.metrics_exporter = "none"
+otel.trace_exporter = "none"
+otel.log_user_prompt = false
+''' }
 # Each mise.<machine>.toml overlay symlinks only itself into ~/.config/mise,
 # so hosts don't carry (and warn about) the other machines' overlays.
 "~/.config/mise/config.toml" = { source = "~/.dotfiles/mise.toml", mode = "symlink" }
