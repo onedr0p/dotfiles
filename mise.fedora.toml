@@ -12,8 +12,9 @@ machine = "fedora"
 #
 # rpm-ostree still owns what must live in the OS image: fish (login shell, must
 # be in /etc/shells), the container and qemu stack, hardware utilities,
-# systemd-networkd, 1password-cli (no linuxbrew formula), telnet (no linuxbrew
-# bottle), and the gcc/make/git toolchain Homebrew itself builds against.
+# systemd-networkd, glibc-langpack-en (the en_US.utf-8 locale the shells
+# export), 1password-cli (no linuxbrew formula), telnet (no linuxbrew bottle),
+# and the gcc/make/git toolchain Homebrew itself builds against.
 
 # No [tools] here on purpose. Homebrew covers every global tool, including the
 # ones that look macOS-only: casks whose sole artifact is a `binary` install
