@@ -154,10 +154,13 @@ layered packages, permissive SELinux, and the disabled firewall):
 # counterpart is only present as a dependency. logrotate and which are not in
 # the Fedora IoT base image either, so they have to be requested explicitly.
 # systemd-networkd supports the optional network setup in step 2 below.
+# glibc-langpack-en supplies the en_US.utf-8 locale the shells export: the image
+# ships glibc-minimal-langpack, which carries only C, C.utf8, and POSIX, so
+# without it every setlocale call warns.
 sudo rpm-ostree install --idempotent --assumeyes \
   autoconf automake bind-utils binutils docker expect fish gcc gcc-c++ git \
-  libtool lm_sensors logrotate make net-tools nvme-cli patch pciutils \
-  qemu-guest-agent qemu-system-x86-core qemu-user-static-aarch64 runc \
+  glibc-langpack-en libtool lm_sensors logrotate make net-tools nvme-cli patch \
+  pciutils qemu-guest-agent qemu-system-x86-core qemu-user-static-aarch64 runc \
   smartmontools systemd-networkd tcpdump telnet usbutils which
 
 # Permissive SELinux + no host firewall (dev box)
