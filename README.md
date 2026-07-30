@@ -36,9 +36,17 @@ untracked `mise.local.toml` next to `mise.toml`.
 
 ## Bootstrap
 
+mise itself is always installed with the official installer, on every
+platform - never through a package manager. Package-manager copies (brew,
+pkg, rpm-ostree) can't `mise self-update`, lag behind releases, and on
+Fedora IoT live on a read-only `/usr`. The installer puts the binary at
+`~/.local/bin/mise` (override with `MISE_INSTALL_PATH`), and the shell
+configs in this repo already put `~/.local/bin` first on `PATH`.
+
 Common flow, after the machine-specific preparation below:
 
 ```sh
+curl https://mise.run | sh   # installs ~/.local/bin/mise
 git clone https://github.com/onedr0p/dotfiles ~/.dotfiles
 cd ~/.dotfiles
 mise trust
@@ -56,9 +64,10 @@ git does not track the 0600 mode on the ssh config source.
 
 ### macos
 
+Homebrew is still needed for the brewfile, but not for mise:
+
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install mise
 ```
 
 Then run the common flow. The post-dotfiles hook installs everything in the
@@ -73,21 +82,21 @@ chsh -s "$(brew --prefix)/bin/fish"
 ### termux
 
 ```sh
-pkg install git mise fish
+pkg install git fish
 chsh -s fish
 ```
 
-Then run the common flow. Prompt niceties (starship, zoxide, atuin, bat, lsd)
-also come from pkg; the fish config skips whichever are missing.
+Then run the common flow. Note the install path: `$HOME` on Termux is
+`/data/data/com.termux/files/home`, so the installer places the binary at
+`/data/data/com.termux/files/home/.local/bin/mise` - keep that in mind when
+referencing it outside the shell (the proot-wrapped `ms` function, scripts,
+Termux widgets). Prompt niceties (starship, zoxide, atuin, bat, lsd) still
+come from pkg; the fish config skips whichever are missing.
 
 ### truenas
 
-TrueNAS Scale has no usable package manager (the base OS is reset on updates),
-so install mise to `~/.local/bin` with the official script:
-
-```sh
-curl https://mise.run | MISE_INSTALL_PATH="$HOME/.local/bin/mise" sh
-```
+TrueNAS Scale has no usable package manager (the base OS is reset on
+updates), so the installer flow is the only option here anyway.
 
 TrueNAS Scale mounts `/tmp` noexec, which breaks mise installs. A post-init
 script must exist to remount it with exec (System → Advanced Settings →
@@ -107,7 +116,8 @@ instead. Re-run `mise bootstrap --yes` after major TrueNAS updates.
 Fedora IoT is an immutable `rpm-ostree` system: `/usr` is read-only, so system
 packages are layered into the OS image and activated with a reboot. The
 `terra-release` repo provides packages including `1password-cli`, `kopia`,
-`mise`, `sops`, and `starship`.
+`sops`, and `starship`. mise is not layered; it comes from the installer in
+the common flow, so it can self-update without an rpm-ostree deploy.
 
 **0. Passwordless sudo** (optional, dev box only — the provisioning below is
 sudo-heavy). Add a `wheel` NOPASSWD drop-in, validated with `visudo` so a typo
@@ -126,7 +136,7 @@ Your user must be in the `wheel` group (`id -nG | grep -qw wheel`); add it with
 layered packages, permissive SELinux, and the disabled firewall):
 
 ```sh
-# Terra repo -> mise + starship
+# Terra repo -> 1password-cli, kopia, sops, starship
 sudo curl -fsSL https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo \
   | sudo tee /etc/yum.repos.d/terra.repo
 sudo rpm-ostree install --idempotent terra-release
@@ -136,7 +146,7 @@ sudo rpm-ostree install --idempotent --assumeyes \
   1password-cli age atuin autoconf automake bat bind-utils binutils btop \
   croc docker expect fastfetch fd-find fish fzf gcc gcc-c++ gh git \
   gum helm htop just kopia kustomize libatomic libtool lm_sensors lsd make \
-  mise moreutils nano net-tools netcat nmap nvme-cli patch pciutils procs \
+  moreutils nano net-tools netcat nmap nvme-cli patch pciutils procs \
   qemu-guest-agent qemu-system-x86-core qemu-user-static-aarch64 ripgrep \
   rsync runc smartmontools sops spacer starship systemd-networkd tcpdump \
   telnet tree usbutils wget yq zoxide
@@ -179,9 +189,9 @@ curl https://github.com/$GITHUB_USER.keys > ~/.ssh/authorized_keys
 chsh -s /usr/bin/fish
 ```
 
-**4. Dotfiles.** mise is layered by the rpm-ostree command in step 1, so run
-the common flow with `fedora` in `miserc.toml`. The bootstrap installs the
-remaining declared tools into `~/.local`.
+**4. Dotfiles.** Run the common flow (installer included) with `fedora` in
+`miserc.toml`. The bootstrap installs the remaining declared tools into
+`~/.local`.
 
 ### Fish plugins
 
