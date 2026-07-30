@@ -20,8 +20,9 @@ machine = "fedora"
 # fine on linuxbrew (claude-code@latest, codex), and the Kagi CLI has a tap
 # formula with an on_linux block.
 #
-# Language runtimes (node, npm, uv, python) are per-project only, declared in
-# each project's own mise config, so mise stays a dotfiles manager here.
+# node (which carries npm) and python come from Homebrew because enough global
+# tooling assumes they exist. Other language runtimes stay per-project, declared
+# in each project's own mise config, so mise stays a dotfiles manager here.
 
 # Runs after the dotfiles phase so the brewfile symlink exists on first run.
 # brew is resolved explicitly: the linuxbrew prefix is not on PATH until
