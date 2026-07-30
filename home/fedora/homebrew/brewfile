@@ -1,0 +1,157 @@
+# Core `flux` is InfluxData's Flux language, not the FluxCD CLI.
+tap "fluxcd/tap"
+tap "home-operations/tap", trusted: true
+tap "microck/kagi"
+# Simple, modern, secure file encryption
+brew "age"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
+# CLI to install, manage & troubleshoot Kubernetes clusters running Cilium
+brew "cilium-cli"
+# Cloudflare Tunnel client (formerly Argo Tunnel)
+brew "cloudflared"
+# Securely send things from one computer to another
+brew "croc"
+# Diff tool for YAML files, and sometimes JSON
+brew "dyff"
+# Program that can automate interactive applications
+brew "expect"
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GitHub command-line tool
+brew "gh"
+# Task is a task runner/build tool that aims to be simpler and easier to use
+brew "go-task"
+# Tool for glamorous shell scripts
+brew "gum"
+# Kubernetes package manager
+brew "helm"
+# Deploy Kubernetes Helm Charts
+brew "helmfile"
+# Improved top (interactive process viewer)
+brew "htop"
+# Handy way to save and run project-specific commands
+brew "just"
+# Kubernetes CLI To Manage Your Clusters In Style!
+brew "k9s"
+# Fast and secure open-source backup
+brew "kopia"
+# Package manager for kubectl plugins
+brew "krew"
+# Colorize your kubectl output
+brew "kubecolor"
+# FAST Kubernetes manifests validator, with support for Custom Resources!
+brew "kubeconform"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
+# Template-free customization of Kubernetes YAML manifests
+brew "kustomize"
+# Fast and powerful Git hooks manager for any type of projects
+brew "lefthook"
+# Clone of ls with colorful output, file type icons, and more
+brew "lsd"
+# Render Jinja2 templates directly from the command-line to stdout
+brew "minijinja-cli"
+# Is a tool to create, modify and inspect torrent files. Fast
+brew "mkbrr"
+# Collection of tools that nobody wrote when UNIX was young
+brew "moreutils"
+# Free (GNU) replacement for the Pico text editor
+brew "nano"
+# Utility for managing network connections
+brew "netcat"
+# Port scanning utility for large networks
+brew "nmap"
+# Modern replacement for ps written in Rust
+brew "procs"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Utility that provides fast incremental file transfer
+brew "rsync"
+# Intuitive find & replace CLI
+brew "sd"
+# Editor of encrypted files
+brew "sops"
+# Small command-line utility for adding spacers to command output
+brew "spacer"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Tail multiple Kubernetes pods & their containers
+brew "stern"
+# CLI for out-of-band management of Kubernetes nodes created by Talos
+brew "talosctl"
+# Command-line packet analyzer
+brew "tcpdump"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Extraction utility for .zip compressed archives; casks shipping a .zip (such
+# as 1password-cli) cannot unpack without it and Fedora IoT has no unzip.
+brew "unzip"
+# Helm-like configuration values loader with support for various sources
+brew "vals"
+# Modern watch command
+brew "viddy"
+# Internet file retriever
+brew "wget"
+# Extensible command-line tool to format YAML files
+brew "yamlfmt"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
+brew "yq"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# Flux CLI
+brew "fluxcd/tap/flux", trusted: true
+# Agent-native Rust CLI for Kagi subscribers with JSON-first output
+brew "microck/kagi/kagi", trusted: true
+# These two casks work on linuxbrew: they declare no depends_on and ship a
+# linux-x64 `binary` artifact rather than a macOS .app bundle. Prefer them over
+# the npm packages, which would pull in a global node - and which brew installs
+# with scripts disabled, leaving @anthropic-ai/claude-code without the native
+# binary its postinstall fetches.
+# Command-line interface for 1Password
+cask "1password-cli"
+# Terminal-based AI coding assistant
+cask "claude-code"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
+# Small, stateless webhook-to-notification relay
+cask "home-operations/tap/chaski", trusted: true
+# Render and diff Flux GitOps repositories offline, without a cluster
+cask "home-operations/tap/flate"
+# Kubectl plugin operating the kopiur Kopia-native backup operator. The cask
+# links it as `kopiur`, not `kubectl-kopiur`, so it runs standalone and `kubectl
+# kopiur` will not find it - it is not a drop-in for krew's kopiur/kopiur.
+cask "home-operations/tap/kopiur", trusted: true
+#
+# All from krew's default index. The macos brewfile also carries kopiur/kopiur
+# and netshoot/netshoot, which live in custom indexes: brew bundle only shells
+# out to `kubectl-krew install`, so those need `kubectl krew index add <name>
+# <url>` first and are omitted here rather than fail every bootstrap.
+krew "browse-pvc"
+krew "cert-manager"
+krew "cnpg"
+krew "ctx"
+krew "df-pv"
+krew "envsubst"
+krew "get-all"
+krew "klock"
+krew "marvin"
+krew "node-restart"
+krew "node-shell"
+krew "ns"
+krew "pv-migrate"
+krew "pv-mounter"
+krew "rook-ceph"
+krew "view-secret"
+krew "viewnode"
+krew "virt"

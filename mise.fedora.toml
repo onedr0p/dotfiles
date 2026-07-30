@@ -3,34 +3,52 @@ machine = "fedora"
 
 [dotfiles]
 "~/.config/mise/mise.fedora.toml" = { source = "~/.dotfiles/mise.fedora.toml", mode = "symlink" }
+"~/.config/homebrew" = { source = "~/.dotfiles/home/fedora/homebrew", mode = "symlink" }
+"~/.config/fish/conf.d/10-homebrew.fish" = { source = "~/.dotfiles/home/fedora/10-homebrew.fish", mode = "symlink" }
 
-[tools]
-# Command-line tools available through rpm-ostree are not declared here.
-"cilium-cli" = "latest"
-"claude" = "latest"
-"cloudflared" = "latest"
-"codex" = "latest"
-"dyff" = "latest"
-"flux2" = "latest"
-"helmfile" = "latest"
-"krew" = "latest"
-"kubecolor" = "latest"
-"kubeconform" = "latest"
-"kubectl" = "latest"
-"lefthook" = "latest"
-"node" = "latest"
-"npm" = "latest"
-"python" = "latest"
-"sd" = "latest"
-"stern" = "latest"
-"talos" = "latest"
-"task" = "latest"
-"vals" = "latest"
-"viddy" = "latest"
-"yamlfmt" = "latest"
-"aqua:autobrr/mkbrr" = "latest"
-"aqua:mitsuhiko/minijinja" = "latest"
-"github:Microck/kagi-cli" = "latest"
-# go-mediainfo and flate (github: backend) are home-media tools, not dev
-# tools, and their unauthenticated GitHub API lookups hit the anonymous
-# rate limit here - omitted from the fedora dev box.
+# CLI tools come from Homebrew (see home/fedora/homebrew/brewfile). mise stays a
+# standalone ~/.local/bin/mise install, so it never depends on the brew prefix
+# it provisions.
+#
+# rpm-ostree still owns what must live in the OS image: fish (login shell, must
+# be in /etc/shells), the container and qemu stack, hardware utilities,
+# systemd-networkd, 1password-cli (no linuxbrew formula), telnet (no linuxbrew
+# bottle), and the gcc/make/git toolchain Homebrew itself builds against.
+
+# No [tools] here on purpose. Homebrew covers every global tool, including the
+# ones that look macOS-only: casks whose sole artifact is a `binary` install
+# fine on linuxbrew (claude-code, codex), and the Kagi CLI has a tap formula
+# with an on_linux block.
+#
+# Language runtimes (node, npm, uv, python) are per-project only, declared in
+# each project's own mise config, so mise stays a dotfiles manager here.
+
+# Runs after the dotfiles phase so the brewfile symlink exists on first run.
+# brew is resolved explicitly: the linuxbrew prefix is not on PATH until
+# 10-homebrew.fish has been laid down and a new shell started.
+[bootstrap.hooks.post-dotfiles]
+run = '''
+set -eu
+BREW="$(command -v brew || true)"
+for candidate in /home/linuxbrew/.linuxbrew/bin/brew "$HOME/.linuxbrew/bin/brew"; do
+    [ -n "$BREW" ] && break
+    [ -x "$candidate" ] && BREW="$candidate"
+done
+if [ -z "$BREW" ]; then
+    echo "brew not found - install Homebrew before bootstrapping this machine" >&2
+    exit 1
+fi
+eval "$("$BREW" shellenv sh)"
+# brew bundle does not order entry types against each other, so whatever an
+# entry's installer depends on has to exist beforehand: unzip for casks that
+# ship a .zip (Fedora IoT has none), and krew's plugin index, which a freshly
+# installed krew does not have, for the krew entries.
+command -v unzip >/dev/null 2>&1 || brew install unzip
+command -v kubectl-krew >/dev/null 2>&1 || brew install krew
+kubectl-krew update
+# Casks from a third-party tap are refused at load time, before bundle reaches
+# the code that would honour their `trusted: true`, and the trust store
+# (~/.homebrew/trust.json) is machine-local rather than tracked here.
+brew trust --tap home-operations/tap
+brew bundle install --no-upgrade --file="$HOME/.config/homebrew/brewfile"
+'''

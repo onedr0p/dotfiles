@@ -15,12 +15,12 @@ My dotfiles managed by [mise](https://mise.jdx.dev/dotfiles.html).
 
 ## Machines
 
-| Machine   | Device                | Shell | Packages        |
-| --------- | --------------------- | ----- | --------------- |
-| `macos`   | Laptop (macOS)        | fish  | Homebrew        |
-| `termux`  | Phone (Termux)        | fish  | pkg + mise      |
-| `truenas` | NAS (TrueNAS Scale)   | fish  | mise            |
-| `fedora`  | Dev box (Fedora IoT)  | fish  | rpm-ostree + mise |
+| Machine   | Device                | Shell | Packages                     |
+| --------- | --------------------- | ----- | ---------------------------- |
+| `macos`   | Laptop (macOS)        | fish  | Homebrew                     |
+| `termux`  | Phone (Termux)        | fish  | pkg + mise                   |
+| `truenas` | NAS (TrueNAS Scale)   | fish  | mise                         |
+| `fedora`  | Dev box (Fedora IoT)  | fish  | rpm-ostree + Homebrew + mise |
 
 The machine is pinned once per host in `~/.config/mise/miserc.toml` (untracked):
 
@@ -114,10 +114,20 @@ instead. Re-run `mise bootstrap --yes` after major TrueNAS updates.
 ### fedora
 
 Fedora IoT is an immutable `rpm-ostree` system: `/usr` is read-only, so system
-packages are layered into the OS image and activated with a reboot. The
-`terra-release` repo provides packages including `1password-cli`, `kopia`,
-`sops`, and `starship`. mise is not layered; it comes from the installer in
-the common flow, so it can self-update without an rpm-ostree deploy.
+packages are layered into the OS image and activated with a reboot. Because
+every added package costs a reboot, the rpm layer stays thin: it carries only
+what must live in the OS image (the login shell, the container and qemu stack,
+hardware utilities, and the toolchain Homebrew builds against), and Homebrew
+provides the CLI tooling from `home/fedora/homebrew/brewfile`. Neither mise nor
+Homebrew is layered, so both can update themselves without an rpm-ostree deploy.
+
+No third-party rpm repo is needed. fish comes from Fedora's own repos, and
+everything that used to come from Terra is now a Homebrew entry: starship,
+kopia, sops, and `1password-cli`. That last one is a cask, which installs on
+linuxbrew because its only artifact is a `binary` rather than a macOS `.app` -
+the same reason the `claude-code` and `codex` casks work here. Terra's
+`1password-cli` rpm also pulled in the 1Password desktop app as a dependency,
+which is dead weight on a headless box.
 
 **0. Passwordless sudo** (optional, dev box only — the provisioning below is
 sudo-heavy). Add a `wheel` NOPASSWD drop-in, validated with `visudo` so a typo
@@ -136,20 +146,19 @@ Your user must be in the `wheel` group (`id -nG | grep -qw wheel`); add it with
 layered packages, permissive SELinux, and the disabled firewall):
 
 ```sh
-# Terra repo -> 1password-cli, kopia, sops, starship
-sudo curl -fsSL https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo \
-  | sudo tee /etc/yum.repos.d/terra.repo
-sudo rpm-ostree install --idempotent terra-release
-# libatomic is a runtime dependency for the mise-managed node build.
+# autoconf/automake/binutils/gcc/gcc-c++/libtool/make/patch are the toolchain
+# Homebrew builds against; git is needed to clone this repo before brew exists;
+# fish must be layered because a login shell has to be in /etc/shells. Homebrew
+# covers everything else except telnet (no linuxbrew bottle, source-only Tier
+# 3), tcpdump's tcpslice, expect's mkpasswd-expect, and lm_sensors, whose brew
+# counterpart is only present as a dependency. logrotate and which are not in
+# the Fedora IoT base image either, so they have to be requested explicitly.
 # systemd-networkd supports the optional network setup in step 2 below.
 sudo rpm-ostree install --idempotent --assumeyes \
-  1password-cli age atuin autoconf automake bat bind-utils binutils btop \
-  croc docker expect fastfetch fd-find fish fzf gcc gcc-c++ gh git \
-  gum helm htop just kopia kustomize libatomic libtool lm_sensors lsd make \
-  moreutils nano net-tools netcat nmap nvme-cli patch pciutils procs \
-  qemu-guest-agent qemu-system-x86-core qemu-user-static-aarch64 ripgrep \
-  rsync runc smartmontools sops spacer starship systemd-networkd tcpdump \
-  telnet tree usbutils wget yq zoxide
+  autoconf automake bind-utils binutils docker expect fish gcc gcc-c++ git \
+  libtool lm_sensors logrotate make net-tools nvme-cli patch pciutils \
+  qemu-guest-agent qemu-system-x86-core qemu-user-static-aarch64 runc \
+  smartmontools systemd-networkd tcpdump telnet usbutils which
 
 # Permissive SELinux + no host firewall (dev box)
 sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
@@ -189,9 +198,30 @@ curl https://github.com/$GITHUB_USER.keys > ~/.ssh/authorized_keys
 chsh -s /usr/bin/fish
 ```
 
-**4. Dotfiles.** Run the common flow (installer included) with `fedora` in
-`miserc.toml`. The bootstrap installs the remaining declared tools into
-`~/.local`.
+**4. Homebrew.** The common flow already installs mise, so only Homebrew is
+left. It is not layered either, and owns all the CLI tooling:
+
+```sh
+NONINTERACTIVE=1 /bin/bash -c \
+  "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+**5. Dotfiles.** Run the common flow with `fedora` in `miserc.toml`. The
+`post-dotfiles` hook seeds `unzip`, krew's plugin index and the tap trust store,
+then runs `brew bundle install --no-upgrade` against the brewfile symlinked to
+`~/.config/homebrew/brewfile`, so it only installs what is missing. The seeding
+matters because `brew bundle` does not order entry types against each other, so
+anything an entry's installer needs must already exist or that entry fails.
+
+`mise.fedora.toml` declares no `[tools]` - Homebrew covers every global tool,
+including the ones that look macOS-only. A cask whose sole artifact is a
+`binary` installs fine on linuxbrew, which is how `claude-code`, `codex` and
+`1password-cli` arrive, and the Kagi CLI comes from a tap formula with an
+`on_linux` block.
+
+Language runtimes are deliberately not global on this machine: `node`, `npm`,
+`uv` and `python` are declared per project in that project's own mise config, so
+`command -v node` outside a project is expected to come up empty.
 
 ### Fish plugins
 
