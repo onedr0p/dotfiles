@@ -22,6 +22,21 @@ git_email = "devin@buhl.casa"
 "~/.ssh/config" = { source = "~/.dotfiles/home/ssh/config.tmpl", mode = "template" }
 "~/.claude/CLAUDE.md" = { source = "~/.dotfiles/home/config/agents/AGENTS.md", mode = "symlink" }
 "~/.codex/AGENTS.md" = { source = "~/.dotfiles/home/config/agents/AGENTS.md", mode = "symlink" }
+# Claude Code writes this file itself when settings change via /config, so those
+# edits land in the repo through the symlink and show up as a diff.
+"~/.claude/settings.json" = { source = "~/.dotfiles/home/claude/settings.json", mode = "symlink" }
+# codex persists machine-local state into config.toml (per-project trust_level,
+# notice.*, tui.*), so manage only a marker block instead of the whole file.
+"~/.codex/config.toml/telemetry" = { block = '''
+[analytics]
+enabled = false
+
+[otel]
+exporter = "none"
+metrics_exporter = "none"
+trace_exporter = "none"
+log_user_prompt = false
+''' }
 # Each mise.<machine>.toml overlay symlinks only itself into ~/.config/mise,
 # so hosts don't carry (and warn about) the other machines' overlays.
 "~/.config/mise/config.toml" = { source = "~/.dotfiles/mise.toml", mode = "symlink" }
