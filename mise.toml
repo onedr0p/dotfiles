@@ -33,15 +33,15 @@ git_email = "devin@buhl.casa"
 "~/.claude/settings.json" = { source = "~/.dotfiles/home/claude/settings.json", mode = "symlink" }
 # codex persists machine-local state into config.toml (per-project trust_level,
 # notice.*, tui.*), so manage only a marker block instead of the whole file.
+# Dotted keys, not [analytics]/[otel] headers: codex appends new tables at EOF,
+# so a block that opens a table scope swallows whatever codex writes next and
+# the next apply deletes it. Keep these markers above the first table header.
 "~/.codex/config.toml/telemetry" = { block = '''
-[analytics]
-enabled = false
-
-[otel]
-exporter = "none"
-metrics_exporter = "none"
-trace_exporter = "none"
-log_user_prompt = false
+analytics.enabled = false
+otel.exporter = "none"
+otel.metrics_exporter = "none"
+otel.trace_exporter = "none"
+otel.log_user_prompt = false
 ''' }
 # Each mise.<machine>.toml overlay symlinks only itself into ~/.config/mise,
 # so hosts don't carry (and warn about) the other machines' overlays.
