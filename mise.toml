@@ -26,6 +26,7 @@ git_email = "devin@buhl.casa"
 "~/.gitignore_global" = { source = "~/.dotfiles/home/gitignore_global", mode = "symlink" }
 "~/.nanorc" = { source = "~/.dotfiles/home/nanorc", mode = "symlink" }
 "~/.ssh/config" = { source = "~/.dotfiles/home/ssh/config.tmpl", mode = "template" }
+"~/.ssh/allowed_signers" = { source = "~/.dotfiles/home/ssh/allowed_signers", mode = "symlink" }
 "~/.claude/CLAUDE.md" = { source = "~/.dotfiles/home/config/agents/AGENTS.md", mode = "symlink" }
 "~/.codex/AGENTS.md" = { source = "~/.dotfiles/home/config/agents/AGENTS.md", mode = "symlink" }
 # Claude Code writes this file itself when settings change via /config, so those

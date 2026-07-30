@@ -11,6 +11,10 @@
 {%- endif %}
 [gpg]
   format = ssh
+[gpg "ssh"]
+  {#- Public keys only; every machine's signing key must be listed or `git log
+      --show-signature` reports "No principal matched" for commits it made. #}
+  allowedSignersFile = {{ env.HOME }}/.ssh/allowed_signers
 [format]
   signOff = true
 [core]
@@ -23,12 +27,15 @@
   ff = only
 [pull]
   rebase = true
+[rebase]
+  autoStash = true
 [fetch]
   prune = true
 [status]
   submoduleSummary = false
 [tag]
   forceSignAnnotated = true
+  gpgSign = true
 [init]
   defaultBranch = main
 [filter "lfs"]
