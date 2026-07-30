@@ -219,9 +219,9 @@ including the ones that look macOS-only. A cask whose sole artifact is a
 `codex` and `1password-cli` arrive, and the Kagi CLI comes from a tap formula
 with an `on_linux` block.
 
-Language runtimes are deliberately not global on this machine: `node`, `npm`,
-`uv` and `python` are declared per project in that project's own mise config, so
-`command -v node` outside a project is expected to come up empty.
+`node` (which ships `npm`) and `python` are global, from Homebrew, on both
+fedora and macos. Other language runtimes are declared per project in that
+project's own mise config rather than installed globally.
 
 ### Fish plugins
 

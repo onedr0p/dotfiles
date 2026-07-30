@@ -70,6 +70,8 @@ brew "nano"
 brew "netcat"
 # Port scanning utility for large networks
 brew "nmap"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
 # Modern replacement for ps written in Rust
 brew "procs"
 # Interpreted, interactive, object-oriented programming language
@@ -115,9 +117,8 @@ brew "fluxcd/tap/flux", trusted: true
 brew "microck/kagi/kagi", trusted: true
 # These two casks work on linuxbrew: they declare no depends_on and ship a
 # linux-x64 `binary` artifact rather than a macOS .app bundle. Prefer them over
-# the npm packages, which would pull in a global node - and which brew installs
-# with scripts disabled, leaving @anthropic-ai/claude-code without the native
-# binary its postinstall fetches.
+# the npm packages, which brew installs with scripts disabled, leaving
+# @anthropic-ai/claude-code without the native binary its postinstall fetches.
 # Command-line interface for 1Password
 cask "1password-cli"
 # The `@latest` cask tracks the release channel of the same name; the plain
