@@ -9,6 +9,9 @@ font-thicken = true
 # macOS specific
 macos-auto-secure-input = true
 macos-secure-input-indication = true
+# window-show-tab-bar is GTK-only, so a single tab still hides the bar here;
+# this at least keeps the tab strip in the titlebar instead of adding a row.
+macos-titlebar-style = tabs
 
 window-padding-balance = false
 window-padding-x = 10
