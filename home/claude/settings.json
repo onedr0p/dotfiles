@@ -1,15 +1,22 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(kagi:*)"
+    "allow": [],
+    "additionalDirectories": [
+      "/tmp"
     ]
   },
-  "model": "opus[1m]",
   "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true
   },
-  "effortLevel": "high",
-  "tui": "fullscreen",
   "theme": "dark",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipWorkflowUsageWarning": true,
+  "tui": "fullscreen",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "model": "opus[1m]",
+  "effortLevel": "high"
 }
