@@ -47,6 +47,7 @@ The following modern tools are available and preferred over their traditional co
 - **Data**: `jq` for JSON, `yq` for YAML.
 - **Pod Logs**: `stern` instead of `kubectl logs`.
 - **DNS Resolving**: `doggo` instead of `dig`
+- **File Watching**: `watchexec` instead of `entr`, `inotifywait`, or `sleep` polling loops, e.g. `watchexec -r -e go -- go test ./...`. It runs until killed, so start it in the background.
 - **Web Search**: `kagi` (kagi-cli) instead of built-in web search when available. `kagi search "query"` and `kagi quick "question"` output JSON by default (pipe to `jq`); `kagi summarize --subscriber --url <url>` summarizes a page. Some features are also exposed as MCP tools (server: `kagi`).
 
 ## Git
