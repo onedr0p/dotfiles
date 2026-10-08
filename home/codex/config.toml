@@ -1,0 +1,13 @@
+[analytics]
+enabled = false
+
+[otel]
+exporter = "none"
+metrics_exporter = "none"
+trace_exporter = "none"
+log_user_prompt = false
+
+# workspace-write only allows the workspace and /tmp, so without this Go builds
+# fall back to per-session caches in /tmp, which fill its quota on Fedora.
+[sandbox_workspace_write]
+writable_roots = ["{{ env.HOME }}/{% if os() == "macos" %}Library/Caches{% else %}.cache{% endif %}/go-build"]

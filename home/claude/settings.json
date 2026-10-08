@@ -1,13 +1,8 @@
 {
   "permissions": {
-    "allow": [],
     "additionalDirectories": [
       "/tmp"
     ]
-  },
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
   },
   "theme": "dark",
   "agentPushNotifEnabled": true,
@@ -16,7 +11,5 @@
   "attribution": {
     "commit": "",
     "pr": ""
-  },
-  "model": "opus[1m]",
-  "effortLevel": "high"
+  }
 }
