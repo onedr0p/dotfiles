@@ -33,6 +33,7 @@ These rules bias toward caution over speed; use judgment on trivial tasks.
   - Use `and`/`or` for logic.
 - Both macOS and Linux are in use; anything written for the shell must work on both.
 - Dotfiles are managed with mise (repo: `~/.dotfiles`, applied with `mise dotfiles apply`). Edit dotfiles in the repo, not the rendered files in `$HOME`; most deployed files are symlinks into it.
+- **Go**: use the default `GOCACHE`; don't create per-session caches under `/tmp`. On the Fedora host `/tmp` is a quota-limited tmpfs, and stale caches there break `go test` with "disk quota exceeded".
 
 ## Preferred Tools
 
