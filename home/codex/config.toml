@@ -11,3 +11,13 @@ log_user_prompt = false
 # fall back to per-session caches in /tmp, which fill its quota on Fedora.
 [sandbox_workspace_write]
 writable_roots = ["{{ env.HOME }}/{% if os() == "macos" %}Library/Caches{% else %}.cache{% endif %}/go-build"]
+
+# The memini plugin pins its MCP server to localhost. Codex can't resolve a
+# per-repo namespace for MCP calls, so tool writes go to the machine's home
+# namespace instead of the server's shared "default".
+[plugins."memini@memini".mcp_servers.memini]
+enabled = false
+
+[mcp_servers.memini]
+url = "https://memini.turbo.ac/mcp"
+env_http_headers = { "X-Memini-Home" = "MEMINI_HOME", "X-Memini-Namespace" = "MEMINI_HOME" }
