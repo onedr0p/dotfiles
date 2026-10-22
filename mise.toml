@@ -21,6 +21,7 @@ git_email = "devin@buhl.casa"
 # same ~/.config/homebrew path.
 [dotfiles]
 "~/.config" = { source = "~/.dotfiles/home/config", mode = "symlink-each", exclude = ["*.tmpl"] }
+"~/.config/fish/conf.d/memini.fish" = { source = "~/.dotfiles/home/config/fish/conf.d/memini.fish.tmpl", mode = "template" }
 "~/.config/fish/functions/ms.fish" = { source = "~/.dotfiles/home/config/fish/functions/ms.fish.tmpl", mode = "template" }
 "~/.config/fish/functions/tf.fish" = { source = "~/.dotfiles/home/config/fish/functions/tf.fish.tmpl", mode = "template" }
 "~/.gitconfig" = { source = "~/.dotfiles/home/gitconfig.tmpl", mode = "template" }
