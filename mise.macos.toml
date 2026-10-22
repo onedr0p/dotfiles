@@ -9,3 +9,6 @@ machine = "macos"
 # Runs after the dotfiles phase so the brewfile symlink exists on first run.
 [bootstrap.hooks.post-dotfiles]
 run = "brew bundle --no-upgrade --file=$HOME/.config/homebrew/brewfile"
+
+[tools]
+rust = "stable"
