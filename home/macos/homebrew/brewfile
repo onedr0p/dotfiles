@@ -334,7 +334,6 @@ cask "home-operations/tap/kopiur", trusted: true
 cask "latest"
 # Meet, chat, call, and collaborate in just one place
 cask "microsoft-teams"
-cask "mqtt-explorer"
 # Music tagger
 cask "musicbrainz-picard"
 # Netbird UI Client
@@ -345,8 +344,6 @@ cask "omnidisksweeper"
 cask "pearcleaner"
 # Persistent volume migration plugin for Kubernetes
 cask "utkuozdemir/pv-migrate/pv-migrate", trusted: true
-# Archive manager for data compression and backups
-cask "rar"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Tool to format memory cards complying with the SD File System spec
@@ -369,8 +366,6 @@ cask "transmission"
 cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
-# Lossless audio decoder
-cask "xld"
 # REST, GraphQL and gRPC client
 cask "yaak"
 # Media file tag editor
